@@ -1,0 +1,142 @@
+@CHARSET "UTF-8";
+.capsule-cms-main-menu {
+    width: 100%;
+    overflow: visible;
+    height: 25px;
+    background-color: #edeceb;
+    cursor: default;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;  
+}
+.capsule-cms-main-menu .container {
+    width: 10000px;
+    height: 25px;
+    background: #edeceb repeat-x 0 center url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADRJREFUeNpifPP6FQOVABMD9QA1zWL5////qB9H3TXqx1E/jvpxtJwgyV0P7t+lllkAAQYA0sYdiSlET0EAAAAASUVORK5CYII=");
+}
+.capsule-cms-main-menu .punct {
+    height: 25px;
+    background: #edeceb repeat-x 0 center url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADRJREFUeNpifPP6FQOVABMD9QA1zWL5////qB9H3TXqx1E/jvpxtJwgyV0P7t+lllkAAQYA0sYdiSlET0EAAAAASUVORK5CYII=");
+    float: left;
+    line-height: 23px;
+    position: relative;
+    padding: 0 7px;
+    white-space: nowrap;
+    z-index: 10;
+    text-shadow: 0 1px 0 #fff;
+}
+.capsule-cms-main-menu .punct-hover {
+    background: #edeceb repeat-x 0 center url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAIAAAC1JZyVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFlJREFUeNrslMEJACAMAyO4/9tVXMcxVKgz9GEoIV0gJNy1jbnw/3oAlJhgBHUEPFo+hjSaFAJSo7HakIDm6AmPlo/Z50oh4A9dtQ2kvPGHtp7WsyppT4ABAEEOP3A1+2oTAAAAAElFTkSuQmCC");
+    color: #fff;
+    z-index: 20;
+    text-shadow: none;
+}
+.capsule-cms-main-menu .punct .sub-place {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    height: 1px;
+    display: none;
+}
+.capsule-cms-main-menu .sub-punct .sub-place {
+    position: absolute;
+    left: auto;
+    bottom: auto;
+    right: 0;
+    top: -3px;
+    width: 2px;
+    height: 5px;
+    display: none;
+}
+.capsule-cms-main-menu .sub-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    border: 1px #aaa solid;
+    padding: 2px;
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.capsule-cms-main-menu .sub-punct {
+    position: relative;
+    background: #fff;
+    color: #000;
+    z-index: 10;
+    display: block;
+}
+.capsule-cms-main-menu .sub-punct img {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}
+.capsule-cms-main-menu .sub-punct-disabled {
+    position: relative;
+    background: #fff;
+    color: #a9a5a2;
+    z-index: 10;
+}
+.capsule-cms-main-menu .sub-punct-disabled img {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    opacity: .3; 
+    -moz-opacity: .3; 
+}
+.capsule-cms-main-menu .sub-punct-hover {
+    background: #edeceb repeat-x 0 center url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAIAAAC1JZyVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFlJREFUeNrslMEJACAMAyO4/9tVXMcxVKgz9GEoIV0gJNy1jbnw/3oAlJhgBHUEPFo+hjSaFAJSo7HakIDm6AmPlo/Z50oh4A9dtQ2kvPGHtp7WsyppT4ABAEEOP3A1+2oTAAAAAElFTkSuQmCC");
+    color: #fff;
+    z-index: 20;
+}
+.capsule-cms-main-menu .sub-punct-label {
+    height: 23px;
+    padding: 0 24px;
+    line-height: 22px;
+    display: block;
+    outline-style: none;
+    text-decoration: none;
+    color: #000;
+    color: inherit;
+}
+.capsule-cms-main-menu .sub-punct-label:hover {
+    color: #fff;
+    color: inherit;
+}
+.capsule-cms-main-menu .sub-punct-arrow {
+    background: no-repeat left center url("data:image/gif;base64,R0lGODlhBAAHAIABAAAAAAAAACH5BAEAAAEALAAAAAAEAAcAAAIIRA4WaeyrVCgAOw==");
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 23px;
+}
+.capsule-cms-main-menu .sub-punct-arrow-hover {
+    background: no-repeat left center url("data:image/gif;base64,R0lGODlhBAAHAIABAP///wAAACH5BAEAAAEALAAAAAAEAAcAAAIIRA4WaeyrVCgAOw==");
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 23px;
+}
+.capsule-cms-main-menu .delimiter {
+    background: #fff;
+    padding: 4px 2px;
+    font-size: 1px;
+    line-height: 1px;
+    overflow: hidden; 
+    position: relative;
+    color: #fff;
+    z-index: 10;
+}
+.capsule-cms-main-menu .delimiter div {
+    line-height: 1px;
+    font-size: 1px;
+    border-top: 1px #aaa solid;
+}
+.capsule-cms-main-menu form {
+    display: none;
+}

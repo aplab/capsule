@@ -1,0 +1,14 @@
+{
+    "#": "Так пишутся комментарии",
+    "baseUrl": "/ajax/",
+    "cmd": "ajax",
+    "#": "Имя переменной, содержащей команду для вызова контроллера",
+    "action": "cmd",
+    "#": "где по умолчанию ищем контроллеры",
+    "controllerDefaultNs": "Capsule/App/Ajax/Controller",
+    "#": "команда: контроллер_который_обрабарывает",
+    "controller": {
+        "toggleActive": "Active",
+        "loadNested": "Nested"
+    }
+}

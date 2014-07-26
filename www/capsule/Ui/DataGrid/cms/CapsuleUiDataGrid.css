@@ -1,0 +1,323 @@
+@CHARSET "UTF-8";
+.capsule-ui-datagrid {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+/* Header */
+.capsule-ui-datagrid-header-place {
+    width: 100%;
+    height: 26px;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    background: #e4e3e2 repeat-x 0 center url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAaCAIAAAD5ZqGGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlJREFUeNpiWLJgLsP///+Zfv36ycTAwMAEYoMwA5T+DxWD80FsoNivX7/gfJgYMh9Z7OihAwABBgAlwDwCO3K1UQAAAABJRU5ErkJggg==");
+}
+.capsule-ui-datagrid-header {
+    height: 26px;
+    position: absolute;
+    left: 0; 
+    overflow: hidden;
+}
+.capsule-ui-datagrid-header-wrapper {
+    height: 26px;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-header .capsule-ui-datagrid-hcell {
+    height: 26px;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-header .capsule-ui-datagrid-hcell div {
+    border-left:  #fcfcfc 1px solid;
+    border-right: #c4c2bf 1px solid;
+    height: 17px;
+    margin-top: 4px;
+    line-height: 17px;
+    padding: 0 4px;
+    text-shadow: 0 1px 0 #FFFFFF;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: default;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+.capsule-ui-datagrid-header .capsule-ui-datagrid-hcell:last-child div {
+    border-right: 0;
+    padding-right: 5px;
+}
+.capsule-ui-datagrid-header .capsule-ui-datagrid-hcell:first-child div {
+    border-left: 0;
+    padding-left: 5px;
+}
+.capsule-ui-datagrid-header .capsule-ui-datagrid-hcell input[type="checkbox"] {
+    display: block;
+    width: 13px;
+    height: 13px;
+    margin-top: 2px;
+}
+/* End of header */
+/* Body */
+.capsule-ui-datagrid-body {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    top: 26px;
+    bottom: 25px;
+    overflow: scroll;
+}
+.capsule-ui-datagrid-body-wrapper {
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row {
+    overflow: hidden;
+    clear: both;
+    background-color: #fff;
+}
+.capsule-ui-datagrid-body-row:hover {
+    background-color: #ecf1f8;
+}
+.capsule-ui-datagrid-body-row.selected {
+    background-color: #e2e7ef;
+}
+.capsule-ui-datagrid-body-row.selected:hover {
+    background-color: #dde2eb;
+}
+/* End of body */
+/* Footer */
+.capsule-ui-datagrid-footer {
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: #e4e3e2;
+}
+/* Navigation */
+.capsule-ui-datagrid-nav {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 600px;
+    height: 21px;
+    clear: both;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-nav select {
+    text-align: center;
+}
+.capsule-ui-datagrid-nav option {
+    text-align: right;
+}
+.capsule-ui-datagrid-page {
+    width: 70px;
+    height: 21px;
+    overflow: hidden;
+    float: left;
+}
+.capsule-ui-datagrid-label {
+    height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+    line-height: 19px;
+    float: left;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-shadow: 0 1px 0 #fff;
+}
+.capsule-ui-datagrid-label-disabled {
+    height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+    line-height: 19px;
+    float: left;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #A9A5A2;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+.capsule-ui-datagrid-num {
+    width: 70px;
+    height: 21px;
+    overflow: hidden;
+    float: left;
+}
+/* End of navigation */
+/* End of footer */
+/* Cell */
+/* Text */
+.capsule-ui-datagrid-body-row .cell-text {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-text div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+/* End of Text */
+/* Rtext */
+.capsule-ui-datagrid-body-row .cell-rtext {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-rtext div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+    text-align: right;
+}
+/* End of Rtext */
+/* Id */
+.capsule-ui-datagrid-body-row .cell-id {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-id div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+/* End of Id */
+/* Checkbox */
+.capsule-ui-datagrid-body-row .cell-checkbox {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-checkbox div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+.capsule-ui-datagrid-body-row .cell-checkbox div input[type="checkbox"] {
+    display: block;
+    width: 13px;
+    height: 13px;
+    margin-top:3px;
+}
+/* end of checkbox */
+/* User */
+.capsule-ui-datagrid-body-row .cell-user {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-user div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+.capsule-ui-datagrid-body-row .cell-user div.nobody {
+    color: #A9A5A2;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+/* End of User */
+/* Bind */
+.capsule-ui-datagrid-body-row .cell-bind {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-bind div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+.capsule-ui-datagrid-body-row .cell-bind div.undef {
+    color: #A9A5A2;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+/* End of Bind */
+/* Active */
+.capsule-ui-datagrid-body-row .cell-active {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-active div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+.capsule-ui-datagrid-body-row .cell-active div input[type="checkbox"] {
+    display: block;
+    width: 13px;
+    height: 13px;
+    margin-top:3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* end of Active */
+/* tree */
+.capsule-ui-datagrid-body-row .cell-tree {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-datagrid-body-row .cell-tree div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    tree-overflow: ellipsis;
+    white-space: nowrap;
+    -o-tree-overflow: ellipsis;
+    cursor: default;
+}
+/* End of tree */
+/* End of cell */

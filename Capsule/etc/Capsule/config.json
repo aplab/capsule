@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0.1 Beta",
+    "timezoneId": "Asia/Yekaterinburg",
+    "host": "www.c1.aplab.ru",
+    "share": {
+        "icons": {
+            
+        }
+    },
+    "defaultUser": {
+        "login": "root",
+        "password": "capsule1"
+    }
+    
+}

@@ -1,0 +1,1 @@
+<div title="<?=$cell->val?>" class="cell-text w<?=$cell->col->width?>"><div><?=$cell->val?></div></div>

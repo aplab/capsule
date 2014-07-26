@@ -1,0 +1,380 @@
+.capsule-ui-object-editor {
+    background-color: #f2f1f0;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    top: 0; 
+}
+.capsule-ui-object-editor-tabs {
+    position: absolute;
+    height: 30px;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    display: block;
+}
+.capsule-ui-object-editor-container {
+    background-color: #f2f1f0;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    top: 0;
+    overflow: hidden;
+}
+.capsule-ui-object-editor-panel {
+    background-color: #f2f1f0;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    top: 0;
+    overflow: hidden;
+    display: none;
+}
+.capsule-ui-object-editor-elements {
+    background-color: #f2f1f0;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    top: 0;
+    overflow: auto;
+    border-left: 1px #a4a09d solid;
+    border-right: 1px #a4a09d solid;
+}
+.capsule-ui-object-editor-el-list {
+    background-color: #f2f1f0;
+    position: static;
+    overflow: hidden;
+    padding-top: 14px;
+    padding-left: 14px;
+    width: 728px;
+}
+/* ELEMENTS */
+/* label */
+.capsule-ui-oe-el-label {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-label-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-label-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-label-noval {
+    color: #a9a5a2;
+    text-shadow: 0 1px 0 #fff;
+}
+/* end of label */
+/* text */
+.capsule-ui-oe-el-text {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-text-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-text-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* input text */
+.capsule-ui-oe-el-text-brdr {
+    border: #73706d 1px solid;
+    line-height: 13px;
+    background: #fff;
+    padding: 0;
+    height: 19px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+}
+.capsule-ui-oe-el-text-brdr input {
+    padding: 0 2px 0 2px;
+    margin: 0 auto;
+    display: block;
+    border: 0;
+    background: #fff;
+    font-family: "Segoe UI", Tahoma, "DejaVu Sans", "sans-serif";
+    font-size:11px;
+    line-height: 19px;
+    width: 99%;
+    height: 19px;
+    *margin-top: -1px;
+    outline: none;
+}
+/* end of input text */
+/* end of text */
+/* password */
+.capsule-ui-oe-el-password {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-password-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-password-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* input password */
+.capsule-ui-oe-el-password-brdr {
+    border: #73706d 1px solid;
+    line-height: 13px;
+    background: #fff;
+    padding: 0;
+    height: 19px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+}
+.capsule-ui-oe-el-password-brdr input {
+    padding: 0 2px 0 2px;
+    margin: 0 auto;
+    display: block;
+    border: 0;
+    background: #fff;
+    font-family: "Segoe UI", Tahoma, "DejaVu Sans", "sans-serif";
+    font-size:11px;
+    line-height: 19px;
+    width: 99%;
+    height: 18px;
+    *margin-top: -1px;
+    outline: none;
+}
+/* end of input password */
+/* end of password */
+/* datetime */
+.capsule-ui-oe-el-datetime {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-datetime-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-datetime-value {
+    width: 130px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* input datetime */
+.capsule-ui-oe-el-datetime-brdr {
+    border: #73706d 1px solid;
+    line-height: 13px;
+    background: #fff;
+    padding: 0;
+    height: 19px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+}
+.capsule-ui-oe-el-datetime-brdr input {
+    padding: 0 2px 0 2px;
+    margin: 0 auto;
+    display: block;
+    border: 0;
+    background: #fff url('/capsule/assets/share/icons/cms/calendar_2.png') no-repeat right center;
+    font-family: "Segoe UI", Tahoma, "DejaVu Sans", "sans-serif";
+    font-size:11px;
+    line-height: 19px;
+    width: 122px;
+    cursor: pointer;
+    height: 18px;
+    *margin-top: -1px;
+    outline: none;
+}
+/* end of input datetime */
+/* end of datetime */
+/* user */
+.capsule-ui-oe-el-user {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-user-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-user-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-user-noval {
+    color: #a9a5a2;
+    text-shadow: 0 1px 0 #fff;
+}
+/* end of user */
+/* bind */
+.capsule-ui-oe-el-bind {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-bind-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    bind-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-bind-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    bind-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of bind */
+/* flag */
+.capsule-ui-oe-el-flag {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-flag-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-flag-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of flag */
+/* tree */
+.capsule-ui-oe-el-tree {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-tree-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    tree-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-tree-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    tree-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of tree */
+/* nested */
+.capsule-ui-oe-el-nested {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-nested-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    nested-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-nested-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    nested-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of nested */
+/* end of ELEMENTS */

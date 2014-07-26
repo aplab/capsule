@@ -1,0 +1,6 @@
+{
+    "default": {
+        "files": "%{CAPSULE_SYSTEM_ROOT}/",
+        "symlinks": "%{CAPSULE_SYSTEM_ROOT}/"
+    }
+}

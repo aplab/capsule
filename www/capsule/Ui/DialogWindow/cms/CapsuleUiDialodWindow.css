@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+.capsule-ui-dialog-window {
+    position: absolute;
+    z-index: 10000;
+    display: none;
+    cursor: default;
+    background: transparent url(i/transparent.gif);
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 200;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-shadow {
+    position: absolute;
+    left: 0;
+    z-index: 100;
+    background: transparent url(i/cell.gif);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-caption {
+    height: 24px;
+    overflow: hidden;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;  
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-left-corner {
+    height: 24px;
+    overflow: hidden;
+    background: transparent url('i/left-corner.gif') no-repeat 0 0;
+    padding-left: 5px;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-right-corner {
+    height: 24px;
+    overflow: hidden;
+    background: transparent url('i/right-corner.gif') no-repeat right 0;
+    padding-right: 5px;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-label {
+    height: 24px;
+    overflow: hidden;
+    background: transparent url('i/caption-bg.png') 0 0;
+    position: relative;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-label-text {
+    line-height: 23px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 0 0 #4e76a8, -1px 0 0 #4e76a8, 0 1px 0 #4e76a8, 0 -1px 0 #4e76a8;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-container {
+    border: 1px #6d6a68 solid;
+    border-top: 0;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-workplace {
+    border: 1px #d2d0ce solid;
+    border-left: 1px #fff solid;
+    border-top: 0;
+    background: #edeceb;
+    position: relative;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-close-button {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background: url('i/close.png') no-repeat 0 0;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-close-button-hover {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background: url('i/close.png') no-repeat center 0;
+}
+.capsule-ui-dialog-window .capsule-ui-dialog-window-close-button-active {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background: url('i/close.png') no-repeat right 0;
+}

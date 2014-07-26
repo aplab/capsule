@@ -1,0 +1,350 @@
+{
+    "#": "Так пишутся комментарии",
+    "baseUrl": "/admin/",
+    "cmd": "admin",
+    "allowInstall": true,
+    "installCommand": "install",
+    "defaultItemsPerPage": 100,
+    "itemsPerPageVariants": [
+        10, 50, 100, 200, 500
+    ],
+    "#": "Main menu configuration",
+    "mainMenu": {
+        "help": "Конфигурация главного меню",
+        "item": {
+            "site": {
+                "caption": "Site",
+                "help": "Site",
+                "item": {
+                    "go_to_admin": {
+                        "caption": "Manage",
+                        "url": "/admin/"
+                    },
+                    "go_to_site": {
+                        "caption": "Go to website",
+                        "url": "/"
+                    },
+                    "d1": {
+                        "type": "delimiter"
+                    },
+                    "exit": {
+                        "caption": "Exit",
+                        "url": "logout"
+                    }
+                }
+            },
+            "modules": {
+                "caption": "Modules",
+                "help": "Modules",
+                "item": {
+                    "textblock": {
+                        "caption": "Text blocks",
+                        "url": "textblock"
+                    },
+                    "devlog": {
+                        "caption": "Dev log",
+                        "url": "devlog",
+                        "item": {
+                            "add": {
+                                "caption": "add",
+                                "url": "devlog/add"
+                            }
+                        }
+                    },
+                    "flatmenu": {
+                        "caption": "Flat menu",
+                        "url": "flatmenu",
+                        "item": {
+                            "container": {
+                                "caption": "Menu",
+                                "url": "flatmenu",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "flatmenu/add"
+                                    },
+                                    "list": {
+                                        "caption": "list",
+                                        "url": "flatmenu"
+                                    }
+                                }
+                            },
+                            "item": {
+                                "caption": "Punct",
+                                "url": "flatmenupunct",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "flatmenupunct/add"
+                                    },
+                                    "list": {
+                                        "caption": "list",
+                                        "url": "flatmenupunct"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "treemenu": {
+                        "caption": "Tree menu",
+                        "url": "treemenu",
+                        "item": {
+                            "container": {
+                                "caption": "Menu",
+                                "url": "treemenu",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "treemenu/add"
+                                    },
+                                    "list": {
+                                        "caption": "list",
+                                        "url": "treemenu"
+                                    }
+                                }
+                            },
+                            "item": {
+                                "caption": "Punct",
+                                "url": "treemenupunct",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "treemenupunct/add"
+                                    },
+                                    "list": {
+                                        "caption": "list",
+                                        "url": "treemenupunct"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "references": {
+                "caption": "References",
+                "help": "References",
+                "item": {
+                    "named": {
+                        "caption": "Named",
+                        "url": "named"
+                    }
+                    
+                }
+            },
+            "units": {
+                "caption": "Units",
+                "help": "Units",
+                "item": {
+                    "nested": {
+                        "caption": "nested",
+                        "item": {
+                            "container": {
+                                "caption": "container",
+                                "url": "nestedcontainer",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "nestedcontainer/add"
+                                    },
+                                    "list": {
+                                        "caption": "list",
+                                        "url": "nestedcontainer"
+                                    }
+                                }
+                            },
+                            "item": {
+                                "caption": "item",
+                                "url": "nesteditem"
+                            }
+                        }
+                    },
+                    "tree_list": {
+                        "caption": "nested tree",
+                        "item": {
+                            "container": {
+                                "caption": "container",
+                                "url": "treecontainer"
+                            },
+                            "item": {
+                                "caption": "item",
+                                "url": "treeitem"
+                            }
+                        }
+                    },
+                    "tree": {
+                        "caption": "Tree",
+                        "url": "tree"
+                    },
+                    "active": {
+                        "caption": "Active",
+                        "url": "active"
+                    },
+                    "richtext": {
+                        "caption": "Rich text",
+                        "url": "richtext"
+                    },
+                    "dated": {
+                        "caption": "dated",
+                        "url": "dated"
+                    },
+                    "unit with timestamp": {
+                        "caption": "unit with timestamp",
+                        "url": "unitts"
+                    },
+                    "unit with user": {
+                        "caption": "unit with user",
+                        "url": "unitusr"
+                    },
+                    "unit with user & timestamp": {
+                        "caption": "unit with user & ts",
+                        "url": "unittsusr"
+                    },
+                    "named with user & timestamp": {
+                        "caption": "named with user & ts",
+                        "url": "namedtsusr"
+                    },
+                    "titled with user & timestamp": {
+                        "caption": "titled with user & ts",
+                        "url": "titledtsusr"
+                    },
+                    "token with user & timestamp": {
+                        "caption": "token with user & ts",
+                        "url": "tokentsusr"
+                    },
+                    "bind with user & timestamp": {
+                        "caption": "bind with user & ts",
+                        "url": "bindtsusr"
+                    }
+                }
+            },
+            "settings": {
+                "caption": "Settings",
+                "help": "Settings",
+                "item": {
+                    "preferences": {
+                        "caption": "Preferences",
+                        "url": "preferences"
+                    },
+                    "user": {
+                        "caption": "User management",
+                        "url": "user"
+                    },
+                    "d1": {
+                        "type": "delimiter"
+                    },
+                    "install": {
+                        "caption": "Restart",
+                        "url": "install"
+                    }
+                }
+            },
+            "help": {
+                "caption": "Help",
+                "help": "Help",
+                "item": {
+                    "help": {
+                        "caption": "Справка",
+                        "url": "http://www.aplab.ru/",
+                        "target": "_blank"
+                    },
+                    "d1": {
+                        "type": "delimiter"
+                    },
+                    "about": {
+                        "caption": "About",
+                        "action": "CapsuleUiDialogWindow.getInstance('about').showCenter()"
+                    }
+                }
+            }
+        }
+    },
+    "templates": "/var/www/templates/cms",
+    "ui": {
+        "controls": {
+            "css": "/capsule/Ui/CapsuleControl/control.css",
+            "js": "/capsule/Ui/CapsuleControl/control.js"
+        },
+        "mainMenu": {
+            "css": "/capsule/Ui/DropDownMenu/cms/menu.css",
+            "js": "/capsule/Ui/DropDownMenu/cms/menu.js",
+            "height": 25
+        },
+        "dataGrid": {
+            "css": "/capsule/Ui/DataGrid/cms/CapsuleUiDataGrid.css",
+            "js": "/capsule/Ui/DataGrid/cms/CapsuleUiDataGrid.js",
+            "top": 29
+        },
+        "toolbar": {
+            "height": 29,
+            "css": "/capsule/Ui/Toolbar/cms/CapsuleUiToolbar.css",
+            "js": "/capsule/Ui/Toolbar/cms/CapsuleUiToolbar.js"
+        },
+        "tabControl": {
+            "height": 30,
+            "css": "/capsule/Ui/TabControl/cms/CapsuleUiTabControl.css",
+            "js": "/capsule/Ui/TabControl/cms/CapsuleUiTabControl.js"
+        },
+        "objectEditor": {
+            "css": "/capsule/Ui/ObjectEditor/cms/CapsuleUiObjectEditor.css",
+            "js": "/capsule/Ui/ObjectEditor/cms/CapsuleUiObjectEditor.js"
+        },
+        "ckeditor": {
+            "js": "/capsule/assets/share/ckeditor/ckeditor.js",
+            "adapter": "/capsule/assets/share/ckeditor/adapters/jquery.js",
+            "basePath": "/capsule/assets/share/ckeditor/"
+        },
+        "dialogWindow": {
+            "css": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.css",
+            "js": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.js"
+        }
+    },
+    "#": "Icons configuration",
+    "icons": {
+        "cms": "/capsule/assets/share/icons/cms"
+    },
+    "path": {
+        "assets": "/capsule/assets",
+        "css": {
+            "cssReset": "/capsule/assets/cms/css/cssreset-min.css",
+            "cssStyle": "/capsule/assets/cms/css/style.css"
+        },
+        "js": {
+            "jquery": "/capsule/assets/share/jquery/jquery-2.0.3.min.js",
+            "capsule": "/capsule/assets/cms/js/Capsule.js"
+        },
+        "ext": "/capsule/assets/cms/ext"
+    },
+    "controller": {
+        "defaultNamespace": "Capsule/App/Cms/Controller"
+    },
+    "#": "Module configuration",
+    "#": "команда админки : какой вызвать контроллер",
+    "#": "Пространства имен разделять символом / или \\ (обратный слэш удваивать)",
+    "#": "Пространства имен без ведущего разделителя в начале строки будут пытаться подключить из текущего контекста",
+    "module": {
+        "user": "User",
+        "named": "Named",
+        "richtext": "Richtext",
+        "dated": "Dated",
+        "unitts": "UnitTs",
+        "unitusr": "UnitUsr",
+        "unittsusr": "UnitTsUsr",
+        "namedtsusr": "NamedTsUsr",
+        "titledtsusr": "TitledTsUsr",
+        "tokentsusr": "TokenTsUsr",
+        "bindtsusr": "BindTsUsr",
+        "textblock": "TextBlock",
+        "nestedcontainer": "NestedContainer",
+        "nesteditem": "NestedItem",
+        "treecontainer": "TreeContainer",
+        "treeitem": "TreeItem",
+        "active": "Active",
+        "tree": "Tree",
+        "flatmenu": "FlatMenu",
+        "flatmenupunct": "FlatMenuPunct",
+        "treemenu": "TreeMenu",
+        "treemenupunct": "TreeMenuPunct",
+        "devlog": "DevLog"
+    }
+}
