@@ -34,6 +34,5 @@ Storage::getInstance()->addFile(__FILE__, '/ololo/jaja1.php', true);
 
 //Storage::getInstance()->dropLink('/ololo/jaja1.php');
 
-$i = new \SplFileInfo(__FILE__);
-\Capsule\Tools\Tools::dump(stat(__FILE__));
+
 

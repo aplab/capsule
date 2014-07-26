@@ -24,16 +24,18 @@ if (!Auth::getInstance()->currentUser) die;
 // \Capsule\Tools\Tools::dump($o->earlierItemId());
 // \Capsule\Tools\Tools::dump($o->laterItemId());
 
-$dir = Storage::getInstance()->readDir('ololo');
+\Capsule\Tools\Tools::dump(Storage::getInstance());
 
-foreach ($dir as $k => $v) {
-    \Capsule\Tools\Tools::dump($v->getFilename());
-}
+\Capsule\Tools\Tools::dump(Capsule::getInstance()->systemRoot);
 
-Storage::getInstance()->addFile(__FILE__, '/ololo/jaja1.php', true);
+\Capsule\Tools\Tools::dump(Capsule::getInstance()->documentRoot);
 
-//Storage::getInstance()->dropLink('/ololo/jaja1.php');
 
-$i = new \SplFileInfo(__FILE__);
-\Capsule\Tools\Tools::dump(stat(__FILE__));
+
+Storage::getInstance()->addFile(__FILE__, 'jaj');
+
+
+
+
+
 

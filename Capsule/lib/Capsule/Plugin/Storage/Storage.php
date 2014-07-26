@@ -24,6 +24,7 @@ use Capsule\DataStorage\DataStorage;
 use Capsule\Common\Path;
 use Capsule\DataStruct\Loader;
 use Capsule\Capsule;
+use PHP\Exceptionizer\Exception;
 /**
  * Storage.php
  *
@@ -38,6 +39,8 @@ class Storage
      * @var string
      */
     const DEFAULT_STORAGE = 'default';
+    
+    const DRIVER_NS = 'Driver';
     
     /**
      * Storage instances
@@ -102,5 +105,89 @@ class Storage
             }
         }
         return self::$$name;
+    }
+    
+    /**
+     * Returns required or default instance
+     * 
+     * @param string $instance_name
+     * @return self
+     */
+    public static function getInstance($instance_name = null) {
+        if (is_null($instance_name)) {
+            $instance_name = self::DEFAULT_STORAGE;
+        }
+        if (!isset(self::$instances[$instance_name])) {
+            self::$instances[$instance_name] = new self(self::config()->$instance_name);
+        }
+        return self::$instances[$instance_name];
+    }
+    
+    /**
+     * @param Config $config
+     * @return self
+     */
+    private function __construct(Config $config) {
+        $ns = Fn::get_namespace($this);
+        $driver_classname = Fn::cc(self::DRIVER_NS . '/' . $config->driver, $this);
+        $this->data['driver'] = new $driver_classname($config);
+    }
+    
+    /**
+     * Returns property value
+     *
+     * @param string
+     * @return mixed
+     * @throws Exception
+     */
+    public function __get($name) {
+        $getter = 'get' . $name;
+        if (method_exists($this, $getter)) {
+            return $this->$getter();
+        }
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+        $msg = 'Unknown property: '.get_class($this).'::$'.$name;
+        throw new \Exception($msg);
+    }
+    
+    /**
+     * Handler property value change.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     * @throws Exception
+     */
+    public function __set($name, $value) {
+        if (array_key_exists($name, $this->data)) {
+            $msg = get_class($this) . '::$' . $name . ' is read only';
+        } else {
+            $msg = 'Unknown property: ' . get_class($this) . '::$' . $name;
+        }
+        throw new \Exception($msg);
+    }
+    
+    /**
+     * Disable cloning
+     *
+     * @param void
+     * @return void
+     */
+    private function __clone() {
+        trigger_error('Clone is not allowed.', E_USER_ERROR);
+    }
+    
+    public function readDir($relative_path = null) {
+        return $this->driver->readDir($relative_path);
+    }
+    
+    public function dropLink($relative_path) {
+        return $this->driver->dropLink($relative_path);
+    }
+    
+    public function addFile($source_absolute_path, $link_relative_path, $overwrite = null) {
+        return $this->driver->addFile($source_absolute_path, $link_relative_path, $overwrite);
     }
 }

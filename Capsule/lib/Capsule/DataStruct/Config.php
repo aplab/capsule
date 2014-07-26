@@ -188,7 +188,6 @@ class Config implements Iterator, Countable
                 $ret[$key] = $value;
             }
         }
-
         return $ret;
     }
 }
