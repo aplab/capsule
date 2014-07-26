@@ -1,5 +1,6 @@
 {
     "default": {
+        "type": "local",
         "files": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/files",
         "symlinks": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/lnk"
     }
