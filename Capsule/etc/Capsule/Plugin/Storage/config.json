@@ -1,6 +1,6 @@
 {
     "default": {
-        "files": "%{CAPSULE_SYSTEM_ROOT}/",
-        "symlinks": "%{CAPSULE_SYSTEM_ROOT}/"
+        "files": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/files",
+        "symlinks": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/lnk"
     }
 }
