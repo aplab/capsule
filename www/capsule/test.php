@@ -24,6 +24,8 @@ if (!Auth::getInstance()->currentUser) die;
 // \Capsule\Tools\Tools::dump($o->earlierItemId());
 // \Capsule\Tools\Tools::dump($o->laterItemId());
 
+\Capsule\Tools\Tools::dump(readlink('c:/Windows'));
+
 $dir = Storage::getInstance()->readDir('ololo');
 
 foreach ($dir as $k => $v) {

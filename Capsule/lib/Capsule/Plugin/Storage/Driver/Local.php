@@ -78,6 +78,10 @@ class Local extends Driver
      */
     public function dropLink($relative_path) {
         $path = new Path($this->symlinks, $relative_path);
+        $path = realpath($path);
+        \Capsule\Tools\Tools::dump($path);
+        // При попытке удалить несуществующий файл выдается предупреждение
+        // Warning: unlink('non existent path'): No such file or directory
         if (!file_exists($path)) return;
         // clearstatcache() не требуется, функция unlink() очистит данный кэш 
         // автоматически. http://ru2.php.net/manual/ru/function.clearstatcache.php

@@ -26,6 +26,9 @@ namespace Capsule\Common;
  */
 class Path
 {
+    /**
+     * @var string
+     */
     protected $path;
     
     /**
@@ -44,15 +47,44 @@ class Path
         $this->path = $this->prepare(join('/', $parts));
     }
     
+    /**
+     * Prepare part
+     * 
+     * @param string $part
+     * @return string
+     */
     private function prepare($part) {
         return rtrim(preg_replace('|/{2,}|', '/', str_replace('\\', '/', trim($part))), '/');
     }
     
+    /**
+     * Implicit conversion to a string
+     * 
+     * @param void
+     * @return string
+     */
     public function toString() {
         return $this->path;
     }
     
+    /**
+     * Explicit conversion to a string
+     *
+     * @param void
+     * @return string
+     */
     public function __toString() {
         return $this->toString();
+    }
+    
+    /**
+     * @see global_functions
+     */
+    public function normalize() {
+        $this->path = normalize_path($this->path);
+    }
+    
+    public function absolutize() {
+        $this->path = absolute_path($this->path);
     }
 }

@@ -37,10 +37,20 @@ use PHP\Exceptionizer\Exceptionizer;
  * @property string $microtime
  * @property string $systemRoot
  * @property string $documentRoot
+ * @property string $osType
  * @property Config $config
  */
 final class Capsule implements \Serializable
 {
+    /**
+     * Тип операционной системы
+     * Windows - Microsoft Windows
+     * UNIX - UNIX-like operating system
+     * 
+     * @var string
+     */
+    const OS_TYPE_WINDOWS = 'Windows', OS_TYPE_UNIX = 'UNIX';
+    
     /**
      * Developer mode flag
      *
@@ -122,6 +132,20 @@ final class Capsule implements \Serializable
         }
     }
 
+    /**
+     * Returns operating system type
+     * 
+     * @param void
+     * @return string
+     */
+    protected function getOsType() {
+        $type = String::strtolower(php_uname('s'));
+        if (preg_match('/' . String::strtolower(self::OS_TYPE_WINDOWS) . '/', $type) or getenv('COMSPEC')) {
+            return self::OS_TYPE_WINDOWS;
+        }
+        return self::OS_TYPE_UNIX;
+    }
+    
     /**
      * Дополнительные инициализации модулей
      *

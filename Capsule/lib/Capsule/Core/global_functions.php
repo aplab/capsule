@@ -150,3 +150,69 @@ function my_strtok($string = NULL, $delimiter = NULL) {
     }
     return $result;
 }
+
+/**
+ * Needed a method to normalize a virtual path that could handle .. references 
+ * that go beyond the initial folder reference. So I created the following.
+ * http://php.net/manual/ru/function.realpath.php#112367
+ * 
+ * Will convert /path/to/test/.././..//..///..///../one/two/../three/filename
+ * to ../../one/three/filename
+ * 
+ * @param string $path
+ * @return string
+ */
+function normalize_path($path) {
+    $parts = array();// Array to build a new path from the good parts
+    $path = str_replace('\\', '/', $path);// Replace backslashes with forwardslashes
+    $path = preg_replace('/\/+/', '/', $path);// Combine multiple slashes into a single slash
+    $segments = explode('/', $path);// Collect path segments
+    $test = '';// Initialize testing variable
+    foreach($segments as $segment) {
+        if($segment != '.') {
+            $test = array_pop($parts);
+            if(is_null($test)) {
+                $parts[] = $segment;
+            } else if($segment == '..') {
+                if($test == '..') {
+                    $parts[] = $test;
+                }
+                if($test == '..' || $test == '') {
+                    $parts[] = $segment;
+                }
+            } else {
+                $parts[] = $test;
+                $parts[] = $segment;
+            }
+        }
+    }
+    return join('/', $parts);
+}
+
+/**
+ * http://php.net/manual/ru/function.realpath.php#84012
+ * Because realpath() does not work on files that do not
+ * exist, I wrote a function that does.
+ * It replaces (consecutive) occurences of / and \\ with
+ * whatever is in DIRECTORY_SEPARATOR, and processes /. and /.. fine.
+ * Paths returned by get_absolute_path() contain no
+ * (back)slash at position 0 (beginning of the string) or
+ * position -1 (ending)
+ * 
+ * @param string $path
+ * @return string
+ */
+function absolute_path($path) {
+    $path = normalize_path($path);
+    $parts = array_filter(explode('/', $path), 'strlen');
+    $absolutes = array();
+    foreach ($parts as $part) {
+        if ('.' == $part) continue;
+        if ('..' == $part) {
+            array_pop($absolutes);
+        } else {
+            $absolutes[] = $part;
+        }
+    }
+    return implode('/', $absolutes);
+}
