@@ -50,9 +50,9 @@ class View
         }
         $this->instanceName = $instance_name;
         Ui::getInstance()->onload->append(
-                'new CapsuleUiStorage({
-                    instanceName: "' . $this->instanceName . '",
-                    top: ' . Cms::getInstance()->config->ui->dataGrid->top . '});'
+            'new CapsuleUiStorage({
+                instanceName: "' . $this->instanceName . '",
+                top: ' . Cms::getInstance()->config->ui->dataGrid->top . '});'
         );
     }
     

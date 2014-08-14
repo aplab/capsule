@@ -91,3 +91,22 @@
     background-color: #dde2eb;
 }
 /* End of body */
+/* Cell */
+/* Text */
+.capsule-ui-storage-overview-body-row .cell-text {
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-storage-overview-body-row .cell-text div {
+    height: 20px;
+    overflow: hidden;
+    padding: 0 5px;
+    line-height: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    cursor: default;
+}
+/* End of Text */
+/* End of Cell */
