@@ -6,6 +6,7 @@ use Capsule\Tools\Mysql;
 use Capsule\Loader\GeSHi;
 use Usr\Aplab\Model\DevLog;
 use Capsule\Plugin\Storage\Storage;
+use Capsule\Common\Path;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -24,18 +25,16 @@ if (!Auth::getInstance()->currentUser) die;
 // \Capsule\Tools\Tools::dump($o->earlierItemId());
 // \Capsule\Tools\Tools::dump($o->laterItemId());
 
-\Capsule\Tools\Tools::dump(readlink('c:/Windows'));
+// $s = Storage::getInstance();
 
-$dir = Storage::getInstance()->readDir('ololo');
+// $iter = new DirectoryIterator('H:/polyanin/wallpapers/nature');
 
-foreach ($dir as $k => $v) {
-    \Capsule\Tools\Tools::dump($v->getFilename());
-}
+// foreach ($iter as $i) {
+//     if ($i->isDot()) continue;
+//     $s->addFile($i->getPathname(), $i->getBasename(), 1);
+// }
 
-Storage::getInstance()->addFile(__FILE__, '/ololo/jaja1.php', true);
-
-//Storage::getInstance()->dropLink('/ololo/jaja1.php');
-
-$i = new \SplFileInfo(__FILE__);
-\Capsule\Tools\Tools::dump(stat(__FILE__));
-
+// foreach ($s->readDir() as $i) {
+//     \Capsule\Tools\Tools::dump(absolute_path($i->getPathname()));
+// }
+\Capsule\Tools\Tools::dump(Storage::config());

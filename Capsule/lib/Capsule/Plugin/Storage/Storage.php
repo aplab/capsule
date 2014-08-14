@@ -40,6 +40,11 @@ class Storage
      */
     const DEFAULT_STORAGE = 'default';
     
+    /**
+     * Driver namespace prefix
+     * 
+     * @var string
+     */
     const DRIVER_NS = 'Driver';
     
     /**
@@ -98,7 +103,6 @@ class Storage
                 	));
                 };
                 $data = $loader->loadJson($path, $prefilter);
-                \Capsule\Tools\Tools::dump($data);
                 $$name = new Config($data);
                 $storage->set($class, $$name);
                 self::$$name = $$name;
@@ -179,14 +183,34 @@ class Storage
         trigger_error('Clone is not allowed.', E_USER_ERROR);
     }
     
+    /**
+     * Read dir 
+     * 
+     * @param string $relative_path
+     * @return \DirectoryIterator
+     */
     public function readDir($relative_path = null) {
         return $this->driver->readDir($relative_path);
     }
     
+    /**
+     * Drop link
+     * 
+     * @param string $relative_path
+     * @return boolean
+     */
     public function dropLink($relative_path) {
         return $this->driver->dropLink($relative_path);
     }
     
+    /**
+     * Add file 
+     * 
+     * @param string $source_absolute_path
+     * @param string $link_relative_path
+     * @param boolean $overwrite
+     * @return array
+     */
     public function addFile($source_absolute_path, $link_relative_path, $overwrite = null) {
         return $this->driver->addFile($source_absolute_path, $link_relative_path, $overwrite);
     }

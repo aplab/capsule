@@ -105,7 +105,7 @@ final class Capsule implements \Serializable
     private function __construct($document_root) {
         $this->data['startTime'] = $this->microtime;
         $this->data['alreadyRunning'] = false;
-        $this->data['lib'] = $this->normalizePath(dirname(__DIR__));
+        $this->data['lib'] = $this->_normalizePath(dirname(__DIR__));
         $this->data['systemRoot'] = dirname($this->lib);
         $this->data['etc'] = $this->systemRoot . '/etc';
         $this->data['opt'] = $this->systemRoot . '/opt';
@@ -259,8 +259,8 @@ final class Capsule implements \Serializable
      * @param string $path
      * @return string
      */
-    private function normalizePath($path) {
-        return rtrim(preg_replace('|/{2,}|', '/', str_replace('\\', '/', trim($path))), '/');
+    private function _normalizePath($path) {
+        return rtrim(preg_replace('|/{2,}|', '/', str_replace('\\', '/', $path)), '/');
     }
     
     /**

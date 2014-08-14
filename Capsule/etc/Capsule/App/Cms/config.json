@@ -218,6 +218,16 @@
                     }
                 }
             },
+            "tools": {
+                "caption": "Tools",
+                "help": "Tools",
+                "item": {
+                    "storage": {
+                        "caption": "Storage",
+                        "url": "storage"
+                    }
+                }
+            },
             "settings": {
                 "caption": "Settings",
                 "help": "Settings",
@@ -298,6 +308,12 @@
             "css": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.css",
             "js": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.js"
         }
+        ,
+        "storage": {
+            "css": "/capsule/Ui/Storage/cms/CapsuleUiStorage.css",
+            "js": "/capsule/Ui/Storage/cms/CapsuleUiStorage.js",
+            "top": 29
+        }
     },
     "#": "Icons configuration",
     "icons": {
@@ -345,6 +361,7 @@
         "flatmenupunct": "FlatMenuPunct",
         "treemenu": "TreeMenu",
         "treemenupunct": "TreeMenuPunct",
-        "devlog": "DevLog"
+        "devlog": "DevLog",
+        "storage": "Storage"
     }
 }

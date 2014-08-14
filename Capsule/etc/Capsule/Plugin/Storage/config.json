@@ -1,6 +1,8 @@
 {
     "default": {
         "#": "Comment",
+        "name": "Local storage",
+        "title": "Local storage",
         "driver": "Local",
         "files": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/files",
         "symlinks": "%{CAPSULE_DOCUMENT_ROOT}/capsule/storage/lnk"

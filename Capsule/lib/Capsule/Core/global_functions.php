@@ -159,6 +159,9 @@ function my_strtok($string = NULL, $delimiter = NULL) {
  * Will convert /path/to/test/.././..//..///..///../one/two/../three/filename
  * to ../../one/three/filename
  * 
+ * Paths returned by normalize_path() contain no
+ * (back)slash at position -1 (ending)
+ * 
  * @param string $path
  * @return string
  */
@@ -169,15 +172,15 @@ function normalize_path($path) {
     $segments = explode('/', $path);// Collect path segments
     $test = '';// Initialize testing variable
     foreach($segments as $segment) {
-        if($segment != '.') {
+        if ($segment != '.') {
             $test = array_pop($parts);
-            if(is_null($test)) {
+            if (is_null($test)) {
                 $parts[] = $segment;
-            } else if($segment == '..') {
-                if($test == '..') {
+            } else if ($segment == '..') {
+                if ($test == '..') {
                     $parts[] = $test;
                 }
-                if($test == '..' || $test == '') {
+                if ($test == '..' || $test == '') {
                     $parts[] = $segment;
                 }
             } else {
@@ -186,7 +189,7 @@ function normalize_path($path) {
             }
         }
     }
-    return join('/', $parts);
+    return rtrim(join('/', $parts), '/');
 }
 
 /**
@@ -195,16 +198,22 @@ function normalize_path($path) {
  * exist, I wrote a function that does.
  * It replaces (consecutive) occurences of / and \\ with
  * whatever is in DIRECTORY_SEPARATOR, and processes /. and /.. fine.
- * Paths returned by get_absolute_path() contain no
- * (back)slash at position 0 (beginning of the string) or
- * position -1 (ending)
+ * 
+ * Paths returned by absolute_path() contain no
+ * (back)slash at position -1 (ending)
  * 
  * @param string $path
  * @return string
  */
 function absolute_path($path) {
     $path = normalize_path($path);
-    $parts = array_filter(explode('/', $path), 'strlen');
+    $tmp = explode('/', $path);
+    $parts = array();
+    array_walk($tmp, function($v, $k) use (& $parts) {
+        if (strlen($v) || !$k) {
+            $parts[] = $v;
+        }
+    });
     $absolutes = array();
     foreach ($parts as $part) {
         if ('.' == $part) continue;
@@ -214,5 +223,5 @@ function absolute_path($path) {
             $absolutes[] = $part;
         }
     }
-    return implode('/', $absolutes);
+    return join('/', $absolutes);
 }

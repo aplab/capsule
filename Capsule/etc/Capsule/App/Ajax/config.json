@@ -9,6 +9,7 @@
     "#": "команда: контроллер_который_обрабарывает",
     "controller": {
         "toggleActive": "Active",
-        "loadNested": "Nested"
+        "loadNested": "Nested",
+        "storageOverview": "Storage"
     }
 }

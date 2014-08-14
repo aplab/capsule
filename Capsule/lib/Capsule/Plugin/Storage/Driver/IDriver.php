@@ -39,7 +39,7 @@ interface IDriver
      * мусора, если количество ссылок на него станет равным нулю.
      * 
      * @param string $relative_path
-     * @return void
+     * @return boolean
      */
     function dropLink($relative_path);
     
@@ -52,7 +52,7 @@ interface IDriver
      * 
      * @param string $source_absolute_path
      * @param string $link_relative_path
-     * @return boolean
+     * @return array
      */
     function addFile($source_absolute_path, $link_relative_path);
 }

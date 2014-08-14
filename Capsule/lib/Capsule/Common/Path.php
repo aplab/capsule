@@ -18,6 +18,7 @@
 
 namespace Capsule\Common;
 
+use Capsule\Exception;
 /**
  * Path.php
  *
@@ -36,27 +37,20 @@ class Path
      * @return self
      */
     public function __construct() {
-        $args = func_get_args();
-        $parts = array();
-        foreach ($args as $arg) {
-            $tmp = $this->prepare($arg);
-            if ($tmp) {
-                $parts[] = $tmp;
-            }
+        $tmp = array();
+        $a = func_get_args();
+        if (empty($a)) {
+            $msg = 'Path cannot be empty';
+            throw new Exception($msg);
         }
-        $this->path = $this->prepare(join('/', $parts));
+        array_walk_recursive($a, function($v, $k) use (& $tmp) {
+            $tmp[] = strval($v);
+        });
+        $tmp = join('/', $tmp);
+        $tmp = normalize_path($tmp);
+        $this->path = $tmp;
     }
-    
-    /**
-     * Prepare part
-     * 
-     * @param string $part
-     * @return string
-     */
-    private function prepare($part) {
-        return rtrim(preg_replace('|/{2,}|', '/', str_replace('\\', '/', trim($part))), '/');
-    }
-    
+
     /**
      * Implicit conversion to a string
      * 
@@ -82,9 +76,119 @@ class Path
      */
     public function normalize() {
         $this->path = normalize_path($this->path);
+        return $this->path;
     }
     
+    /**
+     * @see global_functions
+     */
     public function absolutize() {
         $this->path = absolute_path($this->path);
+        return $this->path;
+    }
+    
+    /**
+     * Содержит то что передано в параметре
+     *
+     * @param multitype
+     * @return boolean
+     */
+    public function contain() {
+        $param = new self(func_get_args());
+        $param = $param->toArray();
+        $path = $this->toArray();
+        return sizeof(array_intersect_assoc($path, $param)) === sizeof($param);
+    }
+    
+    /**
+     * Содержит то что передано в параметре
+     *
+     * @param multitype
+     * @return boolean
+     */
+    public function containedIn() {
+        $param = new self(func_get_args());
+        $param = $param->toArray();
+        $path = $this->toArray();
+        return sizeof(array_intersect_assoc($param, $path)) === sizeof($path);
+    }
+    
+    /**
+     * Explicit conversion to array
+     *
+     * @param void
+     * @return array
+     */
+    public function toArray() {
+        return explode('/', $this->path);
+    }
+    
+    /**
+     * @param void
+     * @return boolean
+     */
+    public function isDir() {
+        return is_dir($this->path);
+    }
+    
+    /**
+     * @param void
+     * @return boolean
+     */
+    public function isFile() {
+        return is_file($this->path);
+    }
+    
+    /**
+     * @param void
+     * @return boolean
+     */
+    public function isLink() {
+        return is_link($this->path);
+    }
+    
+    /**
+     * @param void
+     * @return boolean
+     */
+    public function fileExists() {
+        clearstatcache();
+        return file_exists($this->path);
+    }
+    
+    /**
+     * clearstatcache() не требуется, функция unlink() очистит данный кэш 
+     * автоматически. http://ru2.php.net/manual/ru/function.clearstatcache.php
+     * 
+     * @param void
+     * @return boolean
+     * @throws Exception
+     */
+    public function unlink() {
+        if (!$this->fileExists()) {
+            return true;
+        }
+        unlink($this->path);
+        if ($this->fileExists()) {
+            $msg = 'Unable to unlink: ' . $this->path;
+            throw new Exception($msg);
+        }
+        return true;
+    }
+    
+    /**
+     * @param void
+     * @return \Capsule\Common\Path
+     */
+    public function dirname() {
+        return new self(dirname($this->path));
+    }
+    
+    public function substract() {
+        $param = new self(func_get_args());
+        if (!$this->contain($param)) {
+            return new self($this);
+        }
+        return new self(array_diff_assoc($this->toArray(), $param->toArray()));
     }
 }
