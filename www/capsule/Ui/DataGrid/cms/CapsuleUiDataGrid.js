@@ -78,7 +78,7 @@ function CapsuleUiDataGrid(data)
         dataGrid.header.css({left: -dataGrid.body.scrollLeft()});
     });
     
-    // check/uncheck all handker
+    // check/uncheck all handler
     this.header.find('input:checkbox').click(function(){
         if ($(this).prop('checked')) {
             dataGrid.body.find('input:checkbox[name="Checkbox"]').prop('checked', true);

@@ -45,6 +45,12 @@ class Storage extends DefaultController
     protected function overview() {
         $filter = $this->app->urlFilter;
         $toolbar = $this->app->registry->toolbar;
+        
+        $button = new Button;
+        $toolbar->add($button);
+        $button->caption = '/ Root';
+        $button->url = $filter($this->mod);
+        
         $button = new Button;
         $toolbar->add($button);
         $button->caption = 'New';
@@ -56,7 +62,7 @@ class Storage extends DefaultController
         $button->caption = 'Delete selected';
         $button->icon = $this->app->config->icons->cms . '/cross-script.png';
         $button->action = 'CapsuleUiDataGrid.getInstance("capsule-ui-datagrid").del()';
-
+        
         $view = new View('capsule-cms-storage-overview');
         $this->ui->workplace->append($view);
     }

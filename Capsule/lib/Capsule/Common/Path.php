@@ -184,6 +184,11 @@ class Path
         return new self(dirname($this->path));
     }
     
+    /**
+     * Вычитает путь, переданный в параметре, из текущего
+     * 
+     * @return \Capsule\Common\Path
+     */
     public function substract() {
         $param = new self(func_get_args());
         if (!$this->contain($param)) {

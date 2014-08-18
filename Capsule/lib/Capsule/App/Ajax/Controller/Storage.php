@@ -20,8 +20,12 @@ namespace Capsule\App\Ajax\Controller;
 
 use Capsule\App\Ajax\Controller\Controller;
 use Capsule\Superglobals\Request;
-use Capsule\Model\IdBased;
 use Capsule\User\Auth;
+use Capsule\Plugin\Storage\Storage as s;
+use Capsule\App\Cms\Cms;
+use Capsule\Common\Path;
+use Capsule\Capsule;
+use Capsule\Common\TplVar;
 /**
  * Storage.php
  *
@@ -33,18 +37,57 @@ class Storage extends Controller
     protected function storageOverview() {
         if (!Auth::getInstance()->currentUser) return;
         $r = Request::getInstance();
-        $class = $r->gets('class');
-        $id = $r->gets('id');
-        if (!$class) return;
-        if (!$id) return;
-        if (!is_subclass_of($class, IdBased::_class())) return;
-        $o = $class::getElementById($id);
-        if (!$o) return;
-        if (!isset($o->active)) return;
-        $o->active = !$o->active;
-        $o->store();
-        print json_encode(array(
-            'active' => $o->active
-        ));
+        $path = $r->gets('path');
+        $instance_name = $r->gets('instance_name');
+        $storage_id = $this->getStorageIdByPath($path);
+        if (is_null($storage_id)) {
+            $this->storageList($instance_name);
+            return;
+        }
+        $this->storageContents($path, $instance_name);
+    }
+    
+    /**
+     * @param string $path
+     * @return s
+     */
+    protected function getStorageIdByPath($path) {
+        $parts = explode('/', $path);
+        $part = array_shift($parts);
+        if (isset(s::config()->$part)) {
+            return $part;
+        }
+        return null;
+    }
+    
+    /**
+     * @param string $instance_name
+     * @return void
+     */
+    protected function storageList($instance_name) {
+        TplVar::getInstance()->instance_name = $instance_name;
+        $path = new Path(array(
+            Capsule::getInstance()->systemRoot, 
+            Cms::getInstance()->config->templates, 
+            '/ajax/storage_list.php')
+        );
+        include $path;
+    }
+    
+    /**
+     * @param string $instance_name
+     * @return void
+     */
+    protected function storageContents($path, $instance_name) {
+        $parts = explode('/', $path);
+        $part = array_shift($parts);
+        $storage = s::getInstance($part);
+        TplVar::getInstance()->list = $storage->readDir($parts);
+        TplVar::getInstance()->instance_name = $instance_name;
+        include new Path(array(
+            Capsule::getInstance()->systemRoot,
+            Cms::getInstance()->config->templates,
+            '/ajax/storage_contents.php')
+        );
     }
 }
