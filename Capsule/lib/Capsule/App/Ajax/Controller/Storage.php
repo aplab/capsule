@@ -84,6 +84,9 @@ class Storage extends Controller
         $storage = s::getInstance($part);
         TplVar::getInstance()->list = $storage->readDir($parts);
         TplVar::getInstance()->instance_name = $instance_name;
+        TplVar::getInstance()->storage = $storage;
+        TplVar::getInstance()->path = $storage->driver->path();
+        \Capsule\Tools\Tools::dump(TplVar::getInstance()->path);
         include new Path(array(
             Capsule::getInstance()->systemRoot,
             Cms::getInstance()->config->templates,

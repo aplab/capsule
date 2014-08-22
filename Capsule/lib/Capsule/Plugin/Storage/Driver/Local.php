@@ -67,6 +67,14 @@ class Local extends Driver
     }
     
     /**
+     * @param void
+     * @return Path
+     */
+    public function path() {
+        return $this->symlinks;
+    }
+    
+    /**
      * (non-PHPdoc)
      * @see \Capsule\Plugin\Storage\Driver\IDriver::readDir()
      * @throws \UnexpectedValueException
@@ -147,6 +155,7 @@ class Local extends Driver
             throw new \Exception($msg);
         }
         // calculate file param
+        \Capsule\Tools\Tools::dump($path->toString());
         $hash = md5_file($path->toString());
         $file_relative_dir = '/' . join('/', array_slice(str_split($hash, 3), 0, 3));
         $file_absolute_dir = new Path($this->files, $file_relative_dir);

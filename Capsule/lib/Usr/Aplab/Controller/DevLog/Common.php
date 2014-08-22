@@ -88,6 +88,7 @@ class Common extends UnitController
         $template = new Path($this->tplpath, $this->unit->template['item']);
         TplVar::getInstance()->item = $o;
         TplVar::getInstance()->nav = $nav;
+        Website::getInstance()->page->title = $o->title ?: $o->name;
         include $template;
     }
 }

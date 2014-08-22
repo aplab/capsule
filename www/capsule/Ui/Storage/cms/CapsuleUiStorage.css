@@ -133,6 +133,8 @@
 }
 .storage-name {
     width: 400px;
+    float: left;
+    overflow: hidden;
 }
 .storage-name div {
     cursor: default;

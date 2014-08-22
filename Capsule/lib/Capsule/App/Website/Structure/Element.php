@@ -72,6 +72,11 @@ abstract class Element
      * @throws \Exception
      */
     public function __set($name, $value) {
+        $setter = 'set' . ucfirst($name);
+        if (in_array($setter, get_class_methods($this))) {
+            $this->$setter($value, $name);
+            return $this;
+        }
         if (array_key_exists($name, $this->data)) {
             $msg = 'Readonly property: ' . get_class($this) . '::$' . $name;
             throw new \Exception($msg);

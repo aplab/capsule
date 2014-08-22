@@ -119,4 +119,14 @@ class Page extends Element
         include $path;
         return ob_get_clean();
     }
+    
+    /**
+     * Setter
+     * 
+     * @param string $val
+     * @param string $name
+     */
+    protected function setTitle($val, $name) {
+        $this->data[$name] = $val;
+    }
 }

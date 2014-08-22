@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>aplab.ru</title>
+        <title><?=$this->title?></title>
         <link rel="stylesheet" href="/capsule/assets/cms/css/cssreset-min.css" media="all" />
         <link rel="stylesheet" href="/capsule/assets/website/aplab/css/style.css" media="all" />
         <script type="text/javascript" src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>

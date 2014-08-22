@@ -13,28 +13,37 @@ header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 $app = Capsule::getInstance();
-if (!Auth::getInstance()->currentUser) die;
+if (!Auth::getInstance()->currentUser) die; ?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>
+</head>
+<body>
 
-// GeSHi::getInstance();
-// $geshi = new \GeSHi(file_get_contents(__FILE__), 'php');
-// $geshi->enable_classes(false);
-// $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
-// echo $geshi->parse_code();
+<script>
+var iframe = $('<iframe>');
+iframe.attr({
+    width: 400,
+    height: 400
+}).css({
+    background: '#ccc'
+});
 
-// $o = DevLog::id(106);
-// \Capsule\Tools\Tools::dump($o->earlierItemId());
-// \Capsule\Tools\Tools::dump($o->laterItemId());
+$('body').append(iframe);
 
-// $s = Storage::getInstance();
+var HTML = "<html><head></head><body>";
+HTML += "<u>Document</u> <b>HTML</b>";
+HTML += "</body></html>";
 
-// $iter = new DirectoryIterator('H:/polyanin/wallpapers/nature');
 
-// foreach ($iter as $i) {
-//     if ($i->isDot()) continue;
-//     $s->addFile($i->getPathname(), $i->getBasename(), 1);
-// }
 
-// foreach ($s->readDir() as $i) {
-//     \Capsule\Tools\Tools::dump(absolute_path($i->getPathname()));
-// }
-\Capsule\Tools\Tools::dump(Storage::config());
+iframe.document.open();
+iframe.document.write(HTML);
+iframe.document.close();
+
+iframe.document.designMode='on';
+</script>
+
+</body>
+</html>
