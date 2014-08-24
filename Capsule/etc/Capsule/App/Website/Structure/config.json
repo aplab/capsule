@@ -32,6 +32,8 @@
         "keywords" : "",
         "area" : {
             "left_col" : {
+                "#": "пример прямого переопределения контента, отключение области",
+                "#content": "ololo",
                 "title" : "untitled area",
                 "unit" : [
                     {
@@ -67,7 +69,9 @@
                     {
                         "controller" : "/Usr/Aplab/Controller/DevLog/Index",
                         "cache": 0,
-                        "template": "dev-log/list.php"
+                        "template": "dev-log/list.php",
+                        "#": "Порядок сборки в рамках текущей страницы",
+                        "buildOrder": 10
                     }
                 ]
             }

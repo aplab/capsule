@@ -23,6 +23,7 @@ use Capsule\App\Website\Structure\Router;
 use Capsule\Capsule;
 use Capsule\Common\Path;
 use Capsule\App\Website\Exception\Error404Exception;
+use Capsule\App\Website\Structure\Page;
 /**
  * Website.php
  *
@@ -57,7 +58,7 @@ class Website extends App
     public function run() {
         try {
             if ($this->page) {
-                echo $this->page->toString();
+                $this->displayPage();
                 return;
             }
         } catch (Error404Exception $e) {
@@ -94,8 +95,34 @@ class Website extends App
      * @return void
      */
     public function clearBuffer() {
-        while (ob_get_level()) {
-            ob_end_clean();
-        }
+        while (ob_get_level()) ob_end_clean();
     } 
+    
+    /**
+     * Separate function to display the page
+     * 
+     * @param void
+     * @return void
+     */
+    protected function displayPage() {
+        $units = array();
+        foreach ($this->page->area as $area) {
+            foreach ($area->unit as $unit) {
+                $units[] = $unit;
+            }
+        }
+        // Сортировка юнитов по параметру "buildOrder" Если таковой не задан, 
+        // то сортировка в произвольном порядке, т.к. сортировка не важна
+        usort($units, function($a, $b) {
+            $a = $a->buildOrder;
+            $b = $b->buildOrder;
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
+        });
+        // Подготовка контента в юнитах
+        foreach ($units as $init) $unit->prepare();
+        echo $this->page->toString();
+    }
 }

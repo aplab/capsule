@@ -41,7 +41,7 @@ class Cache extends Singleton
      *
      * @var array
      */
-    protected $kayCache = array();
+    protected $keyCache = array();
     
     /**
      * Keywords definition
@@ -49,6 +49,25 @@ class Cache extends Singleton
      * @var string
      */
     const EXPIRE = 'expire', VALUE = 'value';
+    
+    /**
+     * Флаг содержит информацию о том, истек ли кеш, который был запрошен в 
+     * последней операции get.
+     * 
+     * @var boolean
+     */
+    protected $expired = null;
+    
+    /**
+     * Возвращает значение флага, содержащего информацию о том, истек ли кеш, 
+     * который был запрошен в последней операции get.
+     * 
+     * @param void
+     * @return boolean
+     */
+    public function expired() {
+        return $this->expired ? true : false;
+    }
     
     /**
      * @param void
@@ -114,6 +133,7 @@ class Cache extends Singleton
         }
         return $this;
     }
+    
     /**
      * getter
      *
@@ -127,6 +147,16 @@ class Cache extends Singleton
             return null;
         }
         $tmp = unserialize(file_get_contents($path));
+        if ($tmp[self::EXPIRE] && (time() < $tmp[self::EXPIRE])) {
+            $this->expired = true;
+            // Кэш истек, убираем файл. В это время сами данные у нас в tmp
+            if (false === unlink($path)) {
+                $msg = 'Unable to delete file';
+                throw new \Exception($msg);
+            }
+        } else {
+            $this->expired = false;
+        }
         if ($ignore_expire || !$tmp[self::EXPIRE]) {
             return unserialize($tmp[self::VALUE]);
         }

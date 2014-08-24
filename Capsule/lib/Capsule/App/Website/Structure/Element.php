@@ -26,7 +26,20 @@ namespace Capsule\App\Website\Structure;
  */
 abstract class Element
 {
+    /**
+     * ID key
+     * 
+     * @var string
+     */
     const ID = 'id';
+    
+    /**
+     * Explicit conversion to a string
+     * 
+     * @param void
+     * @return void
+     */
+    abstract public function toString();
     
     /**
      * Internal data

@@ -91,18 +91,21 @@ class Page extends Element
      * @return string
      */
     public function toString() {
-        if ($this->cache) {
-            $id = $this->id;
-            $cache = Cache::getInstance();
-            $content = $cache->get($id);
-            if (is_null($content)) {
-                $content = $this->build();
-                $cache->set($id, $content, $this->cache);
+        if (!array_key_exists('content', $this->data)) {
+            if ($this->cache) {
+                $id = $this->id;
+                $cache = Cache::getInstance();
+                $content = $cache->get($id);
+                if (is_null($content)) {
+                    $content = $this->_build();
+                    $cache->set($id, $content, $this->cache);
+                }
+                $this->data['content'] = $content;
+            } else {
+                $this->data['content'] = $this->_build();
             }
-            return $content;
-        } else {
-            return $this->build();
         }
+        return $this->content;
     }
     
     /**
@@ -111,11 +114,12 @@ class Page extends Element
      * @param void
      * @return string
      */
-    protected function build() {
+    protected function _build() {
         $path = new Path(
             Website::getInstance()->tplpath,
-            $this->template);
-        ob_start(); // буферизация
+            $this->template
+        );
+        ob_start(); // output buffering start
         include $path;
         return ob_get_clean();
     }

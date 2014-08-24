@@ -78,31 +78,34 @@ class Area extends Element
      * @return string
      */
     public function toString() {
-        if ($this->cache) {
-            $id = Fn::concat_ws('=>#', $this->pageId, $this->id);
-            $cache = Cache::getInstance();
-            $content = $cache->get($id);
-            if (is_null($content)) {
-                $content = $this->build();
-                $cache->set($id, $content, $this->cache);
+        if (!array_key_exists('content', $this->data)) {
+            if ($this->cache) {
+                $id = Fn::concat_ws('=>#', $this->pageId, $this->id);
+                $cache = Cache::getInstance();
+                $content = $cache->get($id);
+                if (is_null($content)) {
+                    $content = $this->_build();
+                    $cache->set($id, $content, $this->cache);
+                }
+                $this->data['content'] = $content;
+            } else {
+                $this->data['content'] = $this->_build();
             }
-            return $content;
-        } else {
-            return $this->build();
         }
+        return $this->content;
     }
     
     /**
      * Собирает и возвращает контент страницы
      *
      * @param void
-     * @return string
+     * @return void
      */
-    protected function build() {
-        $content = '';// инициализация
+    protected  function _build() {
+        $tmp = '';
         foreach ($this->unit as $unit) {
-            $content .= $unit->toString();
+            $tmp .= $unit->toString();
         }
-        return $content;
+        return $tmp;
     }
 }

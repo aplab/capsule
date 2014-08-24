@@ -29,19 +29,38 @@ use Capsule\App\Website\Website;
  */
 class Unit extends Element
 {
+    /**
+     * Explicit conversion to string
+     *
+     * @param void
+     * @return string
+     */
 	public function toString() {
-	   if ($this->cache) {
-	        $id = Fn::concat_ws('=>#', $this->pageId, $this->areaId, $this->id);
-	        $cache = Cache::getInstance();
-            $content = $cache->get($id);
-            if (is_null($content)) {
-                $content = $this->build();
-                $cache->set($id, $content, $this->cache);
-            }
-            return $content;
-        } else {
-            return $this->build();
-        }
+	    return $this->content;
+	}
+	
+	/**
+	 * Подготавливает контент страницы.
+	 * Заранее, т.к. внутри контента может происходить обработка зависимостей.
+	 *
+	 * @param void
+	 * @return void
+	 */
+	public function prepare() {
+	    if (!array_key_exists('content', $this->data)) {
+	        if ($this->cache) {
+	            $id = Fn::concat_ws('=>#', $this->pageId, $this->areaId, $this->id);
+	            $cache = Cache::getInstance();
+	            $content = $cache->get($id);
+	            if (is_null($content)) {
+	                $content = $this->_build();
+	                $cache->set($id, $content, $this->cache);
+	            }
+	            $this->data['content'] = $content;
+	        } else {
+	            $this->data['content'] = $this->_build();
+	        }
+	    }
 	}
 	
 	/**
@@ -50,7 +69,7 @@ class Unit extends Element
 	 * @param void
 	 * @return string
 	 */
-	protected function build() {
+	protected function _build() {
 	    $namespace = Website::getInstance()->config->controller->defaultNamespace;
 	    $controller_classname = Fn::create_classname($this->controller, $namespace);
 	    $controller = new $controller_classname($this);

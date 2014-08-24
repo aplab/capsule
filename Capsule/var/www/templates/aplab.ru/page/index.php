@@ -25,6 +25,8 @@
         
         <meta name='yandex-verification' content='5194ed66d9e1a091' />
         <meta name="google-site-verification" content="flvN0Px1JUv0SHRH4bqSYu8t4J0ndl_ZZb_DjcD7p68" />
+        <meta name="description" content="<?=$this->description?>">
+        <meta name="keywords" content="<?=$this->keywords?>">
     </head>
     <body>
         <div id="wrapper">
