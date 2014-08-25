@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2014                                                   |
 // +---------------------------------------------------------------------------+
-// | 05.06.2014 5:52:07 YEKT 2014                                              |
+// | 24.08.2014 23:18:18 YEKT 2014                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,16 +16,51 @@
  * @package Capsule
  */
 
-namespace Capsule\Module;
+namespace Capsule\Tools;
 
-use Capsule\Unit\TokenTsUsr;
+use Capsule\Capsule;
 /**
- * TextBlock.php
+ * Sysinfo.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class TextBlock extends TokenTsUsr
+final class Sysinfo
 {
+    /**
+     * Internal data
+     * 
+     * @var array
+     */
+    protected static $data = array();
     
+    /**
+     * Returns host
+     * 
+     * @param void
+     * @return string
+     * @throws Exception
+     */
+    public static function host() {
+        $k = __FUNCTION__;
+        if (!array_key_exists($k, self::$data)) {
+            self::$data[$k] = Capsule::host();
+        }
+        return self::$data[$k];
+    }
+    
+    /**
+     * Returns base url
+     *
+     * @param void
+     * @return string
+     * @throws Exception
+     */
+    public static function baseUrl() {
+        $k = __FUNCTION__;
+        if (!array_key_exists($k, self::$data)) {
+            self::$data[$k] = Capsule::baseUrl();
+        }
+        return self::$data[$k];
+    }
 }

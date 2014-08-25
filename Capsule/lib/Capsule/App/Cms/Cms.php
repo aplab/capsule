@@ -1,7 +1,7 @@
 <?php
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 // +---------------------------------------------------------------------------+
-// | PHP version 5.4.5                                                         |
+// | PHP version 5.4.7                                                         |
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2013                                                   |
 // +---------------------------------------------------------------------------+
@@ -32,6 +32,7 @@ use Capsule\App\Cms\Ui\Section;
 use Capsule\Core\Fn;
 use Capsule\App\Cms\Controller\DefaultController;
 use Capsule\DataModel\Config\Storage;
+use Capsule\Tools\Sysinfo;
 
 /**
  * Cms.php
@@ -93,7 +94,7 @@ class Cms extends App
         if (Auth::LOGOUT === $mod) {
             Auth::logout();
             Auth::getInstance();
-            Redirect::go('http://' . Capsule::getInstance()->config->host . $this->config->baseUrl);
+            Redirect::go(Sysinfo::baseUrl() . $this->config->baseUrl);
             return;
         }
         if (!Auth::getInstance()->currentUser) {
@@ -130,6 +131,6 @@ class Cms extends App
             $user->password = Capsule::getInstance()->config->defaultUser->password;
             $user->store();
         }
-        Redirect::go('http://' . Capsule::getInstance()->config->host . $this->config->baseUrl);
+        Redirect::go(Sysinfo::baseUrl() . $this->config->baseUrl);
     }
 }

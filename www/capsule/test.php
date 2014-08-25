@@ -20,30 +20,19 @@ if (!Auth::getInstance()->currentUser) die; ?>
 <script src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>
 </head>
 <body>
+<?php 
 
-<script>
-var iframe = $('<iframe>');
-iframe.attr({
-    width: 400,
-    height: 400
-}).css({
-    background: '#ccc'
-});
 
-$('body').append(iframe);
-
-var HTML = "<html><head></head><body>";
-HTML += "<u>Document</u> <b>HTML</b>";
-HTML += "</body></html>";
+\Capsule\Tools\Tools::dump(parse_url('//a.b/home/news/2345.php?id=1&jaja=456#45'));
 
 
 
-iframe.document.open();
-iframe.document.write(HTML);
-iframe.document.close();
 
-iframe.document.designMode='on';
-</script>
 
+
+
+
+
+?>
 </body>
 </html>

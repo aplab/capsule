@@ -1,7 +1,7 @@
 <?php
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 // +---------------------------------------------------------------------------+
-// | PHP version 5.4.5                                                         |
+// | PHP version 5.4.7                                                         |
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2013                                                   |
 // +---------------------------------------------------------------------------+
@@ -83,6 +83,13 @@ final class Capsule implements \Serializable
      * @var array
      */
     protected $data = array();
+    
+    /**
+     * Some static data
+     * 
+     * @var array
+     */
+    private static $staticData = null;
 
     /**
      * @param string|null $document_root
@@ -95,6 +102,7 @@ final class Capsule implements \Serializable
         }
         self::$instance = new $class($document_root);
         self::$instance->init();
+        self::$staticData = array();
         return self::$instance;
     }
 
@@ -113,8 +121,8 @@ final class Capsule implements \Serializable
         $this->data['var'] = $this->systemRoot . '/var';
         include 'Exception.php';
         include $this->lib . '/Capsule/Core/Exception.php';
-        if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4) {
-            $msg = 'Supported php version 5.4+';
+        if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4 or PHP_RELEASE_VERSION < 7) {
+            $msg = 'Supported php version 5.4.7+';
             throw new Core\Exception($msg);
         }
         include $this->lib . '/Capsule/Core/Singleton.php';
@@ -279,5 +287,45 @@ final class Capsule implements \Serializable
      */
     public function unserialize($serialized) {
         throw new \BadFunctionCallException('You cannot unserialize this object.');
+    }
+    
+    /**
+     * Prevent cloning
+     * 
+     * @throws \BadFunctionCallException
+     * @param void
+     * @return void
+     */
+    public function __clone() {
+        throw new \BadFunctionCallException('Clone is not allowed.');
+    }
+    
+    /**
+     * Returns host
+     * 
+     * @param void
+     * @return string
+     * @throws Exception
+     */
+    public static function host() {
+        if (!is_array(self::$staticData)) {
+            $msg = 'Object Capsule not found';
+            throw new Exception($msg);
+        }
+        $k = __FUNCTION__;
+        if (!array_key_exists($k, self::$staticData)) {
+            self::$staticData[$k] = self::$instance->config->host;
+        }
+        return self::$staticData[$k];
+    }
+    
+    /**
+     * Returns base url without trailing slash
+     * 
+     * @param void
+     * @return string
+     */
+    public static function baseUrl() {
+        return 'http://' . self::host();
     }
 }
