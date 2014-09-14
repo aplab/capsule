@@ -186,4 +186,21 @@ class ReturnValue implements Iterator, Countable
     public function toArray() {
         return $this->data;
     }
+    
+    /**
+     * Return an json of the stored data.
+     *
+     * @param void
+     * @return array
+     */
+    public function toJson($options = null) {
+        if (is_null($options)) {
+            $options = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
+        }
+        $json = json_encode($this->toArray(), $options);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception(Error::getLastError());
+        }
+        return $json;
+    }
 }

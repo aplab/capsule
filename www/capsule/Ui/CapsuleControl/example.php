@@ -60,6 +60,14 @@
             <div class="capsule-cms-control-radio">
                 <input name="r1" type="radio" />
             </div>
+            label
+            <div class="capsule-cms-control-label">
+                Label-text
+            </div>
+            label text-aligh right
+            <div class="capsule-cms-control-label-r">
+                Label-text
+            </div>
         </div>
     </body>
 </html>

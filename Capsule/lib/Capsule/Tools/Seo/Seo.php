@@ -28,44 +28,63 @@ use Capsule\Tools\Sysinfo;
  */
 class Seo
 {
+    protected static $exclude = array(
+        'c1.aplab.ru',
+        'aplab.ru'
+    );
+    
     private static $data = array();
     
+    const FOLLOW = 'follow,index';
+    
+    /**
+     * Добавляет атрибуты rel="nofollow" и target="_blank"
+     * ко всем внешним ссылкам
+     * Если требуется, чтобы внешняя ссылка была индексируема.
+     * Чтобы пользователи не использовали это как уязвимость,
+     * следует фильтровать входные данные
+     * 
+     * @param string
+     * @return string
+     */
     public static function nofollow($html) {
-        return preg_replace_callback('/<a[^>]+/', function($matches) {
+        $host = Sysinfo::host();
+        $exclude = self::$exclude;
+        if (!in_array($host, $exclude)) array_push($exclude, $host);
+        array_walk($exclude, function(& $v, $k) {
+            $v = preg_quote('//' . $v, '/');
+        });
+        $exclude = join('|', $exclude);
+        return preg_replace_callback('/<a[^>]+/', function($matches) use ($exclude) {
             $link = $matches[0];
-            $site_link = self::baseUrl();
-            if (strpos($link, 'rel') === false) {
-                $link = preg_replace('%(href=\\S(?!$site_link))%i', 'rel="nofollow" $1', $link);
-            } elseif (preg_match('%href=\\S(?!$site_link)%i', $link)) {
-                $link = preg_replace('/rel=\\S(?!nofollow)\\S*/i', 'rel="nofollow"', $link);
+            if (strpos($link, self::FOLLOW) !== false) {
+                return str_replace(self::FOLLOW, '', $link);
+            }
+            if (preg_match('/(href=\\S(?!' . $exclude . '))/i', $link)) {
+                $link = rtrim(preg_replace('/(target=[\'"].*?[\'"]|rel=[\'"].*?[\'"])/', '', $link)) 
+                . ' rel="nofollow" target="_blank"';
             }
             return $link;
         }, $html);
     }
     
-    public static function baseUrl() {
-        $k = __FUNCTION__;
-        if (!isset(self::$data[$k])) {
-            self::$data[$k] = Sysinfo::baseUrl();
-        }
-        return self::$data[$k];
-    }
-    
+    /**
+     * Делает все ссылки абсолютными
+     * 
+     * @param string $html
+     * @return string
+     */
     public static function absolutize($html) {
-        return preg_replace_callback('/<a[^>]+/', function($matches) {
-            $link = $matches[0];
-            $site_link = self::baseUrl();
-            if (strpos($link, 'rel') === false) {
-                $link = preg_replace('%(href=\\S(?!$site_link))%i', 'rel="nofollow" $1', $link);
-            } elseif (preg_match('%href=\\S(?!$site_link)%i', $link)) {
-                $link = preg_replace('/rel=\\S(?!nofollow)\\S*/i', 'rel="nofollow"', $link);
-            }
-            return $link;
+        $host = Sysinfo::host();
+        return preg_replace_callback('/<a[^>]+/', function($matches) use($host) {
+            return preg_replace_callback(
+                '/href=[\'"](?!\\/\\/|mailto:|[^\\/]*?:\\/\\/)\\/?(.*?)[\'"]/i', 
+                function($m) use($host) {
+                    return 'href="//' . Sysinfo::host() . 
+                    (strlen($m[1]) ? '/' : '') . $m[1] . '"';
+                }, 
+                $matches[0]
+            );
         }, $html);
     } 
-    
-    private static function absolutize_url($url) {
-        $url = 
-        $data = parse_str($url);
-    }
 }

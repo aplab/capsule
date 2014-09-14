@@ -29,6 +29,7 @@ function CapsuleUiDialogWindow(data)
     this.width = parseInt(data.width, 10); // начальная ширина окна
     this.height = parseInt(data.height, 10); // начальная высота окна
     this.opacity = parseFloat(data.opacity); // степень прозрачности
+    this.opacity = .9;
     this.hidden = data.hidden ? true : false; // не показывать, вывести как скрытое
     
     /* settings */
@@ -169,7 +170,7 @@ function CapsuleUiDialogWindow(data)
         draggableArea.style.height = this.height + 'px';
         draggableArea.style.left = this.left + 'px';
         draggableArea.style.top = this.top + 'px';
-        // draggableArea.style.opacity = .5;
+        draggableArea.style.opacity = .5;
         
         draggableArea.onmouseup = function() {
             this.parentNode.removeChild(this);

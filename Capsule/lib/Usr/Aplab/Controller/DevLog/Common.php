@@ -32,6 +32,15 @@ use Usr\Aplab\Model\DevLog;
  */
 class Common extends UnitController
 {
+    /**
+     * Главная страница журнала
+     * 
+     * (non-PHPdoc)
+     * @see \Capsule\App\Website\Controller\UnitController::handle()
+     * 
+     * @param void
+     * @return void
+     */
     public function handle() {
         if (Router::getInstance()->hasParameters()) {
             $this->item();
@@ -57,6 +66,12 @@ class Common extends UnitController
         include $template;
     }
     
+    /**
+     * Отдельная статья
+     * 
+     * @param void
+     * @return void
+     */
     protected function item() {
         $param = Router::getInstance()->getParameters();
         $item_id = reset($param);

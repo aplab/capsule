@@ -224,7 +224,41 @@
                 "item": {
                     "storage": {
                         "caption": "Storage",
-                        "url": "storage"
+                        "url": "storage",
+                        "item": {
+                            "small_window": {
+                                "caption": "Popup",
+                                "action": "window.open('/admin/storage/', '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
+                            }
+                        }
+                    },
+                    "files": {
+                        "caption": "Files",
+                        "url": "files"
+                    }
+                }
+            },
+            "file": {
+                "caption": "File",
+                "help": "File",
+                "item": {
+                    "uploadimage": {
+                        "caption": "Upload image",
+                        "url": "uploadimage"
+                    }
+                }
+            },
+            "window": {
+                "caption": "Window",
+                "help": "Window",
+                "item": {
+                    "duplicate": {
+                        "caption": "Duplicate",
+                        "action": "window.open(location.href, '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
+                    },
+                    "new": {
+                        "caption": "New",
+                        "action": "window.open('/admin/', '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
                     }
                 }
             },
@@ -313,6 +347,11 @@
             "css": "/capsule/Ui/Storage/cms/CapsuleUiStorage.css",
             "js": "/capsule/Ui/Storage/cms/CapsuleUiStorage.js",
             "top": 29
+        },
+        "uploadImage": {
+            "css": "/capsule/Ui/UploadImage/cms/CapsuleUiUploadImage.css",
+            "js": "/capsule/Ui/UploadImage/cms/CapsuleUiUploadImage.js",
+            "top": 29
         }
     },
     "#": "Icons configuration",
@@ -329,7 +368,17 @@
             "jquery": "/capsule/assets/share/jquery/jquery-2.0.3.min.js",
             "capsule": "/capsule/assets/cms/js/Capsule.js"
         },
-        "ext": "/capsule/assets/cms/ext"
+        "ext": "/capsule/assets/cms/ext",
+        "imageareaselect": {
+            "css": "/capsule/assets/share/imageareaselect/css/imgareaselect-default.css",
+            "js": "/capsule/assets/share/imageareaselect/jquery.imgareaselect.min.js"
+        },
+        "jqueryUi": {
+            "css1": "/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.min.css",
+            "css2": "/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.structure.min.css",
+            "css3": "/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.theme.min.css",
+            "js": "/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.min.js"
+        }
     },
     "controller": {
         "defaultNamespace": "Capsule/App/Cms/Controller"
@@ -362,6 +411,8 @@
         "treemenu": "TreeMenu",
         "treemenupunct": "TreeMenuPunct",
         "devlog": "DevLog",
-        "storage": "Storage"
+        "storage": "Storage",
+        "files": "Files",
+        "uploadimage": "UploadImage"
     }
 }

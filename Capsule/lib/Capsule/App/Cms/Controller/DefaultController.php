@@ -107,6 +107,11 @@ class DefaultController extends AbstractController
         
         $js->append(new Script($this->app->config->path->js->jquery));
         $js->append(new Script($this->app->config->path->js->capsule));
+        
+        $css->append(new Stylesheet($this->app->config->path->jqueryUi->css1));
+        $css->append(new Stylesheet($this->app->config->path->jqueryUi->css2));
+        $css->append(new Stylesheet($this->app->config->path->jqueryUi->css3));
+        $js->append(new Script($this->app->config->path->jqueryUi->js));
 
         $onload = clone $section;
         $onload->id = 'onload';

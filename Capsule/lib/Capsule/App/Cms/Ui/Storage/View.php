@@ -23,6 +23,11 @@ use Capsule\App\Cms\Ui\Ui;
 use Capsule\App\Cms\Ui\Stylesheet;
 use Capsule\App\Cms\Ui\Script;
 use Capsule\App\Cms\Cms;
+use Capsule\I18n\I18n;
+use Capsule\Ui\TabControl\TabControl;
+use Capsule\Ui\TabControl\Tab;
+use Capsule\Common\TplVar;
+use Capsule\App\Cms\Ui\TabControl\View as tv;
 /**
  * View.php
  *
@@ -32,6 +37,11 @@ use Capsule\App\Cms\Cms;
 class View
 {
     private $object;
+    
+    /**
+     * @var TabControl
+     */
+    protected $tabView;
     
     private $instanceName;
     
@@ -49,6 +59,26 @@ class View
             );
         }
         $this->instanceName = $instance_name;
+        
+        $tabs = new TabControl('storage-tab-control');
+        
+        $tab = new Tab;
+        $tab->name = I18n::_('Upload file');
+        $tabs->add($tab);
+        $tab->bind = $this->instanceName . '-upload-file';
+        
+        $tab = new Tab;
+        $tab->name = I18n::_('Paste image');
+        $tabs->add($tab);
+        $tab->bind = $this->instanceName . '-paste-image';
+        
+        $tab = new Tab;
+        $tab->name = I18n::_('Multi upload');
+        $tabs->add($tab);
+        $tab->bind = $this->instanceName . '-multi-upload';
+        
+        $this->tabView = new tv($tabs);
+        
         Ui::getInstance()->onload->append(
             'new CapsuleUiStorage({
                 instanceName: "' . $this->instanceName . '",
@@ -57,6 +87,8 @@ class View
     }
     
     public function __toString() {
+        TplVar::getInstance()->tab = $this->tabView;
+        TplVar::getInstance()->instanceName = $this->instanceName;
         ob_start();
         include 'template.php';
         return ob_get_clean();

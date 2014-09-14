@@ -121,8 +121,8 @@ final class Capsule implements \Serializable
         $this->data['var'] = $this->systemRoot . '/var';
         include 'Exception.php';
         include $this->lib . '/Capsule/Core/Exception.php';
-        if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4 or PHP_RELEASE_VERSION < 7) {
-            $msg = 'Supported php version 5.4.7+';
+        if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4 or PHP_RELEASE_VERSION < 3) {
+            $msg = 'Supported php version 5.4.3+';
             throw new Core\Exception($msg);
         }
         include $this->lib . '/Capsule/Core/Singleton.php';

@@ -32,6 +32,15 @@ use Usr\Aplab\Model\DevLog;
  */
 class Index extends UnitController
 {
+    /**
+     * Страница журнала
+     * 
+     * (non-PHPdoc)
+     * @see \Capsule\App\Website\Controller\UnitController::handle()
+     * 
+     * @param void
+     * @return void
+     */
     public function handle() {
         $param = Router::getInstance()->getParameters();
         $index = reset($param);
@@ -45,9 +54,14 @@ class Index extends UnitController
         }
         $template = new Path($this->tplpath, $this->unit->template);
         TplVar::getInstance()->items = DevLog::loadIndex($index);
-        array_walk($indexes, function(& $v, $k) use ($index) {
+        $current_page = null;
+        array_walk($indexes, function(& $v, $k) use ($index, & $current_page) {
+            $page = $k + 2;
+            if ($v === $index) {
+                $current_page = $page;
+            }
             $v = array(
-                'page' => $k + 2,
+                'page' => $page,
                 'url' => $v === $index ? null : '/log/index/' . $v
             );
         });
@@ -56,6 +70,9 @@ class Index extends UnitController
             'url' => '/log/'
         ));
         TplVar::getInstance()->index = $indexes;
+        if ($current_page) {
+            Website::getInstance()->page->title = 'Журнал разработки, страница ' . $current_page;
+        }
         include $template;
     }
 }

@@ -27,32 +27,12 @@ namespace Capsule\Plugin\Storage\Driver;
 interface IDriver
 {
     /**
-     * Возвращает список симлинков в директории 
-     * 
-     * @param string $relative_path
-     * @return array
-     */
-    function readDir($relative_path = null);
-    
-    /**
-     * Удаляет симлинк на файл. Сам файл остается и может быть удален сборщиком 
-     * мусора, если количество ссылок на него станет равным нулю.
-     * 
-     * @param string $relative_path
-     * @return boolean
-     */
-    function dropLink($relative_path);
-    
-    /**
      * Добавляет файл в хранилище.
      * $source_absolute_path - место, откуда взять файл.
-     * $link_relative_path - ссылка на файл, по которой он будет доступен. 
-     * Расширение файла указать тут надо, потому что сам файл физически хранится 
-     * без расширения.
      * 
      * @param string $source_absolute_path
-     * @param string $link_relative_path
-     * @return array
+     * @param string $extension
+     * @return string
      */
-    function addFile($source_absolute_path, $link_relative_path);
+    function addFile($source_absolute_path, $extension = null);
 }

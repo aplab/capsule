@@ -11,7 +11,7 @@ $index = TplVar::getInstance()->index;
             <h3><?=$title?></h3>
             <?php endif ?>
             <div class="text">
-                <?=$i->fully?>
+                <?=$i->preview?:$i->fully?>
             </div>
         </div>
     <?php endforeach ?>

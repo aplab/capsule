@@ -421,3 +421,20 @@
     text-shadow: none;
 }
 /* end of link */
+/* label */
+.capsule-cms-control-label {
+    height: 21px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.capsule-cms-control-label-r {
+    height: 21px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+/* end of label */

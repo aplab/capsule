@@ -2,37 +2,32 @@
 use Capsule\Capsule;
 
 use Capsule\User\Auth;
-use Capsule\Tools\Mysql;
-use Capsule\Loader\GeSHi;
-use Usr\Aplab\Model\DevLog;
 use Capsule\Plugin\Storage\Storage;
-use Capsule\Common\Path;
+use Capsule\File\Image\ImageInfo;
 
 
 header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 $app = Capsule::getInstance();
-if (!Auth::getInstance()->currentUser) die; ?>
+if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <script src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>
+
 </head>
 <body>
-<?php 
 
+<object id="supaApplet" width="2048" height="2048" type="application/x-java-applet">
+    <param name="ClickForPaste" value="true">
+    <param name="imagecodec" value="png">
+    <param name="encoding" value="base64">
+    <param name="previewscaler" value="original size">
+    <param name="archive" value="/capsule/assets/share/supa/0.6a/lib/Supa.jar">
+    <param name="classid" value="java:de.christophlinder.supa.SupaApplet.class">
+    Applets disabled. Please enable applets.
+</object>
 
-\Capsule\Tools\Tools::dump(parse_url('//a.b/home/news/2345.php?id=1&jaja=456#45'));
-
-
-
-
-
-
-
-
-
-?>
 </body>
 </html>

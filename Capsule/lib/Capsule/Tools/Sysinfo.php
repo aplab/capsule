@@ -45,6 +45,10 @@ final class Sysinfo
         $k = __FUNCTION__;
         if (!array_key_exists($k, self::$data)) {
             self::$data[$k] = Capsule::host();
+            if (false !== strpos(self::$data[$k], '/')) {
+                $msg = 'Wrong host definition';
+                throw new \UnexpectedValueException($msg);
+            }
         }
         return self::$data[$k];
     }

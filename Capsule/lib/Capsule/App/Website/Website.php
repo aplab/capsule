@@ -24,6 +24,7 @@ use Capsule\Capsule;
 use Capsule\Common\Path;
 use Capsule\App\Website\Exception\Error404Exception;
 use Capsule\App\Website\Structure\Page;
+use Capsule\Tools\Seo\Seo;
 /**
  * Website.php
  *
@@ -123,6 +124,6 @@ class Website extends App
         });
         // Подготовка контента в юнитах
         foreach ($units as $init) $unit->prepare();
-        echo $this->page->toString();
+        echo Seo::nofollow(Seo::absolutize($this->page->toString()));
     }
 }

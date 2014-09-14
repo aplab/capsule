@@ -5,7 +5,10 @@ function CapsuleUiStorage(data) {
     this.top = data.top + 'px';
     this.container = $('#' + this.instanceName);
     this.container.css({top: this.top});
-    this.selectedItem = null;
+    
+    var cl = function(foo) {
+        console.log(foo);
+    }
     
     /**
      * Static section
@@ -28,83 +31,83 @@ function CapsuleUiStorage(data) {
      * End of static section
      */
     
-    /**
-     * Path to ajax
-     */
-    this.ajax = '/ajax/';
+    var iframe = document.createElement('iframe');
+    this.iframe = $(iframe);
+    this.iframe.attr({
+        name: this.instanceName,
+        width: 0,
+        height: 0,
+        border: 0
+    }).css({
+        width: 0,
+        height: 0,
+        border: 0
+    });
     
-    /**
-     * Путь хранилища
-     */
-    this.path = null;
+    this.processing = 0;
     
-    /**
-     * Загрузить список
-     */
-    this.loadList = function() {
-        $.post(storage.ajax, {
-                'cmd': 'storageOverview',
-                'instance_name': storage.instanceName,
-                'path': storage.path
-            }, function(data) {
-                storage.container.empty();
-                storage.container.append(data);
-                // post-init
-                storage.headerPlace = $('#' + storage.instanceName + '-header-place');
-                storage.header = $('#' + storage.instanceName + '-header');
-                storage.headerWrapper = $('#' + storage.instanceName + '-header-wrapper');
-                storage.body = $('#' + storage.instanceName + '-body');
-                storage.footer = $('#' + storage.instanceName + '-footer');
-                // horizontal scroll handler
-                storage.body.scroll(function() {
-                    storage.header.css({left: -storage.body.scrollLeft()});
+    this.uploadForm = $('#' + this.instanceName + '-form');
+    this.inputFile = this.uploadForm.find(':file');
+    this.inputFile.change(function() {
+        if (storage.processing) {
+            alert('another request waiting');
+        }
+        $('body').append(storage.iframe);
+        storage.uploadForm.submit();
+        storage.processing = 1;
+        setTimeout(function() {
+            storage.errorProcessing()
+        }, 4000);
+    });
+    
+    this.response = function(o) {
+        storage.iframe.remove();
+        storage.processing = 0;
+        if (o.error) {
+            $('#' + this.instanceName + '-uf-result :text').val(o.error);
+        } else {
+            $('#' + this.instanceName + '-uf-result :text').val(o.url).
+                change(function() {
+                    Capsule.setSelection(this);
+                }).
+                click(function() {
+                    Capsule.setSelection(this);
+                }).
+                focus(function() {
+                    Capsule.setSelection(this);
+                }).attr({
+                    readonly: true
                 });
-                storage.initLoadedRows();
-            }, 'html'
-        );
+            if (o.isImage) {
+                this.handleImage(o);
+            }
+        }
     }
     
-    this.loadList();
+    this.errorProcessing = function() {
+        storage.iframe.remove();
+        storage.processing = 0;
+        cl('post-handler');
+    }
     
-    // manage rows init
-    this.initLoadedRows = function() {
-        this.body.find('.capsule-ui-storage-overview-body-row').each(function() {
-            $(this).click(function() {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                    storage.selectedItem = null;
-                } else {
-                    if (storage.selectedItem) {
-                        if (storage.selectedItem.hasClass('selected')) {
-                            storage.selectedItem.removeClass('selected');
-                            storage.selectedItem = null;
-                        }
-                    }
-                    $(this).addClass('selected');
-                    storage.selectedItem = $(this);
-                }
-                if (storage.selectedItem) {
-                    //alert(dataGrid.selectedItem.find('td:first').text().trim());
-                }
-            });
-            $(this).dblclick(function() {
-                if (window.getSelection) {
-                    if (window.getSelection().empty) {  // Chrome
-                      window.getSelection().empty();
-                    } else if (window.getSelection().removeAllRanges) {  // Firefox
-                      window.getSelection().removeAllRanges();
-                    }
-                } else if (document.selection) {  // IE?
-                    document.selection.empty();
-                }
-                var o = $(this);
-                var input = o.find('input:hidden').get(0);
-                if ('undefined' === typeof(input)) {
-                    return;
-                }
-                storage.path = $(input).val();
-                storage.loadList();
-            });
+    this.handleImage = function(o) {
+        var c = $('#' + this.instanceName + '-uf-image');
+        c.css({
+            width: o.width,
+            height: o.height
+        }).show();
+        var i = $(new Image());
+        i.attr({
+            src: o.url
+        });
+        c.empty().append(i);
+        var ias = i.imgAreaSelect({
+            handles: true,
+            instance: true,
+            parent: i.closest('.capsule-ui-storage-elements')
+        });
+        i.closest('.capsule-ui-storage-elements').scroll(function() {
+            //ias.update();
         });
     }
 }

@@ -187,6 +187,7 @@ class Path
     /**
      * Вычитает путь, переданный в параметре, из текущего
      * 
+     * @param void
      * @return \Capsule\Common\Path
      */
     public function substract() {
@@ -195,5 +196,16 @@ class Path
             return new self($this);
         }
         return new self(array_diff_assoc($this->toArray(), $param->toArray()));
+    }
+    
+    /**
+     * Returns extension or null
+     * 
+     * @param void
+     * @return string
+     */
+    public function extension($lcase = null) {
+        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
+        return $extension ? ($lcase ? strtolower($extension) : $extension) : null;
     }
 }

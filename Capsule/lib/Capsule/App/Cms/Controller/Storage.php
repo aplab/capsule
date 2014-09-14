@@ -20,6 +20,13 @@ namespace Capsule\App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use Capsule\App\Cms\Ui\Storage\View;
+use Capsule\Ui\DialogWindow\DialogWindow;
+use Capsule\Common\Path;
+use Capsule\Capsule;
+use Capsule\I18n\I18n;
+use Capsule\Common\TplVar;
+use Capsule\App\Cms\Ui\Stylesheet;
+use Capsule\App\Cms\Ui\Script;
 /**
  * Storage.php
  *
@@ -28,12 +35,18 @@ use Capsule\App\Cms\Ui\Storage\View;
  */
 class Storage extends DefaultController
 {
+    protected $instanceName = 'capsule-ui-storage';
+    
     /**
      * (non-PHPdoc)
      * @see \Capsule\Controller\AbstractController::handle()
      */
     public function handle() {
         $this->initSections();
+        
+        $this->ui->css->append(new Stylesheet($this->app->config->path->imageareaselect->css));
+        $this->ui->js->append(new Script($this->app->config->path->imageareaselect->js));
+        
         $this->initMainMenu();
         $this->initToolbar();
         $this->overview();
@@ -48,23 +61,23 @@ class Storage extends DefaultController
         
         $button = new Button;
         $toolbar->add($button);
-        $button->caption = '/ Root';
-        $button->url = $filter($this->mod);
+        $button->caption = I18n::_('Settings');
+        $button->action = 'CapsuleUiDialogWindow.getInstance(\'' . $this->instanceName . '-settings\').showCenter()';
+        $button->icon = $this->app->config->icons->cms . '/wrench-screwdriver.png';
         
-        $button = new Button;
-        $toolbar->add($button);
-        $button->caption = 'New';
-        $button->url = $filter($this->mod, 'add');
-        $button->icon = $this->app->config->icons->cms . '/document--plus.png';
-    
-        $button = new Button;
-        $toolbar->add($button);
-        $button->caption = 'Delete selected';
-        $button->icon = $this->app->config->icons->cms . '/cross-script.png';
-        $button->action = 'CapsuleUiDataGrid.getInstance("capsule-ui-datagrid").del()';
+        $view = new View($this->instanceName);
         
-        $view = new View('capsule-cms-storage-overview');
         $this->ui->workplace->append($view);
+        
+        TplVar::getInstance()->instanceName = $this->instanceName;
+        $window = new DialogWindow($this->instanceName . '-settings');
+        $window->hidden = true;
+        $window->caption = I18n::_('Settings');
+        $window->width = 320;
+        $window->height = 240;
+        $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'storageSettings.php'));
+        $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
+        $this->ui->wrapper->append($view);
     }
     
 

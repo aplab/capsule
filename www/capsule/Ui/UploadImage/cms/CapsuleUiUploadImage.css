@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+.capsule-ui-upload-image {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.capsule-ui-upload-image .info-bar {
+    background-color: #edeceb;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    width: 100%;
+    top: 0;
+    height: 29px;
+    overflow: hidden;
+    display: block;
+}
+.capsule-ui-upload-image .item {
+    float: left;
+    height: 21px;
+    margin-top: 4px;
+}
+.capsule-ui-upload-image .filename {
+    width: 260px;
+    margin-left: 6px;
+    margin-right: 2px;
+}
+.capsule-ui-upload-image .resize-bar {
+    float: left;
+    overflow: hidden;
+    display: none;
+}
+.capsule-ui-upload-image .crop-bar {
+    float: left;
+    overflow: hidden;
+    display: none;
+}
+.capsule-ui-upload-image .label {
+    margin-left: 6px;
+    margin-right: 2px;
+}
+.capsule-ui-upload-image .value {
+    width: 40px;
+}
+.capsule-ui-upload-image .measure {
+    margin-left: 2px;
+    margin-right: 6px;
+}
+.capsule-ui-upload-image .form-container {
+    float: left;
+    height: 21px;
+    margin-top: 4px;
+    overflow: hidden;
+    width: 0;
+    position: relative;
+}
+.capsule-ui-upload-image .form-wrapper {
+    position: absolute;
+    left: 9999px;
+    top: 9999px;
+}
+.capsule-ui-upload-image .workplace {
+    background: transparent url("data:image/gif;base64,R0lGODlhEAAQAIAAAP///8zMzCH5BAAAAAAALAAAAAAQABAAAAIfhG+hq4jM3IFLJhoswNly/XkcBpIiVaInlLJr9FZWAQA7") 0 0;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    top: 29px;
+    overflow: auto;
+    overflow: hidden;
+    overflow: auto;
+}
+.capsule-ui-upload-image .image-wrapper {
+    display: inline-block;
+    margin: 15px;
+}
+.capsule-ui-upload-image .image {
+    display: block;
+    cursor: move;
+}

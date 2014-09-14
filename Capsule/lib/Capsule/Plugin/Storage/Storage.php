@@ -25,6 +25,7 @@ use Capsule\Common\Path;
 use Capsule\DataStruct\Loader;
 use Capsule\Capsule;
 use PHP\Exceptionizer\Exception;
+use Capsule\Common\String;
 /**
  * Storage.php
  *
@@ -179,39 +180,18 @@ class Storage
      * @param void
      * @return void
      */
-    private function __clone() {
+    final public function __clone() {
         trigger_error('Clone is not allowed.', E_USER_ERROR);
-    }
-    
-    /**
-     * Read dir 
-     * 
-     * @param string $relative_path
-     * @return \DirectoryIterator
-     */
-    public function readDir($relative_path = null) {
-        return $this->driver->readDir($relative_path);
-    }
-    
-    /**
-     * Drop link
-     * 
-     * @param string $relative_path
-     * @return boolean
-     */
-    public function dropLink($relative_path) {
-        return $this->driver->dropLink($relative_path);
     }
     
     /**
      * Add file 
      * 
      * @param string $source_absolute_path
-     * @param string $link_relative_path
-     * @param boolean $overwrite
-     * @return array
+     * @param String $extension
+     * @return string
      */
-    public function addFile($source_absolute_path, $link_relative_path, $overwrite = null) {
-        return $this->driver->addFile($source_absolute_path, $link_relative_path, $overwrite);
+    public function addFile($source_absolute_path, $extension = null) {
+        return $this->driver->addFile($source_absolute_path, $extension);
     }
 }

@@ -59,14 +59,10 @@
                 </div>
                 <div id="f-counters">
                     <div id="counter-li">
-                        <noindex>
-                            <?php include 'inc/liveinternet_end.php' ?>
-                        </noindex>
+                        <?php include 'inc/liveinternet_end.php' ?>
                     </div>
                     <div id="counter-ya">
-                        <noindex>
-                            <?php include 'inc/yandex_metrika.php' ?>
-                        </noindex>
+                        <?php include 'inc/yandex_metrika.php' ?>
                     </div>
                 </div>
             </div>
