@@ -291,7 +291,7 @@ function CapsuleUiUploadImage(data)
                     w.image = $(new Image()).addClass('image');
                     var wr = w.imageWrapper;
                     var i = w.image;
-                    p.empty();
+                    p.empty();// очистка image place
                     i.load(function() {
                         wr.append(i);
                         p.append(wr);
@@ -300,7 +300,7 @@ function CapsuleUiUploadImage(data)
                         w.imageOriginalHeight = i.height();
                         w.inputFilename.val(w.imageOriginalFilename); 
                         w.attachDraggable();
-                        this.imageString = '';
+                        w.imageString = '';
                     });
                     i.attr('src', e.target.result);
                 }
@@ -354,6 +354,12 @@ function CapsuleUiUploadImage(data)
         }
     }
     
+    /**
+     * изменить состояние режима resize на противоположное
+     * 
+     * @param void
+     * @return void
+     */
     this.toggleResizable = function() {
         if (this.isResizable()) {
             this.detachResizable();
@@ -776,6 +782,7 @@ function CapsuleUiUploadImage(data)
      * При выделении области или изменении выделения
      * 
      * @param selection
+     * @return void
      */
     this.cropCallback = function(selection) {
         var need_adjust = false;
@@ -1112,7 +1119,7 @@ function CapsuleUiUploadImage(data)
     });
     
     /**
-     * Флаг, обозначает что идет процесс загрузкифайла на сервер
+     * Флаг, обозначает что идет процесс загрузки файла на сервер
      * 
      * @var boolean
      */
@@ -1134,8 +1141,11 @@ function CapsuleUiUploadImage(data)
             return;
         }
         this.createIframe();
+        console.log(this.imageString.length);
         if (this.imageString.length) {
             this.formImageString.val(this.imageString); 
+        } else {
+            this.formImageString.val('');
         }
         var reg = /^\d+$/;
         if (reg.test(this.image.width())) {

@@ -50,7 +50,56 @@ class UploadImage extends Controller
     private function uploadSingleImageHandler() {
         $ret = new ReturnValue();
         $ret->error = null;
-        
+        if (!isset($_FILES['file'])) {
+            $ret->error = I18n::_('no file specified');
+            return $ret;
+        }
+        $file = $_FILES['file'];
+        $keys = array(
+            'name',
+            'type',
+            'tmp_name',
+            'error',
+            'size'
+        );
+        foreach ($keys as $key) {
+            if (!isset($file[$key])) {
+                $ret->error = I18n::_('no file specified');
+                return $ret;
+            }
+            if (!is_scalar($file[$key])) {
+                $ret->error = I18n::_('no file specified');
+                return $ret;
+            }
+        }
+        extract($file);
+        if ($error) {
+            $ret->error = I18n::_(Msg::msg($error));
+            return $ret;
+        }
+        if (!is_uploaded_file($tmp_name)) {
+            if (!is_scalar($file[$key])) {
+                $ret->error = I18n::_('unablo to upload file');
+                return $ret;
+            }
+        }
+        try {
+            $tmp = s::getInstance()->addFile($tmp_name, pathinfo($name, PATHINFO_EXTENSION));
+            $ret->pathname = $tmp['pathname'];
+            $ret->exists = $tmp['exists'];
+            $ret->url = $tmp['url'];
+            try {
+                $tmp = new ImageInfo($ret->pathname);
+                $ret->isImage = true;
+                foreach ($tmp->toArray() as $k => $v) {
+                    $ret->$k = $v;
+                }
+            } catch (\Exception $e) {
+                $ret->isImage = false;
+            }
+        } catch (\Exception $e) {
+            $ret->error = I18n::_($e->getMessage());
+        }
         return $ret;
     }
 }
