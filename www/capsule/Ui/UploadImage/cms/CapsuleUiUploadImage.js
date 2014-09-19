@@ -46,6 +46,7 @@ function CapsuleUiUploadImage(data)
         if ('undefined' !== typeof(c.instances[i])) {
             console.log('Instance already exists: ' + i);
             console.error('Instance already exists: ' + i);
+            throw new Error('Instance already exists: ' + i);
         }
         c.instances[i] = o;
     })(this, arguments.callee);
@@ -1141,7 +1142,6 @@ function CapsuleUiUploadImage(data)
             return;
         }
         this.createIframe();
-        console.log(this.imageString.length);
         if (this.imageString.length) {
             this.formImageString.val(this.imageString); 
         } else {
