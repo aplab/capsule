@@ -308,6 +308,7 @@ function CapsuleUiUploadImage(data)
                 reader.readAsDataURL(input.files[0]);
                 reader = null;
             } else {
+                this.reset();
                 alert('is not image mime type');
             }
         } else {
@@ -1167,6 +1168,11 @@ function CapsuleUiUploadImage(data)
             if (reg.test(this.imageCropY2)) {
                 this.formY2.val(this.imageCropY2);
             }
+        } else {
+            this.formX1.val('');
+            this.formX2.val('');
+            this.formY1.val('');
+            this.formY2.val('');
         }
         this.form.submit();
         setTimeout(function() {

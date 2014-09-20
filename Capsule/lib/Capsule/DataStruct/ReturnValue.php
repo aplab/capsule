@@ -20,6 +20,7 @@ namespace Capsule\DataStruct;
 
 use Iterator, Countable;
 use Capsule\Exception;
+use Capsule\Json\Error;
 
 /**
  * Config.php
