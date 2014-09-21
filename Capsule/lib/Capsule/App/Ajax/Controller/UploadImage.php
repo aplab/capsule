@@ -327,16 +327,45 @@ class UploadImage extends Controller
         $width = ${'width'};
         $height = ${'height'};
         if ($width === $image['width'] && $height === $image['height']) return $image;
-        $dst_image = imagecreatetruecolor($width, $height);
-        if (false === imagecopyresampled($dst_image, $image['image'], 0, 0, 0, 0, $width, $height, $image['width'], $image['height'])) {
-            imagedestroy($dst_image);
-            return $image;
+        if (function_exists('imagescale')) {
+            $image['image'] = imagescale($image['image'], $width, $height,  IMG_GAUSSIAN);
+        } else {
+            $k = 1.4; // Коэффициент пошагового увеличения
+            $tmp_width = intval($image['width'] * $k);
+            if ($tmp_width > $width) {
+                $tmp_width = $width;
+            }
+            $tmp_height = intval($image['height'] * $k);
+            if ($tmp_height > $height) {
+                $tmp_height = $height;
+            }
+            $src_img = $image['image'];
+            while ($tmp_height < $height || $tmp_width < $width) {
+                $tmp_img = imagecreatetruecolor($tmp_width, $tmp_height);
+                if (false === imagecopyresampled($tmp_img, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
+                    imagedestroy($tmp_img);
+                    return $image;
+                }
+                $image['width'] = $tmp_width;
+                $image['height'] = $tmp_height;
+                $src_img = $tmp_img;
+                $tmp_width = intval($image['width'] * 1.3);
+                if ($tmp_width > $width) {
+                    $tmp_width = $width;
+                }
+                $tmp_height = intval($image['height'] * 1.3);
+                if ($tmp_height > $height) {
+                    $tmp_height = $height;
+                }
+            }
+            $dst_image = imagecreatetruecolor($width, $height);
+            if (false === imagecopyresampled($dst_image, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
+                imagedestroy($dst_image);
+                return $image;
+            }
+            imagedestroy($image['image']);
+            $image['image'] = $dst_image;
         }
-        if ($width > $image['width']) {
-            imagefilter($dst_image, IMG_FILTER_GAUSSIAN_BLUR, 7);
-        }
-        imagedestroy($image['image']);
-        $image['image'] = $dst_image;
         $image['width'] = $width;
         $image['height'] = $height;
         return $image;
