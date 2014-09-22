@@ -99,7 +99,7 @@ class UploadImage extends Controller
                 $result = imagegif($image['image'], $path);
                 break;
             default:
-                $result = imagepng($image['image'], $path);
+                $result = imagepng($image['image'], $path, 9);
                 break;
         }
         if (!$result) {
@@ -177,6 +177,8 @@ class UploadImage extends Controller
             $this->result->error = I18n::_('Image type unsupported error');
             return false;
         }
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
         return array(
             'image' => $image,
             'width' => $width,
@@ -256,6 +258,8 @@ class UploadImage extends Controller
                 break;
             case 'png':
                 $image = @imagecreatefrompng($tmp_name);
+                imagealphablending($image, false);
+                imagesavealpha($image, true);
                 break;
             case 'gif':
                 $image = @imagecreatefromgif($tmp_name);
@@ -327,10 +331,45 @@ class UploadImage extends Controller
         $width = ${'width'};
         $height = ${'height'};
         if ($width === $image['width'] && $height === $image['height']) return $image;
-        if (function_exists('imagescale')) {
-            $image['image'] = imagescale($image['image'], $width, $height,  IMG_GAUSSIAN);
-        } else {
-            $k = 1.4; // Коэффициент пошагового увеличения
+        $k = 1.7; // Коэффициент пошагового увеличения
+        $tmp_width = intval($image['width'] * $k);
+        if ($tmp_width > $width) {
+            $tmp_width = $width;
+        }
+        $tmp_height = intval($image['height'] * $k);
+        if ($tmp_height > $height) {
+            $tmp_height = $height;
+        }
+        $src_img = $image['image'];
+        if ('gif' === $image['extension']) {
+            $tmp_width = $width;
+            $tmp_height = $height;
+        }
+        while ($tmp_height < $height || $tmp_width < $width) {
+            $tmp_img = imagecreatetruecolor($tmp_width, $tmp_height);
+            if ('png' === $image['extension']) {
+                imagealphablending($tmp_img, false);
+                imagesavealpha($tmp_img, true);
+                $src_trans = imagecolorallocatealpha($tmp_img, 255, 255, 255, 127);
+                imagefill($tmp_img, 0, 0, $src_trans);
+            } elseif ('gif' === $image['extension']) {
+                $src_trans = imagecolortransparent($src_img);
+                if ($src_trans != (-1)) {
+                    $transparent_color = ImageColorsForIndex($src_img, $src_trans);
+                }
+                if (!empty($transparent_color)) { /* simple check to find wether transparent color was set or not */
+                    $transparent_new = ImageColorAllocate($tmp_img, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                    imagefill($tmp_img, 0, 0, $transparent_new ); /* don't forget to fill the new image with the transparent color */
+                    $transparent_new_index = ImageColorTransparent($tmp_img, $transparent_new);
+                }
+            }
+            if (false === imagecopyresampled($tmp_img, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
+                imagedestroy($tmp_img);
+                return $image;
+            }
+            $image['width'] = $tmp_width;
+            $image['height'] = $tmp_height;
+            $src_img = $tmp_img;
             $tmp_width = intval($image['width'] * $k);
             if ($tmp_width > $width) {
                 $tmp_width = $width;
@@ -339,33 +378,30 @@ class UploadImage extends Controller
             if ($tmp_height > $height) {
                 $tmp_height = $height;
             }
-            $src_img = $image['image'];
-            while ($tmp_height < $height || $tmp_width < $width) {
-                $tmp_img = imagecreatetruecolor($tmp_width, $tmp_height);
-                if (false === imagecopyresampled($tmp_img, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
-                    imagedestroy($tmp_img);
-                    return $image;
-                }
-                $image['width'] = $tmp_width;
-                $image['height'] = $tmp_height;
-                $src_img = $tmp_img;
-                $tmp_width = intval($image['width'] * 1.3);
-                if ($tmp_width > $width) {
-                    $tmp_width = $width;
-                }
-                $tmp_height = intval($image['height'] * 1.3);
-                if ($tmp_height > $height) {
-                    $tmp_height = $height;
-                }
-            }
-            $dst_image = imagecreatetruecolor($width, $height);
-            if (false === imagecopyresampled($dst_image, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
-                imagedestroy($dst_image);
-                return $image;
-            }
-            imagedestroy($image['image']);
-            $image['image'] = $dst_image;
         }
+        $dst_image = imagecreatetruecolor($width, $height);
+        if ('png' === $image['extension']) {
+            imagealphablending($dst_image, false);
+            imagesavealpha($dst_image, true);
+            $src_trans = imagecolorallocatealpha($dst_image, 255, 255, 255, 127);
+            imagefill($dst_image, 0, 0, $src_trans);
+        } elseif ('gif' === $image['extension']) {
+            $src_trans = imagecolortransparent($src_img);
+            if ($src_trans != (-1)) {
+                $transparent_color = ImageColorsForIndex($src_img, $src_trans);
+            }
+            if (!empty($transparent_color)) { /* simple check to find wether transparent color was set or not */
+                $transparent_new = ImageColorAllocate($dst_image, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                imagefill($dst_image, 0, 0, $transparent_new); /* don't forget to fill the new image with the transparent color */
+                $transparent_new_index = ImageColorTransparent($dst_image, $transparent_new);
+            }
+        }
+        if (false === imagecopyresampled($dst_image, $src_img, 0, 0, 0, 0, $tmp_width, $tmp_height, $image['width'], $image['height'])) {
+            imagedestroy($dst_image);
+            return $image;
+        }
+        imagedestroy($image['image']);
+        $image['image'] = $dst_image;
         $image['width'] = $width;
         $image['height'] = $height;
         return $image;
@@ -385,7 +421,7 @@ class UploadImage extends Controller
             if (!is_scalar($$key)) return $image;
             if (!ctype_digit($$key)) return $image;
             $$key = intval($$key);
-            if (!$$key) return $image;
+            if (!$$key && 0 !== $$key) return $image;
         }
         $x1 = ${'x1'};
         $y1 = ${'y1'};
@@ -401,7 +437,20 @@ class UploadImage extends Controller
         $dst_height = abs($y2 - $y1) + 1;
         if ($x1 + $dst_width > $src_width) return $image;
         if ($y1 + $dst_height > $src_height) return $image;
+        
+        
         $dst_image = imagecreatetruecolor($dst_width, $dst_height);
+        if ('png' === $image['extension']) {
+            imagealphablending($dst_image, false);
+            imagesavealpha($dst_image, true);
+            $src_trans = imagecolorallocatealpha($dst_image, 255, 255, 255, 127);
+            imagefill($dst_image, 0, 0, $src_trans);
+        } elseif ('gif' === $image['extension']) {
+            $src_trans = imagecolortransparent($image['image']);
+            imagepalettecopy($dst_image, $image['image']);
+            imagefill($dst_image, 0, 0, $src_trans);
+            imagecolortransparent($dst_image, $src_trans);
+        }
         if (false === imagecopyresampled($dst_image, $image['image'], 0, 0, $x1, $y1, $dst_width, $dst_height, $dst_width, $dst_height)) {
             imagedestroy($dst_image);
             return $image;
