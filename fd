@@ -1,0 +1,15 @@
+echo "$ git status"
+git status
+echo "$ git add ."
+git add .
+echo "$ git status"
+git status
+echo "$ git commit -m \"Various fixes and performance improvements\""
+# git commit -m "Comment: $1"
+git commit -m "Various fixes and performance improvements"
+echo "$ git status"
+git status
+echo "$ git push"
+git push
+echo "$ git status"
+git status
