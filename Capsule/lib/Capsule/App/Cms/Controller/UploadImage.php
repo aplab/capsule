@@ -95,17 +95,17 @@ class UploadImage extends DefaultController
         $button->action = 'CapsuleUiUploadImage.getInstance(\'' . $this->instanceName . '\').reset()';
         $button->icon = $this->app->config->icons->cms . '/cross-script.png';
         
-//         $button = new Button;
-//         $toolbar->add($button);
-//         $button->caption = I18n::_('Lock');
-//         $button->action = 'CapsuleUiDialogWindow.getInstance(\'' . $this->instanceName . '-settings\').showCenter()';
-//         $button->icon = $this->app->config->icons->cms . '/lock-unlock.png';
-        
         $button = new Button;
         $toolbar->add($button);
         $button->caption = I18n::_('Upload');
         $button->action = 'CapsuleUiUploadImage.getInstance(\'' . $this->instanceName . '\').upload()';
         $button->icon = $this->app->config->icons->cms . '/drive-upload.png';
+        
+        $button = new Button;
+        $toolbar->add($button);
+        $button->caption = I18n::_('Favorites');
+        $button->action = 'CapsuleUiDialogWindow.getInstance(\'' . $this->instanceName . '-settings\').favorites()';
+        $button->icon = $this->app->config->icons->cms . '/star_1.png';
         
         $button = new Button;
         $toolbar->add($button);

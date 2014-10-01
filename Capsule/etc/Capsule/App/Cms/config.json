@@ -244,7 +244,17 @@
                 "item": {
                     "uploadimage": {
                         "caption": "Upload image",
-                        "url": "uploadimage"
+                        "url": "uploadimage",
+                        "item": {
+                            "small_window": {
+                                "caption": "Popup",
+                                "action": "window.open('/admin/uploadimage/', '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
+                            },
+                            "new tab": {
+                                "caption": "Open in new tab",
+                                "action": "window.open('/admin/uploadimage/', '_blank')"
+                            }
+                        }
                     }
                 }
             },

@@ -115,7 +115,9 @@ class UploadImage extends Controller
         $image = array_replace($image, $result); 
         imagedestroy($image['image']);
         unset($image['image']);
-        $this->result->image = $image;
+        foreach ($image as $k => $v) {
+            $this->result->$k = $v;
+        }
     }
     
     /**
@@ -461,11 +463,4 @@ class UploadImage extends Controller
         $image['height'] = $dst_height;
         return $image;
     }
-    
-    
-    
-    
-    
-    
-    
 }
