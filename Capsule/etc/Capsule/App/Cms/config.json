@@ -219,6 +219,7 @@
                 }
             },
             "tools": {
+                "disabled": true,
                 "caption": "Tools",
                 "help": "Tools",
                 "item": {
@@ -233,6 +234,7 @@
                         }
                     },
                     "files": {
+                        "disabled": false,
                         "caption": "Files",
                         "url": "files"
                     }

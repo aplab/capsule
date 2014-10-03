@@ -193,6 +193,7 @@ class DefaultController extends AbstractController
         $this->app->registry->mainMenu = $menu;
         $menu_config = $this->app->config->mainMenu;
         foreach ($menu_config->item as $id => $config) {
+            if ($config->get('disabled')) continue;
             $punct = new Punct($config->get('caption', 'не названный пункт'));
             $menu->addPunct($punct, $id);
             $this->_initMainMenuSubitem($punct, $config);

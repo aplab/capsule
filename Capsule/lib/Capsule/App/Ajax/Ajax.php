@@ -22,6 +22,7 @@ use Capsule\App\AbstractApp\App;
 use Capsule\Capsule;
 use Capsule\Core\Fn;
 use Capsule\App\Ajax\Controller\Controller;
+use Capsule\User\Auth;
 /**
  * Ajax.php
  *
@@ -84,6 +85,7 @@ class Ajax extends App
      * @see \Capsule\App\AbstractApp\App::run()
      */
     public function run() {
+        if (!Auth::getInstance()->currentUser) return;
         $c = $this->controller;
         if ($c) $c->handle();
     }

@@ -27,6 +27,7 @@ use Capsule\Superglobals\Post;
 use Capsule\I18n\I18n;
 use Capsule\File\Upload\Msg;
 use Capsule\Plugin\Storage\Storage;
+use Capsule\App\Cms\Model\HistoryUploadImage;
 
 /**
  * UploadImage.php
@@ -115,9 +116,13 @@ class UploadImage extends Controller
         $image = array_replace($image, $result); 
         imagedestroy($image['image']);
         unset($image['image']);
+        $history = new HistoryUploadImage();
         foreach ($image as $k => $v) {
             $this->result->$k = $v;
+            $history->$k = $v;
         }
+        $history->path = $history->url; 
+        $history->store();
     }
     
     /**

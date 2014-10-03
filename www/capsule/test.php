@@ -4,6 +4,7 @@ use Capsule\Capsule;
 use Capsule\User\Auth;
 use Capsule\Plugin\Storage\Storage;
 use Capsule\File\Image\ImageInfo;
+use Capsule\App\Cms\Model\HistoryUploadImage;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -18,11 +19,11 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 
 </head>
 <body>
-<form method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<input type="submit">
-</form>
-<?php \Capsule\Tools\Tools::dump($_FILES);?>
+<?php 
+\Capsule\Tools\Tools::dump(Auth::currentUserId());
+\Capsule\Tools\Tools::dump(HistoryUploadImage::_configDataJson());
+\Capsule\Tools\Tools::dump(HistoryUploadImage::all());
 
+?>
 </body>
 </html>

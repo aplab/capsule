@@ -21,7 +21,7 @@ $view = new View($tab_control);
 ob_start() ?>
 <div class="dialog-window-panel"><div class="dialog-window-tabs"><?=$view?></div>
     <div class="dialog-window-body" id="<?=$in?>-t1">
-        <a href="http://www.aplab.ru" target="_blank">www.aplab.ru</a>
+        <?=I18n::_('Local storage only')?>
     </div>
     <div class="dialog-window-body" id="<?=$in?>-t2">
     
