@@ -52,8 +52,6 @@ class View
         }
         $this->instanceName = $instance_name;
         
-        
-        
         Ui::getInstance()->onload->append(
             'new CapsuleUiUploadImage({
                 instance_name: "' . $this->instanceName . '",

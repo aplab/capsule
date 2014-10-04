@@ -199,7 +199,7 @@ class Auth extends Singleton
      *
      * @var boolean
      */
-    protected $checkHttpAcceptEncoding = true;
+    protected $checkHttpAcceptEncoding = false;
 
     /**
      * Проверять совпадение HTTP_ACCEPT_LANGUAGE

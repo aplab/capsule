@@ -1,13 +1,20 @@
 <?php
 use Capsule\Common\TplVar;
+use Capsule\App\Cms\Model\HistoryUploadImage;
+use Capsule\I18n\I18n;
 $tplvar = TplVar::getInstance();
 $in = $tplvar->instanceName;
 ?><div class="capsule-ui-upload-image-history" id="<?=$in?>">
     <div class="workplace" id="<?=$in?>-workplace">
-    <?php ob_start() ?>
-    <div class="item"><div class="img"><img src="/capsule/storage/files/22a/ab4/571/22aab457137b6b64d56f56d4cdab2bd7.gif"><div class="helper"></div></div><div class="comment">filename.jpg<br>filename.jpg</div></div>
-    <div class="item"><div class="img"><img src="/capsule/storage/files/22a/ab4/571/22aab457137b6b64d56f56d4cdab2bd7.gif"><div class="helper"></div></div><div class="comment">filename.jpg</div></div>
-    <div class="item"><div class="img"><img src="/capsule/storage/files/7db/df6/fb8/7dbdf6fb8c1a5b197d4da2126ed4a0c4.jpg"><div class="helper"></div></div><div class="comment">filename.jpg</div></div>
-    <div class="item"><div class="img"><img src="/capsule/storage/files/7db/df6/fb8/7dbdf6fb8c1a5b197d4da2126ed4a0c4.jpg"><div class="helper"></div></div><div class="comment">filename.jpg</div></div>
-    <?=str_repeat(ob_get_clean(), 250)?></div>
+    <?php foreach (HistoryUploadImage::history() as $i) : ?>
+    <div class="item" title="<?=$i['comment']?>">
+        <input type="hidden" value="<?=$i['id']?>" name="id">
+        <div class="img"><img src="<?=$i['path']?>"></div>
+        <div class="size"><?=$i['width']?>x<?=$i['height']?></div><div class="type"><?=pathinfo($i['path'], PATHINFO_EXTENSION)?></div>
+        <div class="name"><?=$i['name']?></div>
+        <div class="fav" title="<?=I18n::_('Add/remove to favorites')?>"></div>
+        <div class="pen" title="<?=I18n::_('Edit comment')?>"></div>
+        <div class="del" title="<?=I18n::_('Physically delete from storage')?>"></div>
+    </div>
+    <?php endforeach ?>
 </div>

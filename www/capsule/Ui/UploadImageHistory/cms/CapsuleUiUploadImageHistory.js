@@ -107,12 +107,10 @@ function CapsuleUiUploadImageHistory(data)
     this.container.css({top: data.top + 'px'});
     this.workplace = $(this.id('workplace'));
     
-//    this.workplace.find('img').each(function(i, o) {
-//        var o = $(o);
-//        o.css({
-//            left: (110 - o.width()) / 2
-//        });
-//    });
+    this.workplace.find('.item').click(function() {
+        var o = $(this);
+        window.prompt('Ссылка на изображение (Ctrl + C - копировать ссылку, ESC - закрыть этот диалог)', o.find('img').attr('src'));
+    });
     
     
 }

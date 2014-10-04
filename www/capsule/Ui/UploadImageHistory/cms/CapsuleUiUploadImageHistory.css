@@ -22,40 +22,105 @@
     height: 147px;
     float: left;
     position: relative;
+    border-radius: 3px;
+}
+.capsule-ui-upload-image-history .item:hover {
+    background-color: #ecf1f8;
 }
 .capsule-ui-upload-image-history .img {
     border: 0 none;
-    height: 100px;
-    position: relative;
-    width: 110px;
+    position: absolute;
+    width: 90px;
     overflow: hidden;
     text-align: center;
-    padding-bottom: 10px;
+    padding: 10px;
+    bottom: 37px;
+    background: transparent;
 }
 .capsule-ui-upload-image-history .img img {
     max-width: 90px;
     max-height: 90px;
-    display: inline-block;
+    display: block;
     margin: 0 auto;
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-    vertical-align: bottom;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background: #fff;
 }
-.capsule-ui-upload-image-history .helper {
-    display: -moz-inline-box;
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-    width: 0px;
-    zoom: 1;
-    //display: inline;
-}
-.capsule-ui-upload-image-history .comment {
-    color: #000;
+.capsule-ui-upload-image-history .size {
     cursor: default;
-    height: 30px;
+    height: 16px;
     overflow: hidden;
-    padding: 0 2px;
-    text-align: center;
-    width: 106px;
+    padding: 0 5px;
+    text-align: left;
+    width: 100px;
     line-height: 15px;
+    position: absolute;
+    bottom: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: transparent;
+}
+.capsule-ui-upload-image-history .type {
+    cursor: default;
+    height: 16px;
+    overflow: hidden;
+    padding: 0 5px;
+    text-align: right;
+    width: 100px;
+    line-height: 15px;
+    position: absolute;
+    bottom: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    background: transparent;
+    font-weight: bold;
+}
+.capsule-ui-upload-image-history .name {
+    cursor: default;
+    height: 16px;
+    overflow: hidden;
+    padding: 0 5px;
+    text-align: center;
+    width: 100px;
+    line-height: 15px;
+    position: absolute;
+    bottom: 7px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.capsule-ui-upload-image-history .fav {
+    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/star.png') center center no-repeat;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+}
+.capsule-ui-upload-image-history .fav:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.capsule-ui-upload-image-history .pen {
+    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/pencil.png') center center no-repeat;
+    position: absolute;
+    right: 1px;
+    top: 43px;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+}
+.capsule-ui-upload-image-history .pen:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.capsule-ui-upload-image-history .del {
+    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/cross-script.png') center center no-repeat;
+    position: absolute;
+    right: 1px;
+    bottom: 37px;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+}
+.capsule-ui-upload-image-history .del:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }
