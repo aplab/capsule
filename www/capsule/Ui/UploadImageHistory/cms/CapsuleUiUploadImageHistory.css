@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+.capsule-ui-upload-image-history {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.capsule-ui-upload-image-history .workplace {
+    background: #fff;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    top: 0;
+    overflow: auto;
+}
+.capsule-ui-upload-image-history .item {
+    width: 110px;
+    height: 147px;
+    float: left;
+    position: relative;
+}
+.capsule-ui-upload-image-history .img {
+    border: 0 none;
+    height: 100px;
+    position: relative;
+    width: 110px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 10px;
+}
+.capsule-ui-upload-image-history .img img {
+    max-width: 90px;
+    max-height: 90px;
+    display: inline-block;
+    margin: 0 auto;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    vertical-align: bottom;
+}
+.capsule-ui-upload-image-history .helper {
+    display: -moz-inline-box;
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 0px;
+    zoom: 1;
+    //display: inline;
+}
+.capsule-ui-upload-image-history .comment {
+    color: #000;
+    cursor: default;
+    height: 30px;
+    overflow: hidden;
+    padding: 0 2px;
+    text-align: center;
+    width: 106px;
+    line-height: 15px;
+}

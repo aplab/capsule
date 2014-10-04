@@ -20,10 +20,12 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 </head>
 <body>
 <?php 
-\Capsule\Tools\Tools::dump(Auth::currentUserId());
-\Capsule\Tools\Tools::dump(HistoryUploadImage::_configDataJson());
-\Capsule\Tools\Tools::dump(HistoryUploadImage::all());
-
+// \Capsule\Tools\Tools::dump(Auth::currentUserId());
+// \Capsule\Tools\Tools::dump(HistoryUploadImage::_configDataJson());
+$items = HistoryUploadImage::all();
+\Capsule\Tools\Tools::dump($items);
+reset($items)->favorites = 1;
+reset($items)->store();
 ?>
 </body>
 </html>

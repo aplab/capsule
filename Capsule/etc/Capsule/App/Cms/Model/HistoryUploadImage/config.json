@@ -40,13 +40,21 @@
                 "type": "StringLength",
                 "max": 1024
             }
+        },
+        "favorites": {
+            "title": "Favorites",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": ""
         }
     },
     "table": {
         "columns": {
             "path": {
                 "type": "VARCHAR",
-                "length": 1024,
+                "length": 255,
                 "comment": "Путь",
                 "default": ""
             },
@@ -67,8 +75,49 @@
                 "unsigned": true,
                 "comment": "Высота изображения",
                 "default": 0
+            },
+            "favorites": {
+                "type": "tinyint",
+                "length": 1,
+                "unsigned": true,
+                "comment": "Изображение добавлено в избранное",
+                "default": 0
             }
         },
-        "name": "cms_history_upload_image"
+        "indexes": {
+            "path": {
+                "fields": {
+                    "path": {
+                        "length": 255
+                    }
+                }
+            },
+            "path_id": {
+                "fields": {
+                    "path": {
+                        "length": 255
+                    },
+                    "id": []
+                }
+            },
+            "favorites": {
+                "fields": {
+                    "favorites": []
+                }
+            },
+            "id_favorites": {
+                "fields": {
+                    "id": [],
+                    "favorites": []
+                }
+            },
+            "favorites_id": {
+                "fields": {
+                    "favorites": [],
+                    "id": []
+                }
+            }
+        },
+        "name": "capsule_cms_history_upload_image"
     }
 }

@@ -255,6 +255,10 @@
                             "new tab": {
                                 "caption": "Open in new tab",
                                 "action": "window.open('/admin/uploadimage/', '_blank')"
+                            },
+                            "history": {
+                                "caption": "View history",
+                                "action": "window.open('/admin/uploadimagehistory/', '_blank')"
                             }
                         }
                     }
@@ -364,6 +368,11 @@
             "css": "/capsule/Ui/UploadImage/cms/CapsuleUiUploadImage.css",
             "js": "/capsule/Ui/UploadImage/cms/CapsuleUiUploadImage.js",
             "top": 29
+        },
+        "uploadImageHistory": {
+            "css": "/capsule/Ui/UploadImageHistory/cms/CapsuleUiUploadImageHistory.css",
+            "js": "/capsule/Ui/UploadImageHistory/cms/CapsuleUiUploadImageHistory.js",
+            "top": 29
         }
     },
     "#": "Icons configuration",
@@ -425,6 +434,7 @@
         "devlog": "DevLog",
         "storage": "Storage",
         "files": "Files",
-        "uploadimage": "UploadImage"
+        "uploadimage": "UploadImage",
+        "uploadimagehistory":  "UploadImageHistory"
     }
 }

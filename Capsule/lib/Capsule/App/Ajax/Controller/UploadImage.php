@@ -121,7 +121,8 @@ class UploadImage extends Controller
             $this->result->$k = $v;
             $history->$k = $v;
         }
-        $history->path = $history->url; 
+        $history->path = $history->url;
+        HistoryUploadImage::deleteSamePath($history); 
         $history->store();
     }
     
