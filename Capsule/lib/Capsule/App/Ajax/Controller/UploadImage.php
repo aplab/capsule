@@ -469,4 +469,45 @@ class UploadImage extends Controller
         $image['height'] = $dst_height;
         return $image;
     }
+    
+    protected function toggleFavoritesImage() {
+        $ret = array(
+            'error' => true
+        );
+        $image = HistoryUploadImage::id(Post::getInstance()->gets('id'));
+        if ($image) {
+            $k = 'favorites';
+            $v = $image->$k;
+            $image->$k = !$v;
+            $image->store();
+            $ret[$k] = !$v;
+            $ret['error'] = false;
+        }
+        print json_encode($ret);
+    }
+    
+    protected function commentImage() {
+        $ret = array(
+            'error' => true
+        );
+        $image = HistoryUploadImage::id(Post::getInstance()->gets('id'));
+        if ($image) {
+            $image->comment = Post::getInstance()->gets('comment');
+            $image->store();
+            $ret['error'] = false;
+        }
+        print json_encode($ret);
+    }
+    
+    protected function deleteImage() {
+        $ret = array(
+            'error' => true
+        );
+        $image = HistoryUploadImage::id(Post::getInstance()->gets('id'));
+        if ($image) {
+            
+            $ret['error'] = false;
+        }
+        print json_encode($ret);
+    }
 }

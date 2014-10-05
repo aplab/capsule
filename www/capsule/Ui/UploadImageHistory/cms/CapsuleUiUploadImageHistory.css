@@ -89,38 +89,50 @@
     text-overflow: ellipsis;
 }
 .capsule-ui-upload-image-history .fav {
-    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/star.png') center center no-repeat;
+    background: rgba(0, 0, 0, 0.1) url('/capsule/assets/share/icons/cms/star-gray.png') center center no-repeat;
     position: absolute;
-    right: 1px;
-    top: 1px;
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px rgba(255, 255, 255, 0.4) solid;
+    display: none;
 }
 .capsule-ui-upload-image-history .fav:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 .capsule-ui-upload-image-history .pen {
-    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/pencil.png') center center no-repeat;
+    background: rgba(0, 0, 0, 0.1) url('/capsule/assets/share/icons/cms/pencil.png') center center no-repeat;
     position: absolute;
-    right: 1px;
-    top: 43px;
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
+    right: 0;
+    top: 32px;
+    width: 30px;
+    height: 30px;
+    border: 1px rgba(255, 255, 255, 0.4) solid;
+    border-top: 0;
+    border-bottom: 0;
+    display: none;
 }
 .capsule-ui-upload-image-history .pen:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 .capsule-ui-upload-image-history .del {
-    background: rgba(0, 0, 0, 0.3) url('/capsule/assets/share/icons/cms/cross-script.png') center center no-repeat;
+    background: rgba(0, 0, 0, 0.1) url('/capsule/assets/share/icons/cms/cross-octagon-frame.png') center center no-repeat;
     position: absolute;
-    right: 1px;
-    bottom: 37px;
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
+    right: 0;
+    top: 62px;
+    width: 30px;
+    height: 30px;
+    border: 1px rgba(255, 255, 255, 0.4) solid;
+    display: none;
 }
 .capsule-ui-upload-image-history .del:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.capsule-ui-upload-image-history .is-fav {
+    display: block;
+    background: rgba(0, 0, 0, 0.1) url('/capsule/assets/share/icons/cms/star.png') center center no-repeat;
+}
+.capsule-ui-upload-image-history .is-act {
+    display: block;
 }

@@ -10,6 +10,9 @@
     "controller": {
         "toggleActive": "Active",
         "loadNested": "Nested",
-        "uploadSingleImage": "UploadImage"
+        "uploadSingleImage": "UploadImage",
+        "toggleFavoritesImage": "UploadImage",
+        "commentImage": "UploadImage",
+        "deleteImage": "UploadImage"
     }
 }

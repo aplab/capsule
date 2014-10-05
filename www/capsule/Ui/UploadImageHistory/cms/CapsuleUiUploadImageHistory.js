@@ -24,7 +24,7 @@ function CapsuleUiUploadImageHistory(data)
     /**
      * ссылка на сам объект для передачи контекста
      */
-    var widget = this;
+    var instance = this;
     
     /**
      * static init
@@ -107,10 +107,92 @@ function CapsuleUiUploadImageHistory(data)
     this.container.css({top: data.top + 'px'});
     this.workplace = $(this.id('workplace'));
     
+    /**
+     * add handlers
+     */
     this.workplace.find('.item').click(function() {
         var o = $(this);
         window.prompt('Ссылка на изображение (Ctrl + C - копировать ссылку, ESC - закрыть этот диалог)', o.find('img').attr('src'));
-    });
+    }).hover(function(event) {
+            var o = $(this);
+            o.find('.fav').addClass('is-act').click(function(event) {
+                event.stopPropagation();
+                instance.fav(o);
+            });
+            o.find('.pen').addClass('is-act').click(function(event) {
+                event.stopPropagation();
+                instance.pen(o);
+            });
+            o.find('.del').addClass('is-act').click(function(event) {
+                event.stopPropagation();
+                instance.del(o);
+            });
+        }, function() {
+            var o = $(this);
+            o.find('.fav').removeClass('is-act').unbind('click');
+            o.find('.pen').removeClass('is-act').unbind('click');
+            o.find('.del').removeClass('is-act').unbind('click');
+        }
+    );
     
+    this.del = function(o) {
+        if (!confirm('Подтверждение удаления')) return false;
+        var container = o.closest('div.item');
+        var id = container.find('input[name="id"]').val();
+        $.post('/ajax/', {
+            id: id,
+            cmd: 'deleteImage'
+        }, function(data, status, jq) {
+            if (data.error) {
+                alert('error');
+                return;
+            }
+            container.animate({
+                opacity: 0,
+                width: 0
+            }, 300, 'swing', function() {
+                container.remove();
+            });
+        }, 'json');
+    }
     
+    this.pen = function(o) {
+        var container = o.closest('div.item');
+        var id = container.find('input[name="id"]').val();
+        var comment = container.attr('title');
+        var new_comment = prompt('Комментарий к изображению', comment);
+        if (comment == new_comment) return; // не изменено
+        $.post('/ajax/', {
+            id: id,
+            cmd: 'commentImage',
+            comment: new_comment
+        }, function(data, status, jq) {
+            if (data.error) {
+                alert('error');
+                return;
+            }
+            container.attr({
+                title: new_comment
+            });
+        }, 'json');
+    }
+    
+    this.fav = function(o) {
+        var container = o.closest('div.item');
+        var id = container.find('input[name="id"]').val();
+        $.post('/ajax/', {
+            id: id,
+            cmd: 'toggleFavoritesImage'
+        }, function(data, status, jq) {
+            if (data.error) {
+                alert('error');
+                return;
+            }
+            if (data.favorites) {
+                container.find('.fav').addClass('is-fav');
+            } else {
+                container.find('.fav').removeClass('is-fav');
+            }
+        }, 'json');
+    }
 }

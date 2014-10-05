@@ -12,7 +12,7 @@ $in = $tplvar->instanceName;
         <div class="img"><img src="<?=$i['path']?>"></div>
         <div class="size"><?=$i['width']?>x<?=$i['height']?></div><div class="type"><?=pathinfo($i['path'], PATHINFO_EXTENSION)?></div>
         <div class="name"><?=$i['name']?></div>
-        <div class="fav" title="<?=I18n::_('Add/remove to favorites')?>"></div>
+        <div class="fav<?=$i['favorites']?' is-fav':''?>" title="<?=I18n::_('Add/remove to favorites')?>"></div>
         <div class="pen" title="<?=I18n::_('Edit comment')?>"></div>
         <div class="del" title="<?=I18n::_('Physically delete from storage')?>"></div>
     </div>
