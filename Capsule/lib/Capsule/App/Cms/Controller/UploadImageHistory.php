@@ -20,12 +20,8 @@ namespace Capsule\App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use Capsule\App\Cms\Ui\UploadImageHistory\View;
-use Capsule\Common\Path;
 use Capsule\Capsule;
 use Capsule\I18n\I18n;
-use Capsule\Common\TplVar;
-use Capsule\App\Cms\Ui\Stylesheet;
-use Capsule\App\Cms\Ui\Script;
 /**
  * Storage.php
  *

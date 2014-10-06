@@ -20,12 +20,7 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 </head>
 <body>
 <?php 
-// \Capsule\Tools\Tools::dump(Auth::currentUserId());
-// \Capsule\Tools\Tools::dump(HistoryUploadImage::_configDataJson());
-$items = HistoryUploadImage::all();
-\Capsule\Tools\Tools::dump($items);
-reset($items)->favorites = 1;
-reset($items)->store();
+Storage::getInstance()->delFile('ce17be480dafed95bc4a422a20ab1551.jpg');
 ?>
 </body>
 </html>

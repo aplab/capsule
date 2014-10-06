@@ -38,7 +38,19 @@
             "label": "",
             "validator": {
                 "type": "StringLength",
-                "max": 1024
+                "max": 255
+            }
+        },
+        "storage": {
+            "title": "Хранилище",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
             }
         },
         "favorites": {
@@ -56,6 +68,12 @@
                 "type": "VARCHAR",
                 "length": 255,
                 "comment": "Путь",
+                "default": ""
+            },
+            "storage": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "Хранилище",
                 "default": ""
             },
             "comment": {

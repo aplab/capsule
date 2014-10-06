@@ -80,10 +80,17 @@ class IdBased extends SingleKey
         throw new Exception($msg);
     }
     
+    /**
+     * Удаляет данные объекта из таблицы.
+     * Возвращает количество затронутых строк.
+     * 
+     * @param int $id
+     * @return int
+     */
     public static function del($id) {
         $tmp = $id;
         if (!is_array($tmp)) {
-            $tmp[] = $tmp;
+            $tmp = array($tmp);
         }
         $ids = array();
         $db = Db::getInstance();
@@ -100,5 +107,6 @@ class IdBased extends SingleKey
                 FROM ' . $table . '
                 WHERE `' . static::$key . '` IN(' . join(',', $ids) . ')';
         $db->query($sql);
+        return $db->affected_rows;
     }
 }

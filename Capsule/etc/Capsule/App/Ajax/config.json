@@ -12,6 +12,7 @@
         "loadNested": "Nested",
         "uploadSingleImage": "UploadImage",
         "toggleFavoritesImage": "UploadImage",
+        "addToFavoritesImage": "UploadImage",
         "commentImage": "UploadImage",
         "deleteImage": "UploadImage"
     }

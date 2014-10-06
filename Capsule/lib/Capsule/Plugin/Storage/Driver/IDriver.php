@@ -35,4 +35,6 @@ interface IDriver
      * @return string
      */
     function addFile($source_absolute_path, $extension = null);
+    
+    function delFile($filename);
 }

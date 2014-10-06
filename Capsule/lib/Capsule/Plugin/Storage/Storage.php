@@ -129,6 +129,21 @@ class Storage
     }
     
     /**
+     * Возвращает имя хранилища
+     * 
+     * @param self $storage
+     * @throws Exception
+     * @return string
+     */
+    public static function getInstanceName(self $storage) {
+        foreach (self::$instances as $k => $v) {
+            if ($storage === $v) return $k;
+        }
+        $msg = 'Unknown storage';
+        throw new Exception($msg);
+    }
+    
+    /**
      * @param Config $config
      * @return self
      */
@@ -193,5 +208,9 @@ class Storage
      */
     public function addFile($source_absolute_path, $extension = null) {
         return $this->driver->addFile($source_absolute_path, $extension);
+    }
+    
+    public function delFile($filename) {
+        return $this->driver->delFile($filename);
     }
 }

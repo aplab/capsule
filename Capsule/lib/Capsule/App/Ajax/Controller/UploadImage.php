@@ -122,8 +122,10 @@ class UploadImage extends Controller
             $history->$k = $v;
         }
         $history->path = $history->url;
+        $history->storage = Storage::getInstanceName(Storage::getInstance());
         HistoryUploadImage::deleteSamePath($history); 
         $history->store();
+        $this->result->historyId = $history->id;
     }
     
     /**
@@ -470,6 +472,12 @@ class UploadImage extends Controller
         return $image;
     }
     
+    /**
+     * Меняет значение favorites на противоположное
+     * 
+     * @param void
+     * @return void
+     */
     protected function toggleFavoritesImage() {
         $ret = array(
             'error' => true
@@ -486,6 +494,31 @@ class UploadImage extends Controller
         print json_encode($ret);
     }
     
+    /**
+     * Устанавливает значение favorites в true
+     *
+     * @param void
+     * @return void
+     */
+    protected function addToFavoritesImage() {
+        $ret = array(
+            'error' => true
+        );
+        $image = HistoryUploadImage::id(Post::getInstance()->gets('id'));
+        if ($image) {
+            $image->favorites = true;
+            $image->store();
+            $ret['error'] = false;
+        }
+        print json_encode($ret);
+    }
+    
+    /**
+     * Добавляет комментарий к изображению
+     * 
+     * @param void
+     * @return void
+     */
     protected function commentImage() {
         $ret = array(
             'error' => true
@@ -499,13 +532,25 @@ class UploadImage extends Controller
         print json_encode($ret);
     }
     
+    /**
+     * Удаляет изображение из истории и из хранилища, если хранилищем 
+     * поддерживается функция удаления
+     * 
+     * @param void
+     * @return void
+     */
     protected function deleteImage() {
         $ret = array(
             'error' => true
         );
         $image = HistoryUploadImage::id(Post::getInstance()->gets('id'));
         if ($image) {
-            
+            $filename = pathinfo($image->path, PATHINFO_BASENAME);
+            try {
+                Storage::getInstance()->delFile($filename);
+            } catch (\Exception $e) {
+            }
+            HistoryUploadImage::del($image->id);
             $ret['error'] = false;
         }
         print json_encode($ret);

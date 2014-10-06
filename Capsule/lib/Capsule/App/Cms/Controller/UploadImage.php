@@ -46,6 +46,7 @@ class UploadImage extends DefaultController
         
         $this->ui->css->append(new Stylesheet($this->app->config->path->imageareaselect->css));
         $this->ui->js->append(new Script($this->app->config->path->imageareaselect->js));
+        $this->ui->js->append(new Script($this->app->config->path->js->mousewheel));
         
         $this->initMainMenu();
         $this->initToolbar();
@@ -104,8 +105,14 @@ class UploadImage extends DefaultController
         $button = new Button;
         $toolbar->add($button);
         $button->caption = I18n::_('Favorites');
-        $button->action = 'CapsuleUiDialogWindow.getInstance(\'' . $this->instanceName . '-settings\').favorites()';
+        $button->action = 'CapsuleUiUploadImage.getInstance(\'' . $this->instanceName . '\').favorites()';
         $button->icon = $this->app->config->icons->cms . '/star_1.png';
+        
+        $button = new Button;
+        $toolbar->add($button);
+        $button->caption = I18n::_('History');
+        $button->action = 'CapsuleUiUploadImage.getInstance(\'' . $this->instanceName . '\').history()';
+        $button->icon = $this->app->config->icons->cms . '/clock-history.png';
         
         $button = new Button;
         $toolbar->add($button);
@@ -124,6 +131,15 @@ class UploadImage extends DefaultController
         $window->width = 320;
         $window->height = 240;
         $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'storageSettings.php'));
+        $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
+        $this->ui->wrapper->append($view);
+        
+        $window = new DialogWindow($this->instanceName . '-history');
+        $window->hidden = true;
+        $window->caption = I18n::_('History');
+        $window->width = 580;
+        $window->height = 480;
+        $window->content = 'loading...';
         $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
         $this->ui->wrapper->append($view);
     }

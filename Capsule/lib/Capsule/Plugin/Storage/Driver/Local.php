@@ -121,4 +121,24 @@ class Local extends Driver
             'url' => '/' . $file_absolute_path->substract(Capsule::getInstance()->documentRoot)->toString()
         );
     }
+    
+    public function delFile($filename) {
+        $e = new Exceptionizer;
+        // calculate file param
+        $file_relative_dir = '/' . join('/', array_slice(str_split($filename, 3), 0, 3));
+        $file_absolute_dir = new Path($this->files, $file_relative_dir);
+        $file_relative_path = new Path($file_relative_dir, $filename);
+        $file_absolute_path = new Path($this->files, $file_relative_path);
+        if (file_exists($file_absolute_path)) {
+            unlink($file_absolute_path);
+        } else {
+            $msg = 'File not found: ' . $filename;
+            throw new \Exception($msg);
+        }
+        if (file_exists($file_absolute_path)) {
+            $msg = 'Unable to delete file: ' . $filename;
+            throw new \Exception($msg);
+        }
+        return true;
+    }
 }

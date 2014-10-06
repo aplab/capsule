@@ -150,7 +150,7 @@ function CapsuleUiUploadImageHistory(data)
             container.animate({
                 opacity: 0,
                 width: 0
-            }, 300, 'swing', function() {
+            }, 100, 'swing', function() {
                 container.remove();
             });
         }, 'json');

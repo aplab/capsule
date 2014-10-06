@@ -152,6 +152,17 @@ function CapsuleUiUploadImage(data)
         }
     });
     
+    this.inputWidth.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
+        }
+    });
+    
     /**
      * Обработчик потери фокуса поля ввода ширины изображения в плагине resize
      * 
@@ -181,6 +192,17 @@ function CapsuleUiUploadImage(data)
     this.inputHeight.keyup(function(e) {
         if (e.keyCode == 13) {
             this.blur();
+        }
+    });
+    
+    this.inputHeight.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
         }
     });
     
@@ -239,6 +261,9 @@ function CapsuleUiUploadImage(data)
         
         // строковое представление изображения из буфера обмена
         this.imageString = '';
+        
+        // id последнего добавленного изображения в истории
+        this.historyId = null;
     }
     
     this.init(); // сразу инициализируем
@@ -891,6 +916,17 @@ function CapsuleUiUploadImage(data)
         }
     });
     
+    this.inputCropX1.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
+        }
+    });
+    
     /**
      * Обработчик потери фокуса
      */
@@ -930,6 +966,17 @@ function CapsuleUiUploadImage(data)
         }
     });
     
+    this.inputCropY1.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
+        }
+    });
+    
     /**
      * Обработчик потери фокуса
      */
@@ -966,6 +1013,17 @@ function CapsuleUiUploadImage(data)
     this.inputCropX2.keyup(function(e) {
         if (e.keyCode == 13) {
             this.blur();
+        }
+    });
+    
+    this.inputCropX2.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
         }
     });
     
@@ -1011,6 +1069,17 @@ function CapsuleUiUploadImage(data)
         }
     });
     
+    this.inputCropY2.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
+        }
+    });
+    
     /**
      * Обработчик потери фокуса
      */
@@ -1053,6 +1122,17 @@ function CapsuleUiUploadImage(data)
         }
     });
     
+    this.inputCropWidth.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
+        }
+    });
+    
     /**
      * Обработчик потери фокуса
      */
@@ -1088,6 +1168,17 @@ function CapsuleUiUploadImage(data)
     this.inputCropHeight.keyup(function(e) {
         if (e.keyCode == 13) {
             this.blur();
+        }
+    });
+    
+    this.inputCropHeight.mousewheel(function(event) {
+        var direction = event.deltaY;
+        if (direction > 0) {
+            var value = $(this).val();
+            $(this).val(++value);
+        } else {
+            var value = $(this).val();
+            if (value > 0) $(this).val(--value);
         }
     });
     
@@ -1250,5 +1341,31 @@ function CapsuleUiUploadImage(data)
             return;
         }
         this.inputFilename.val(o.url);
+        this.historyId = o.historyId;
+    }
+    
+    this.history = function() {
+        var wnd = CapsuleUiDialogWindow.getInstance(this.instanceName + '-history');
+        wnd.showCenter();
+        var workplace = $(wnd.workplace);
+        workplace.empty();
+        var iframe = $(document.createElement('iframe'));
+        iframe.css({
+            border: 0,
+            position: 'absolute',
+            left: 0,
+            top: 0
+        }).attr({
+            scrolling: 'no',
+            border: 0,
+            width: workplace.width(),
+            height: workplace.height(),
+            src: '/admin/uploadimagehistory/'
+        });
+        workplace.append(iframe);
+    }
+    
+    this.favorites = function() {
+        
     }
 }

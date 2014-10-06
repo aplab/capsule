@@ -57,6 +57,7 @@ class HistoryUploadImage extends NamedTsUsr
         $db = Db::getInstance();
         $sql = 'DELETE FROM ' . $db->bq(self::config()->table->name) . '
                 WHERE `path` = ' . $db->qt($item->get('path', '')) . '
+                AND `storage` = ' . $db->qt($item->get('storage', '')) . '
                 AND `favorites` = 0
                 AND `id` != ' . $db->qt($item->get('id', 0));
         $db->query($sql);
