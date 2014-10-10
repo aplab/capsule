@@ -25,11 +25,22 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <script src="/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"></script>
 </head>
 <body>
-
+<input type="button">
 <script>
 $(document).ready(function() {
+    $('input').click(function() {
+        CapsuleUiDialog.getInstance('testwindow').blink();
+    });
     new CapsuleUiDialog({
-        instanceName: 'testwindow'
+        instanceName: 'testwindow',
+        //hidden: true
+    });
+    new CapsuleUiDialog({
+        instanceName: 'testwindow1',
+        resizable: 0
+    });
+    new CapsuleUiDialog({
+        instanceName: 'testwindow2'
     });
 });
 </script>

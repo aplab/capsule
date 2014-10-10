@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 .capsule-ui-dialog {
-    position: relative;
+    position: absolute;
 }
 .capsule-ui-dialog .capsule-ui-dialog-head {
     height: 24px;
@@ -50,7 +50,7 @@
     top: 5px;
     right: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 1;
     background: #edeceb;
     width: auto;
     height: auto;
@@ -100,7 +100,31 @@
     bottom: 6px;
     background: transparent url("data:image/gif;base64,R0lGODlhCwALAJECAKmlovn4+P///wAAACH5BAEAAAIALAAAAAALAAsAAAIYlH8QyLEMmRKzLRfj3E/g32UctSigdwUFADs=") 0 0 no-repeat;
 }
-
-
-
+.capsule-ui-dialog .ui-icon-gripsmall-diagonal-se {
+    background: none;
+}
+.capsule-ui-dialog .capsule-ui-dialog-content-resizable {
+    background: green;
+    position: absolute;
+    margin: auto;
+    width: auto;
+    height: auto;
+    top: 24px;
+    left: 5px;
+    right: 5px;
+    bottom: 25px;
+    z-index: 100;
+}
+.capsule-ui-dialog .capsule-ui-dialog-content-fixed {
+    background: green;
+    position: absolute;
+    margin: auto;
+    width: auto;
+    height: auto;
+    top: 24px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    z-index: 100;
+}
 
