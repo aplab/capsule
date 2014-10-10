@@ -148,8 +148,8 @@ class DefaultController extends AbstractController
         $window = new DialogWindow('about');
         $window->hidden = true;
         $window->caption = 'About';
-        $window->width = 640;
-        $window->height = 480;
+        $window->width = 320;
+        $window->height = 240;
         $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
         $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
         $wrapper->append($view);

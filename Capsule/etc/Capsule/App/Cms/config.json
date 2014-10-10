@@ -436,6 +436,7 @@
         "storage": "Storage",
         "files": "Files",
         "uploadimage": "UploadImage",
-        "uploadimagehistory":  "UploadImageHistory"
+        "uploadimagehistory":  "UploadImageHistory",
+        "uploadimagefavorites":  "UploadImageFavorites"
     }
 }

@@ -19,7 +19,7 @@
 namespace Capsule\App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
-use Capsule\App\Cms\Ui\UploadImageHistory\View;
+use Capsule\App\Cms\Ui\UploadImageFavorites\View;
 use Capsule\Capsule;
 use Capsule\I18n\I18n;
 /**
@@ -28,9 +28,9 @@ use Capsule\I18n\I18n;
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class UploadImageHistory extends DefaultController
+class UploadImageFavorites extends DefaultController
 {
-    protected $instanceName = 'capsule-ui-upload-image-history';
+    protected $instanceName = 'capsule-ui-upload-image-favorites';
     
     /**
      * (non-PHPdoc)
@@ -53,9 +53,9 @@ class UploadImageHistory extends DefaultController
         
         $button = new Button;
         $toolbar->add($button);
-        $button->caption = I18n::_('Show only favorites');
-        $button->url = '/admin/uploadimagefavorites/';
-        $button->icon = $this->app->config->icons->cms . '/star_1.png';
+        $button->caption = I18n::_('Show all history');
+        $button->url = '/admin/uploadimagehistory/';
+        $button->icon = $this->app->config->icons->cms . '/clock-history.png';
         
         $view = new View($this->instanceName); 
         

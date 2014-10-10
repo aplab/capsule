@@ -39,4 +39,35 @@
         }
         return true;  
     }  
+    
+    /**
+     * Ниже универсальное решение на языке JavaScript, которое учитывает 3 
+     * способа определения, в каком окне браузера открыта страница.
+     * 
+     * @param void
+     * @return boolean
+     */
+    Capsule.isFramed = function() {
+        var isFramed = false;
+        try {
+          isFramed = window != window.top || document != top.document || self.location != top.location;
+        } catch (e) {
+          isFramed = true;
+        }
+        return isFramed;
+    }
+    
+    if (Capsule.isFramed()) {
+        var name = window.name;
+        if (!name) return;
+        var p = window.parent;
+        if ('object' != typeof(p)) return;
+        var d = window.parent.document;
+        if ('object' != typeof(d)) return;
+        $(document).ready(function() {
+            $(this).click(function() {
+                $('#' + name, window.parent.document).mousedown();
+            });
+        });
+    }
 })(window);

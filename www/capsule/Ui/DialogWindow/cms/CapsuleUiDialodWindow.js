@@ -246,14 +246,14 @@ function CapsuleUiDialogWindow(data)
             if (draggableArea.instance.left < 0) {
                 draggableArea.instance.left = 0;
             }
-            
-            var limit = $(this).width() - dialogWindow.width; 
+            // 32 просто некий лимит
+            var limit = $(this).width() - 32;//dialogWindow.width; 
             
             if (draggableArea.instance.left > limit) {
                 draggableArea.instance.left = limit;
             }    
-            
-            var limit = $(this).height() - dialogWindow.height; 
+            // 32 просто некий лимит
+            var limit = $(this).height() - 32;//dialogWindow.height; 
                 
             if (draggableArea.instance.top > limit) {
                 draggableArea.instance.top = limit;
@@ -317,4 +317,27 @@ function CapsuleUiDialogWindow(data)
         this.container.style.display = 'block';
         this.focus();
     }
+    
+//    this.resizable = true;
+//    
+//    this.setResizable = function(value) {
+//        this.resizable = value ? true : false;
+//        if (!this.resizable) {
+//            $(this.container).resizable('destroy');
+//            return;
+//        }
+//        $(this.container).resizable({
+//            resize: function(event, ui) {
+//                $(dialogWindow.wrapper).css({
+//                    width: ui.size.width,
+//                    height: ui.size.height
+//                });
+//                $(dialogWindow.workplace).css({
+//                    height: ui.size.height - (dialogWindow.captionHeight + dialogWindow.workplaceHeightCorrection)
+//                });
+//            }
+//        });
+//    } 
+//    
+//    this.setResizable(this.resizable);
 }

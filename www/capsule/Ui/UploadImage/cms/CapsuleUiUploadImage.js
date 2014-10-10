@@ -161,6 +161,7 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputWidthRecalc();
     });
     
     /**
@@ -170,21 +171,25 @@ function CapsuleUiUploadImage(data)
      * @return void
      */
     this.inputWidth.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputWidthRecalc();
+    });
+    
+    this.inputWidthRecalc = function() {
+        var o = this.inputWidth;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageResizeWidth);
+            o.val(this.imageResizeWidth);
             return;
         }
-        $(this).val(check.value);
-        widget.detachResizable();
-        widget.image.css({
+        o.val(check.value);
+        this.detachResizable();
+        this.image.css({
             width: check.value,
             height: 'auto'
         });
-        widget.attachResizable();
-    });
+        this.attachResizable();
+    }
     
     /**
      * Обработчик нажатия enter
@@ -204,27 +209,32 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputHeightRecalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputHeight.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputHeightRecalc();
+    });
+    
+    this.inputHeightRecalc = function() {
+        var o = this.inputHeight;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageResizeHeight);
+            o.val(this.imageResizeHeight);
             return;
         }
-        $(this).val(check.value);
-        widget.detachResizable();
-        widget.image.css({
+        o.val(check.value);
+        this.detachResizable();
+        this.image.css({
             width: 'auto',
             height: check.value
         });
-        widget.attachResizable();
-    });
+        this.attachResizable();
+    }
     
     /**
      * Начальная инициализация
@@ -925,22 +935,27 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropX1Recalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropX1.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropX1Recalc();
+    });
+    
+    this.inputCropX1Recalc = function() {
+        var o = this.inputCropX1;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropX1);
+            o.val(this.imageCropX1);
             return;
         }
         value = check.value;
-        var xMax = widget.image.width() - 1;
-        var selection = widget.getSelection();
+        var xMax = this.image.width() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
@@ -954,8 +969,8 @@ function CapsuleUiUploadImage(data)
         if (x2 > xMax) {
             x2 = xMax;
         }
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Обработчик нажатия enter
@@ -975,22 +990,27 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropY1Recalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropY1.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropY1Recalc();
+    });
+    
+    this.inputCropY1Recalc = function() {
+        var o = this.inputCropY1;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropY1);
+            o.val(this.imageCropY1);
             return;
         }
         value = check.value;
-        var yMax = widget.image.height() - 1;
-        var selection = widget.getSelection();
+        var yMax = this.image.height() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
@@ -1004,8 +1024,8 @@ function CapsuleUiUploadImage(data)
         if (y2 > yMax) {
             y2 = yMax;
         }
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Обработчик нажатия enter
@@ -1025,22 +1045,27 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropX2Recalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropX2.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropX2Recalc();
+    });
+    
+    this.inputCropX2Recalc = function() {
+        var o = this.inputCropX2;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropX2);
+            o.val(this.imageCropX2);
             return;
         }
         value = check.value;
-        var xMax = widget.image.width() - 1;
-        var selection = widget.getSelection();
+        var xMax = this.image.width() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
@@ -1057,8 +1082,8 @@ function CapsuleUiUploadImage(data)
         if (x1 < 0) {
             x1 = 0;
         }
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Обработчик нажатия enter
@@ -1078,22 +1103,27 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropY2Recalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropY2.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropY2Recalc();
+    });
+    
+    this.inputCropY2Recalc = function() {
+        var o = this.inputCropY2;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropY2);
+            o.val(this.imageCropY2);
             return;
         }
         value = check.value;
-        var yMax = widget.image.height() - 1;
-        var selection = widget.getSelection();
+        var yMax = this.image.height() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
@@ -1110,8 +1140,8 @@ function CapsuleUiUploadImage(data)
         if (y1 < 0) {
             y1 = 0;
         }
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Обработчик нажатия enter
@@ -1131,36 +1161,41 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropWidthRecalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropWidth.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropWidthRecalc();
+    });
+    
+    this.inputCropWidthRecalc = function() {
+        var o = this.inputCropWidth;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropWidth);
+            o.val(this.imageCropWidth);
             return;
         }
         value = check.value;
-        var xMax = widget.image.width() - 1;
-        var selection = widget.getSelection();
+        var xMax = this.image.width() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
         var y2 = selection.y2;
         if (0 == value) value = 1;
-        var delta = value - widget.imageCropWidth;
+        var delta = value - this.imageCropWidth;
         x2 += delta;
         if (x2 > xMax) {
             x1 -= x2 - xMax;
             x2 = xMax;
         }
         if (x1 < 0) x1 = 0;
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Обработчик нажатия enter
@@ -1180,36 +1215,41 @@ function CapsuleUiUploadImage(data)
             var value = $(this).val();
             if (value > 0) $(this).val(--value);
         }
+        widget.inputCropHeightRecalc();
     });
     
     /**
      * Обработчик потери фокуса
      */
     this.inputCropHeight.blur(function() {
-        var o = $(this);
-        var value = $(this).val();
-        var check = widget.checkInputDigit(value);
+        widget.inputCropHeightRecalc();
+    });
+    
+    this.inputCropHeightRecalc = function() {
+        var o = this.inputCropHeight;
+        var value = o.val();
+        var check = this.checkInputDigit(value);
         if (!check.valid) {
-            $(this).val(widget.imageCropHeight);
+            o.val(this.imageCropHeight);
             return;
         }
         value = check.value;
-        var yMax = widget.image.height() - 1;
-        var selection = widget.getSelection();
+        var yMax = this.image.height() - 1;
+        var selection = this.getSelection();
         var x1 = selection.x1;
         var x2 = selection.x2;
         var y1 = selection.y1;
         var y2 = selection.y2;
         if (0 == value) value = 1;
-        var delta = value - widget.imageCropHeight;
+        var delta = value - this.imageCropHeight;
         y2 += delta;
         if (y2 > yMax) {
             y1 -= y2 - yMax;
             y2 = yMax;
         }
         if (y1 < 0) y1 = 0;
-        widget.setSelection(x1, y1, x2, y2);
-    });
+        this.setSelection(x1, y1, x2, y2);
+    }
     
     /**
      * Флаг, обозначает что идет процесс загрузки файла на сервер
@@ -1346,6 +1386,7 @@ function CapsuleUiUploadImage(data)
     
     this.history = function() {
         var wnd = CapsuleUiDialogWindow.getInstance(this.instanceName + '-history');
+        wnd.hide();
         wnd.showCenter();
         var workplace = $(wnd.workplace);
         workplace.empty();
@@ -1354,18 +1395,57 @@ function CapsuleUiUploadImage(data)
             border: 0,
             position: 'absolute',
             left: 0,
-            top: 0
+            top: 0,
+            background: 'transparent'
         }).attr({
+            name: wnd.instanceName,
             scrolling: 'no',
             border: 0,
             width: workplace.width(),
             height: workplace.height(),
-            src: '/admin/uploadimagehistory/'
+            src: '/admin/uploadimagehistory/',
+            allowtransparency: 1,
+            frameborder: 0
         });
         workplace.append(iframe);
     }
     
     this.favorites = function() {
-        
+        if (this.historyId) {
+            $.post('/ajax/', {
+                id: this.historyId,
+                cmd: 'addToFavoritesImage'
+            }, function(data, status, jq) {
+                widget.openFavorites();
+            }, 'json');
+        } else {
+            this.openFavorites();
+        }
+    }
+    
+    this.openFavorites = function() {
+        var wnd = CapsuleUiDialogWindow.getInstance(this.instanceName + '-favorites');
+        wnd.hide();
+        wnd.showCenter();
+        var workplace = $(wnd.workplace);
+        workplace.empty();
+        var iframe = $(document.createElement('iframe'));
+        iframe.css({
+            border: 0,
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            background: 'transparent'
+        }).attr({
+            name: wnd.instanceName,
+            scrolling: 'no',
+            border: 0,
+            width: workplace.width(),
+            height: workplace.height(),
+            src: '/admin/uploadimagefavorites/',
+            allowtransparency: 1,
+            frameborder: 0
+        });
+        workplace.append(iframe);
     }
 }

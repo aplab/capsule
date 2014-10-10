@@ -15,12 +15,24 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <!DOCTYPE HTML>
 <html>
 <head>
+<link media="all" href="/capsule/assets/cms/css/cssreset-min.css" rel="stylesheet">
+<link media="all" href="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.min.css" rel="stylesheet">
+<link media="all" href="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.structure.min.css" rel="stylesheet">
+<link media="all" href="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.theme.min.css" rel="stylesheet">
+<link media="all" href="/capsule/Ui/Dialog/cms/CapsuleUiDialog.css" rel="stylesheet">
 <script src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>
-
+<script src="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.min.js"></script>
+<script src="/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"></script>
 </head>
 <body>
-<?php 
-Storage::getInstance()->delFile('ce17be480dafed95bc4a422a20ab1551.jpg');
-?>
+
+<script>
+$(document).ready(function() {
+    new CapsuleUiDialog({
+        instanceName: 'testwindow'
+    });
+});
+</script>
+
 </body>
 </html>
