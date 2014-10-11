@@ -72,7 +72,7 @@ function CapsuleUiTabControl(data) {
         o.css({
             zIndex: 10000
         });
-        o.addClass('active');
+        o.addClass('active');console.log(o.attr('class'));
         bind = this.data.items[n].bind; 
         if ('undefined' != typeof(bind) && bind) {
             $('#' + this.data.items[n].bind).css({

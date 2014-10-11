@@ -7,6 +7,7 @@ $tab_control = new TabControl('about-dialog-window');
 
 $tab = new Tab();
 $tab->bind = 'dialog-window-body-t1';
+$tab->active = true;
 $tab_control->add($tab);
 $tab->name = I18n::_('About');
 
@@ -101,7 +102,7 @@ If the Library as you received it specifies that a proxy can decide whether futu
 </div>
 <script>
 $('#close-licence-window').find('button').click(function() {
-    CapsuleUiDialogWindow.getInstance('about').hide();
+    CapsuleUiDialog.getInstance('about').hide();
 });
 </script>
 <?php return ob_get_clean();

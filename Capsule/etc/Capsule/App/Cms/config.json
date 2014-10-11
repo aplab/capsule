@@ -313,7 +313,7 @@
                     },
                     "about": {
                         "caption": "About",
-                        "action": "CapsuleUiDialogWindow.getInstance('about').showCenter()"
+                        "action": "CapsuleUiDialog.getInstance('about').showCenter()"
                     }
                 }
             }
@@ -355,10 +355,13 @@
             "basePath": "/capsule/assets/share/ckeditor/"
         },
         "dialogWindow": {
-            "css": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.css",
-            "js": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialodWindow.js"
-        }
-        ,
+            "css": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialogWindow.css",
+            "js": "/capsule/Ui/DialogWindow/cms/CapsuleUiDialogWindow.js"
+        },
+        "dialog": {
+            "css": "/capsule/Ui/Dialog/cms/CapsuleUiDialog.css",
+            "js": "/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"
+        },
         "storage": {
             "css": "/capsule/Ui/Storage/cms/CapsuleUiStorage.css",
             "js": "/capsule/Ui/Storage/cms/CapsuleUiStorage.js",

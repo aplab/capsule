@@ -105,7 +105,7 @@
     background: transparent url("data:image/gif;base64,R0lGODlhCwALAJECAKmlovn4+P///wAAACH5BAEAAAIALAAAAAALAAsAAAIYlH8QyLEMmRKzLRfj3E/g32UctSigdwUFADs=") 0 0 no-repeat;
 }
 .capsule-ui-dialog .ui-icon-gripsmall-diagonal-se {
-    background: none;
+    background: none !important;
 }
 .capsule-ui-dialog .capsule-ui-dialog-workplace-resizable {
     position: absolute;

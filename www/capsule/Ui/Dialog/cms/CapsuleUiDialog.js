@@ -23,9 +23,14 @@
  * 
  * @property string content
  * @property string iframeSrc
+ * 
+ * @property decimal opacity
+ * 
+ * @property int left
+ * @property int top
  */
 function CapsuleUiDialog(data) {
-    data = data || {};
+    var data = data || {};
     this.instanceName = data.instanceName || null;
     this.instanceNumber = 0;
     
@@ -143,7 +148,33 @@ function CapsuleUiDialog(data) {
     if (this.height < this.minHeight) this.height = this.minHeight;
     if (this.height > this.maxHeight) this.height = this.maxHeight;
     
-    this.appendTo = data.appendTo || $('body');
+    // private properties
+    var prop = {};
+    
+    prop.hasOpacity = false;
+    if ('undefined' !== typeof(data.opacity)) {
+        prop.hasOpacity = true;
+        prop.opacity = data.opacity;
+    }
+    
+    /**
+     * init left and top position
+     */
+    prop.defaultLeft = 100;
+    prop.defaultTop = 100;
+    prop.constCenter = 'center';
+    if ('undefined' !== typeof(data.left)) {
+        prop.left = data.left;
+    } else {
+        prop.left = prop.defaultLeft;
+    }
+    if ('undefined' !== typeof(data.top)) {
+        prop.top = data.top;
+    } else {
+        prop.top = prop.defaultTop;
+    }
+    
+    this.appendTo = $('#' + data.appendTo) || $('body');
     
     this.hidden = ('undefined' === typeof(data.hidden)) ? false : (data.hidden ? true :false);
     
@@ -151,10 +182,17 @@ function CapsuleUiDialog(data) {
         display: this.hidden ? 'none' : 'block',
         width: this.width,
         height: this.height,
-        zIndex: this.newZ()
+        zIndex: this.newZ(),
+        left: prop.left,
+        top: prop.top
     }).attr({
         id: this.instanceName
     }).appendTo(this.appendTo);
+    if (prop.hasOpacity) {
+        this.container.css({
+            opacity: prop.opacity
+        });
+    }
     this.head = c().addClass('capsule-ui-dialog-head').appendTo(this.container);
     this.caption = c().addClass('capsule-ui-dialog-caption').appendTo(this.head);
     this.leftCorner = c().addClass('capsule-ui-dialog-left-corner').appendTo(this.head);
@@ -163,11 +201,10 @@ function CapsuleUiDialog(data) {
     this.shadow = c().addClass('capsule-ui-dialog-shadow').appendTo(this.container);
     this.leftBorder = c().addClass('capsule-ui-dialog-left-border').appendTo(this.shadow);
     this.rightBorder = c().addClass('capsule-ui-dialog-right-border').appendTo(this.shadow);
-    this.corner = c().addClass('capsule-ui-dialog-resizable').appendTo(this.shadow);
     
     // Накрыть контент при перемещении
     this.coverUp = c().addClass('capsule-ui-dialog-cover-up');
-    
+    // что будет в окне, iframe или обычный текст/html
     this.contentType = ('undefined' === typeof(data.contentType)) ? contentTypeNormal : ((contentTypeIframe === data.contentType) ? contentTypeIframe :contentTypeNormal);
     
     this.resizable = ('undefined' === typeof(data.resizable)) ? true : (data.resizable ? true :false);
@@ -231,6 +268,7 @@ function CapsuleUiDialog(data) {
                 height: this.workplace.height()
             });
         }
+        return this;
     };
     
     /**
@@ -251,6 +289,7 @@ function CapsuleUiDialog(data) {
             this.container.show();
             this.setFocus();
         }
+        return this;
     };
     
     /**
@@ -268,6 +307,7 @@ function CapsuleUiDialog(data) {
             }
         }
         this.show();
+        return this;
     };
     
     /**
@@ -306,6 +346,7 @@ function CapsuleUiDialog(data) {
     };
     
     if (this.resizable) {
+        this.corner = c().addClass('capsule-ui-dialog-resizable').appendTo(this.shadow);
         this.workplace = c().addClass('capsule-ui-dialog-workplace-resizable').appendTo(this.container);
         if (contentTypeNormal === this.contentType) {
             this.workplace.append(data.content || this.contentType);
@@ -313,7 +354,16 @@ function CapsuleUiDialog(data) {
                 minWidth: this.minWidth,
                 minHeight: this.minHeight,
                 maxWidth: this.maxWidth,
-                maxHeight: this.maxHeight
+                maxHeight: this.maxHeight,
+                containment: 'parent',
+                resize: function(event, ui) {
+                    dialog.width = ui.size.width;
+                    dialog.height = ui.size.height;
+                },
+                stop: function(event, ui) {
+                    dialog.width = ui.size.width;
+                    dialog.height = ui.size.height;
+                }
             });
         } else {
             this.createIframe();
@@ -322,11 +372,14 @@ function CapsuleUiDialog(data) {
                 minHeight: this.minHeight,
                 maxWidth: this.maxWidth,
                 maxHeight: this.maxHeight,
+                containment: 'parent',
                 resize: function(event, ui) {
                     dialog.iframe.attr({
                         width: dialog.workplace.width(),
                         height: dialog.workplace.height()
                     });
+                    dialog.width = ui.size.width;
+                    dialog.height = ui.size.height;
                 },
                 start: function(event, ui) {
                     dialog.iframe.attr({
@@ -341,6 +394,8 @@ function CapsuleUiDialog(data) {
                         height: dialog.workplace.height()
                     });
                     dialog.coverUp.hide();
+                    dialog.width = ui.size.width;
+                    dialog.height = ui.size.height;
                 }
             });
         }
@@ -358,6 +413,7 @@ function CapsuleUiDialog(data) {
      */
     $(this.container).draggable({
         handle: this.head,
+        containment: $('#capsule-cms-workplace'),
         create: function(event, ui) {
             dialog.coverUp.appendTo(dialog.container).hide();
         },
@@ -370,24 +426,48 @@ function CapsuleUiDialog(data) {
     });
     
     this.showCenter = function() {
-        var parent = this.container.parent();
-        var cw = parent.width();
-        var ch = parent.height();
-        this.left = (cw - this.width) / 2;
-        this.top = (ch - this.height) / 2;
-        if (this.left < 0) {
-            this.left = 0;
-        }
-        if (this.top < 25) {
-            this.top = 25;
-        }
-        this.container.css({
-            left: this.left,
-            top: this.top
-        });
+        this.center();
         if (this.container.is(':visible')) {
             this.blink();
         }
         this.show();
+        return this;
+    };
+    
+    this.center = function() {
+        var parent = this.container.parent();
+        var cw = parent.width();
+        var ch = parent.height();
+        prop.left = (cw - this.width) / 2;
+        prop.top = (ch - this.height) / 2;
+        if (prop.left < 0) {
+            prop.left = 0;
+        }
+        if (prop.top < 0) {
+            prop.top = 0;
+        }
+        this.container.css({
+            left: prop.left,
+            top: prop.top
+        });
+        return this;
+    };
+    
+    this.centerX = function() {
+        var parent = this.container.parent();
+        var cw = parent.width();
+        prop.left = (cw - this.width) / 2;
+        if (prop.left < 0) {
+            prop.left = 0;
+        }
+    };
+    
+    this.centerY = function() {
+        var parent = this.container.parent();
+        var ch = parent.height();
+        prop.top = (ch - this.height) / 2;
+        if (prop.top < 0) {
+            prop.top = 0;
+        }
     };
 }

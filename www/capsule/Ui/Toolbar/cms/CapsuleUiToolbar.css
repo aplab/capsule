@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 .capsule-ui-toolbar {
     height: 29px;
-    overflow: visible;
+    overflow: hidden;
     cursor: default;
     -moz-user-select: none;
     -o-user-select: none;
@@ -13,6 +13,7 @@
 }
 .capsule-ui-toolbar .container {
     height: 29px;
+    width: 10000px;
 }
 .capsule-ui-toolbar .item {
     height: 29px;

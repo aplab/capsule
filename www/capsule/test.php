@@ -34,20 +34,23 @@ $(document).ready(function() {
         height: '100%'
     });
     $('input').click(function() {
-        CapsuleUiDialog.getInstance('testwindow').showCenter();
+        CapsuleUiDialog.getInstance('testwindow').center().setFocus();
     });
     new CapsuleUiDialog({
         instanceName: 'testwindow',
-        hidden: true,
+        hidden: false,
         title: 'Новое окно',
         width: 200,
         height: 200,
         contentType: 'iframe',
-        iframeSrc: '/admin/uploadimagehistory/'
+        iframeSrc: '/admin/uploadimagehistory/',
+        opacity: .9
     });
     new CapsuleUiDialog({
         instanceName: 'testwindow1',
-        resizable: 0
+        resizable: 0,
+        left: 200,
+        top: 400
     });
     new CapsuleUiDialog({
         instanceName: 'testwindow2'

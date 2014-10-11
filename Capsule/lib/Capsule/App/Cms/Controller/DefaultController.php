@@ -31,6 +31,7 @@ use Capsule\App\Cms\Ui\MainMenu\View;
 use Capsule\Capsule;
 use Capsule\Ui\DialogWindow\DialogWindow;
 use Capsule\Common\Path;
+use Capsule\App\Cms\Ui\Dialog\Dialog;
 /**
  * DefaultController.php
  *
@@ -144,15 +145,21 @@ class DefaultController extends AbstractController
         $workplace->append($toolbar);
 
         $wrapper->append($workplace);
-        
-        $window = new DialogWindow('about');
-        $window->hidden = true;
-        $window->caption = 'About';
-        $window->width = 320;
-        $window->height = 240;
-        $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
-        $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
-        $wrapper->append($view);
+        $content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
+        new Dialog(array(
+            'instanceName' => 'about',
+            'content' => $content,
+            'appendTo' => 'capsule-cms-wrapper',
+            'hidden' => true
+        ));
+//         $window = new DialogWindow('about');
+//         $window->hidden = true;
+//         $window->caption = 'About';
+//         $window->width = 320;
+//         $window->height = 240;
+//         $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
+//         $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
+//         $wrapper->append($view);
         
         
     }

@@ -69,7 +69,7 @@ html {
     left: 15px;
     top: 15px;
     right: 15px;
-    bottom: 51px;
+    bottom: 36px;
 }
 .dialog-window-panel .dialog-window-tabs {
     overflow: hidden;
@@ -91,7 +91,7 @@ html {
     position: absolute; 
     left: 15px;
     right: 15px;
-    bottom: 15px;
+    bottom: 0;
     height: 21px;
     overflow: hidden;
     clear: both;
