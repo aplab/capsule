@@ -20,20 +20,30 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <link media="all" href="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.structure.min.css" rel="stylesheet">
 <link media="all" href="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.theme.min.css" rel="stylesheet">
 <link media="all" href="/capsule/Ui/Dialog/cms/CapsuleUiDialog.css" rel="stylesheet">
+<script src="/capsule/assets/cms/js/Capsule.js"></script>
 <script src="/capsule/assets/share/jquery/jquery-2.0.3.min.js"></script>
 <script src="/capsule/assets/share/jquery-ui/jquery-ui-1.11.1.custom/jquery-ui.min.js"></script>
 <script src="/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"></script>
 </head>
 <body>
-<input type="button">
+<input type="button" value="Пинь!"> 
 <script>
 $(document).ready(function() {
+    $('html, body').css({
+        width: '100%',
+        height: '100%'
+    });
     $('input').click(function() {
-        CapsuleUiDialog.getInstance('testwindow').blink();
+        CapsuleUiDialog.getInstance('testwindow').showCenter();
     });
     new CapsuleUiDialog({
         instanceName: 'testwindow',
-        //hidden: true
+        hidden: true,
+        title: 'Новое окно',
+        width: 200,
+        height: 200,
+        contentType: 'iframe',
+        iframeSrc: '/admin/uploadimagehistory/'
     });
     new CapsuleUiDialog({
         instanceName: 'testwindow1',

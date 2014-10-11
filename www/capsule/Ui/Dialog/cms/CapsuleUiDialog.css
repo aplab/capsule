@@ -1,6 +1,8 @@
 @CHARSET "UTF-8";
 .capsule-ui-dialog {
     position: absolute;
+    left: 100px;
+    top: 100px;
 }
 .capsule-ui-dialog .capsule-ui-dialog-head {
     height: 24px;
@@ -12,6 +14,18 @@
     position: relative;
     margin: 0 5px;
     background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAE5JREFUeNpidI2tYaAGYNx05i1VDGJ5/u4bdQz69+8/dQz6/59KBv37TzUXMYx6jX4uopJBv37/Ha5e+z+askdyGFHNoCtXr1PFIIAAAwByF0DliBPZ6QAAAABJRU5ErkJggg==") 0 0 repeat-x;
+    color: #fff;
+    font-weight: bold;
+    line-height: 23px;
+    overflow: hidden;
+    text-align: center;
+    text-shadow: 1px 0 0 #4e76a8, -1px 0 0 #4e76a8, 0 1px 0 #4e76a8, 0 -1px 0 #4e76a8;
+    word-break: break-all;
+    word-wrap: break-word;
+    font-family: "Segoe UI",Tahoma,"DejaVu Sans",sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    cursor: move;
 }
 .capsule-ui-dialog .capsule-ui-dialog-left-corner {
     height: 24px;
@@ -36,6 +50,7 @@
     right: 5px;
     top: 2px;
     background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAUCAIAAABeYcl+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4hJREFUeNqklstPE1EUh2eGIm8banxsjDFSLQUlhhCJyrMSRAwiLowh4s6dG3Gn/gfuXPnYCD7ihldUFAQM8d0QI0qlhIQFC4zBApXyamfG0znT453OFK705GZy77nn6/3NuWdur3inb1oQhN8LSxFZEfjMliJts2fSMBl2c2ZTFBVWDQRDPu8AJ+Mu8QCFayfDonU8usvJNjVf1kXDqrPzi+Mjg566pgO7czck/dNzA70druJqHG6adWzNgGfn43sFxxs5RcPrXW1tnZoJijcffvcOvyivObPLkc0Jj07OgNCS8lPQR7ZgTy4nOzk92//qGbA7HdndT+7vLT653WHnL4zP/U9Bt00UowNQLCsqJ7nDkTMuCAgiq6i8bK49S9BYIlRuFg2+H5sUW1yJiX4+8A6e9Z5jFGf2gBGosXrnQecQPC+draIpswdZ0kqax3w+eBa43RRm9oDJIFok0RrdO/j+9rUG6Fy51VNXfdTSgyYyolFBW9cbimxprLT0EEubowrRjs/3gyLd7nxLj55pRbXINBoAEI0dJqOqdaZVDlZVjZkW4jK9DsvGYKYNP1pTUQoMAiwGTphiF2Y065lubihPxMKUamQVo+p8lysRC1Os6oisSmymsXnKjuC7siQ4KYCyZWYvnC4zs+A0s/9qOtZcmu44FpwqExPNtMLUdGhlbZ1v1jzL1vTyWmQd1jwL7FpY5jk9zLNapiV9bXgDbB+9X9gNwv0CJwXo2ZJEYpWYdfV9MLPgpABiFeb0wOb3+80sOCkACahpSTRusXfkK5GwO7Rf4IQpdotFzeh7gNbz+lMiFqYwhlimPKJ6Jib8iViYItna6aFQsgRWEJKHiw5CY+vMWJcCsaqmiGXrq0qgsSwbI4nMvlO1xlincz80Q30zRS3Lavw5XXSoEKOhk8hjrmkUU1epq4ROIg+TaUPV5uU5MRI6iTwW/4hUrIWFbnZo6TGd0/pUbUUxO7T0mE8PtH15TsGQdAuPJiOW6Z+BRYX77vEr8IfNNLA56SInO7cQiv9H/P+7h7QSlmvqzw33d88GgjDesEEYXPEAAZDY+WAIErBhgzC44iELWktrz0+NvOSXO/a260Rjy+Lyqnij/Vtm+pZUWwrcdDlhuD2HI/KSdnInwyI+1NPOyVY1XERQvN42Gr2S27PSUm2c8Go4EtB2GS0ZFiwrI42TDS2vYuevAAMAmcw6dDR5cLQAAAAASUVORK5CYII=") 0 0 no-repeat;
+    cursor: default;
 }
 .capsule-ui-dialog .capsule-ui-dialog-close-btn:hover {
     background-position: -20px 0;
@@ -44,29 +59,18 @@
     background-position: -40px 0;
 }
 .capsule-ui-dialog .capsule-ui-dialog-shadow {
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     position: absolute;
     left: 0;
     top: 5px;
     right: 0;
     bottom: 0;
     z-index: 1;
-    background: #edeceb;
+    background: #edeceb url("data:image/gif;base64,R0lGODlhIwACAIAAAG1qaNLQziH5BAAAAAAALAAAAAAjAAIAAAIKjI+pu+APo5yzAAA7") 0 bottom repeat-x;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     width: auto;
     height: auto;
     margin: auto;
-}
-.capsule-ui-dialog .capsule-ui-dialog-bottom-border {
-    position: absolute;
-    width: auto;
-    margin: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    border-top: 1px #d2d0ce solid;
-    background-color: #6d6a68;
-    z-index: 10;
+    overflow: hidden;
 }
 .capsule-ui-dialog .capsule-ui-dialog-left-border {
     position: absolute;
@@ -90,7 +94,7 @@
     bottom: 1px;
     border-left: 1px #d2d0ce solid;
     background-color: #6d6a68;
-    z-index: 20;
+    z-index: 23;
 }
 .capsule-ui-dialog .capsule-ui-dialog-resizable {
     position: absolute;
@@ -103,28 +107,39 @@
 .capsule-ui-dialog .ui-icon-gripsmall-diagonal-se {
     background: none;
 }
-.capsule-ui-dialog .capsule-ui-dialog-content-resizable {
-    background: green;
+.capsule-ui-dialog .capsule-ui-dialog-workplace-resizable {
     position: absolute;
     margin: auto;
     width: auto;
     height: auto;
     top: 24px;
-    left: 5px;
-    right: 5px;
+    left: 4px;
+    right: 4px;
     bottom: 25px;
-    z-index: 100;
+    z-index: 20;
+    overflow: hidden;
 }
-.capsule-ui-dialog .capsule-ui-dialog-content-fixed {
-    background: green;
+.capsule-ui-dialog .capsule-ui-dialog-workplace-fixed {
     position: absolute;
     margin: auto;
     width: auto;
     height: auto;
     top: 24px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    z-index: 100;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    z-index: 20;
+    overflow: hidden;
 }
-
+.capsule-ui-dialog .capsule-ui-dialog-cover-up {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: transparent url("data:image/gif;base64,R0lGODlhQABAAIAAAP///wAAACH5BAEAAAAALAAAAABAAEAAAAJFhI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yuF1AAADs=") 0 0 repeat;
+    width: auto;
+    height: auto;
+    margin: auto;
+}

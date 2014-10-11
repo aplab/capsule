@@ -27,6 +27,10 @@
 function CapsuleUiDialog(data) {
     data = data || {};
     this.instanceName = data.instanceName || null;
+    this.instanceNumber = 0;
+    
+    var contentTypeIframe = 'iframe';
+    var contentTypeNormal = 'normal';
     
     /**
      * ссылка на сам объект для передачи контекста
@@ -90,6 +94,7 @@ function CapsuleUiDialog(data) {
             throw new Error('Instance already exists: ' + i);
         }
         c.instances[i] = o;
+        dialog.instanceNumber = Object.keys(c.instances).length; 
     })(this, arguments.callee);
     
     /**
@@ -147,6 +152,8 @@ function CapsuleUiDialog(data) {
         width: this.width,
         height: this.height,
         zIndex: this.newZ()
+    }).attr({
+        id: this.instanceName
     }).appendTo(this.appendTo);
     this.head = c().addClass('capsule-ui-dialog-head').appendTo(this.container);
     this.caption = c().addClass('capsule-ui-dialog-caption').appendTo(this.head);
@@ -154,30 +161,16 @@ function CapsuleUiDialog(data) {
     this.rightCorner = c().addClass('capsule-ui-dialog-right-corner').appendTo(this.head);
     this.closeBtn = c().addClass('capsule-ui-dialog-close-btn').appendTo(this.head);
     this.shadow = c().addClass('capsule-ui-dialog-shadow').appendTo(this.container);
-    this.bottomBorder = c().addClass('capsule-ui-dialog-bottom-border').appendTo(this.shadow);
-    this.bottomBorder = c().addClass('capsule-ui-dialog-left-border').appendTo(this.shadow);
-    this.bottomBorder = c().addClass('capsule-ui-dialog-right-border').appendTo(this.shadow);
+    this.leftBorder = c().addClass('capsule-ui-dialog-left-border').appendTo(this.shadow);
+    this.rightBorder = c().addClass('capsule-ui-dialog-right-border').appendTo(this.shadow);
+    this.corner = c().addClass('capsule-ui-dialog-resizable').appendTo(this.shadow);
+    
+    // Накрыть контент при перемещении
+    this.coverUp = c().addClass('capsule-ui-dialog-cover-up');
+    
+    this.contentType = ('undefined' === typeof(data.contentType)) ? contentTypeNormal : ((contentTypeIframe === data.contentType) ? contentTypeIframe :contentTypeNormal);
     
     this.resizable = ('undefined' === typeof(data.resizable)) ? true : (data.resizable ? true :false);
-    if (this.resizable) {
-        this.bottomBorder = c().addClass('capsule-ui-dialog-resizable').appendTo(this.shadow);
-        $(this.container).resizable({
-            minWidth: this.minWidth,
-            minHeight: this.minHeight,
-            maxWidth: this.maxWidth,
-            maxHeight: this.maxHeight
-        });
-        this.content = c().addClass('capsule-ui-dialog-content-resizable').appendTo(this.container);
-    } else {
-        this.content = c().addClass('capsule-ui-dialog-content-fixed').appendTo(this.container);
-    }
-    
-    /**
-     * attach dragable behavior
-     */
-    $(this.container).draggable({
-        handle: this.head,
-    });
     
     /**
      * focus etc
@@ -185,7 +178,9 @@ function CapsuleUiDialog(data) {
      * @param void 
      * @return void
      */
-    this.container.mousedown(function() {
+    this.container.mousedown(function(event) {
+        dialog.setFocus();
+    }).click(function(event) {
         dialog.setFocus();
     });
     
@@ -230,6 +225,12 @@ function CapsuleUiDialog(data) {
     this.show = function() {
         this.container.show();
         this.setFocus();
+        if (this.contentType === contentTypeIframe) {
+            this.iframe.attr({
+                width: this.workplace.width(),// кагбэ обновить
+                height: this.workplace.height()
+            });
+        }
     };
     
     /**
@@ -265,6 +266,127 @@ function CapsuleUiDialog(data) {
                     dialog.blinking();
                 }, i * 100);
             }
+        }
+        this.show();
+    };
+    
+    /**
+     * Operate title
+     */
+    this.title = data.title || 'Untitled window ' + this.instanceNumber;
+    this.setTitle = function() {
+        this.caption.text(this.title);
+    };
+    this.setTitle(this.title);
+    
+    /**
+     * Создает iframe для контента
+     */
+    this.createIframe = function() {
+        this.iframe = c('iframe').attr({
+            width: this.workplace.width(),
+            height: this.workplace.height(),
+            hspace: 0,
+            vspace: 0,
+            name: this.instanceName,
+            marginheight: 0,
+            marginwidth: 0,
+            allowtransparency: 1,
+            frameborder: 0,
+            scrolling: 'no',
+            border: 0,
+            src: data.iframeSrc
+        }).css({
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            backgroundColor: 'transparent'//,
+            //'pointer-events': 'none'
+        }).appendTo(this.workplace);
+    };
+    
+    if (this.resizable) {
+        this.workplace = c().addClass('capsule-ui-dialog-workplace-resizable').appendTo(this.container);
+        if (contentTypeNormal === this.contentType) {
+            this.workplace.append(data.content || this.contentType);
+            $(this.container).resizable({
+                minWidth: this.minWidth,
+                minHeight: this.minHeight,
+                maxWidth: this.maxWidth,
+                maxHeight: this.maxHeight
+            });
+        } else {
+            this.createIframe();
+            $(this.container).resizable({
+                minWidth: this.minWidth,
+                minHeight: this.minHeight,
+                maxWidth: this.maxWidth,
+                maxHeight: this.maxHeight,
+                resize: function(event, ui) {
+                    dialog.iframe.attr({
+                        width: dialog.workplace.width(),
+                        height: dialog.workplace.height()
+                    });
+                },
+                start: function(event, ui) {
+                    dialog.iframe.attr({
+                        width: dialog.workplace.width(),
+                        height: dialog.workplace.height()
+                    });
+                    dialog.coverUp.show();
+                },
+                stop: function(event, ui) {
+                    dialog.iframe.attr({
+                        width: dialog.workplace.width(),
+                        height: dialog.workplace.height()
+                    });
+                    dialog.coverUp.hide();
+                }
+            });
+        }
+    } else {
+        this.workplace = c().addClass('capsule-ui-dialog-workplace-fixed').appendTo(this.container);
+        if (contentTypeNormal === this.contentType) {
+            this.workplace.append(data.content || this.contentType);
+        } else {
+            this.createIframe();
+        }
+    }
+    
+    /**
+     * attach dragable behavior
+     */
+    $(this.container).draggable({
+        handle: this.head,
+        create: function(event, ui) {
+            dialog.coverUp.appendTo(dialog.container).hide();
+        },
+        start: function(event, ui) {
+            dialog.coverUp.show();
+        },
+        stop: function(event, ui) {
+            dialog.coverUp.hide();
+        }
+    });
+    
+    this.showCenter = function() {
+        var parent = this.container.parent();
+        var cw = parent.width();
+        var ch = parent.height();
+        this.left = (cw - this.width) / 2;
+        this.top = (ch - this.height) / 2;
+        if (this.left < 0) {
+            this.left = 0;
+        }
+        if (this.top < 25) {
+            this.top = 25;
+        }
+        this.container.css({
+            left: this.left,
+            top: this.top
+        });
+        if (this.container.is(':visible')) {
+            this.blink();
         }
         this.show();
     };

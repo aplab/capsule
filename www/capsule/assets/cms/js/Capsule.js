@@ -65,8 +65,8 @@
         var d = window.parent.document;
         if ('object' != typeof(d)) return;
         $(document).ready(function() {
-            $(this).click(function() {
-                $('#' + name, window.parent.document).mousedown();
+            $(this).mousedown(function() {
+                $('#' + name, window.parent.document).click();
             });
         });
     }
