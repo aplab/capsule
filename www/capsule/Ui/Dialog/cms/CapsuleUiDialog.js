@@ -174,7 +174,11 @@ function CapsuleUiDialog(data) {
         prop.top = prop.defaultTop;
     }
     
-    this.appendTo = $('#' + data.appendTo) || $('body');
+    if ('undefined' === typeof(data.appendTo)) {
+        this.appendTo = $('body');
+    } else {
+        this.appendTo = $('#' + data.appendTo);
+    }
     
     this.hidden = ('undefined' === typeof(data.hidden)) ? false : (data.hidden ? true :false);
     
@@ -349,7 +353,7 @@ function CapsuleUiDialog(data) {
         this.corner = c().addClass('capsule-ui-dialog-resizable').appendTo(this.shadow);
         this.workplace = c().addClass('capsule-ui-dialog-workplace-resizable').appendTo(this.container);
         if (contentTypeNormal === this.contentType) {
-            this.workplace.append(data.content || this.contentType);
+            this.workplace.append(data.content || $(data.contentSrc));
             $(this.container).resizable({
                 minWidth: this.minWidth,
                 minHeight: this.minHeight,

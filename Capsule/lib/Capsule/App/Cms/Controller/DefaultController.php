@@ -83,6 +83,10 @@ class DefaultController extends AbstractController
         $body->id = 'body';
         $html->append($body);
         
+        $buffer = clone $section;
+        $buffer->id = 'buffer';
+        $body->append($buffer);
+        
         $pop_calendar = clone $section;
         $pop_calendar->id = 'popcalendar';
         $body->append($pop_calendar);
@@ -146,11 +150,14 @@ class DefaultController extends AbstractController
 
         $wrapper->append($workplace);
         $content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
+        $buffer->append($content);
         new Dialog(array(
             'instanceName' => 'about',
-            'content' => $content,
+            'contentSrc' => '#capsule-cms-about-window-content',
             'appendTo' => 'capsule-cms-wrapper',
-            'hidden' => true
+            'hidden' => true,
+            'minWidth' => 320,
+            'minHeight' => 240
         ));
 //         $window = new DialogWindow('about');
 //         $window->hidden = true;

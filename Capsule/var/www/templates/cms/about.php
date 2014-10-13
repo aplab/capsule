@@ -18,6 +18,7 @@ $tab->name = I18n::_('Licence');
 
 $view = new View($tab_control);
 ob_start() ?>
+<div id="capsule-cms-about-window-content">
 <div class="dialog-window-panel"><div class="dialog-window-tabs"><?=$view?></div>
 <div class="dialog-window-body" id="dialog-window-body-t1">
 <a href="http://www.aplab.ru" target="_blank">www.aplab.ru</a>
@@ -105,4 +106,5 @@ $('#close-licence-window').find('button').click(function() {
     CapsuleUiDialog.getInstance('about').hide();
 });
 </script>
+</div>
 <?php return ob_get_clean();

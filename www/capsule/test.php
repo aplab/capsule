@@ -26,7 +26,10 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <script src="/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"></script>
 </head>
 <body>
-<input type="button" value="Пинь!"> 
+<div id="d1" style="width: 300px; height: 300px; background: green; float: left;">
+    <input type="button" value="Пинь!">
+</div>
+<div id="d2" style="width: 400px; height: 400px; background: blue; float: left;"></div> 
 <script>
 $(document).ready(function() {
     $('html, body').css({
@@ -46,15 +49,16 @@ $(document).ready(function() {
         iframeSrc: '/admin/uploadimagehistory/',
         opacity: .9
     });
-    new CapsuleUiDialog({
-        instanceName: 'testwindow1',
-        resizable: 0,
-        left: 200,
-        top: 400
-    });
-    new CapsuleUiDialog({
-        instanceName: 'testwindow2'
-    });
+    $('#d1').clone(1,1).appendTo($('#d2'));
+//     new CapsuleUiDialog({
+//         instanceName: 'testwindow1',
+//         resizable: 0,
+//         left: 200,
+//         top: 400
+//     });
+//     new CapsuleUiDialog({
+//         instanceName: 'testwindow2'
+//     });
 });
 </script>
 

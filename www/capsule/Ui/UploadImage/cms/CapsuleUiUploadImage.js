@@ -1384,30 +1384,26 @@ function CapsuleUiUploadImage(data)
         this.historyId = o.historyId;
     }
     
+    var historyWindow = null;
+    
     this.history = function() {
-        var wnd = CapsuleUiDialogWindow.getInstance(this.instanceName + '-history');
-        wnd.hide();
-        wnd.showCenter();
-        var workplace = $(wnd.workplace);
-        workplace.empty();
-        var iframe = $(document.createElement('iframe'));
-        iframe.css({
-            border: 0,
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            background: 'transparent'
-        }).attr({
-            name: wnd.instanceName,
-            scrolling: 'no',
-            border: 0,
-            width: workplace.width(),
-            height: workplace.height(),
-            src: '/admin/uploadimagehistory/',
-            allowtransparency: 1,
-            frameborder: 0
-        });
-        workplace.append(iframe);
+        if (Capsule.isFramed()) {
+            location.href = '/admin/uploadimagehistory/';
+            return;
+        }
+        if (null === historyWindow) {
+            historyWindow = new CapsuleUiDialog({
+                instanceName: this.instanceName + '-history',
+                hidden: true,
+                title: 'История',
+                width: 640,
+                height: 480,
+                contentType: 'iframe',
+                iframeSrc: '/admin/uploadimagehistory/',
+                opacity: .9
+            });
+        }
+        historyWindow.showCenter();
     }
     
     this.favorites = function() {
@@ -1421,31 +1417,28 @@ function CapsuleUiUploadImage(data)
         } else {
             this.openFavorites();
         }
-    }
+    };
+    
+    var favoritesWindow = null;
     
     this.openFavorites = function() {
-        var wnd = CapsuleUiDialogWindow.getInstance(this.instanceName + '-favorites');
-        wnd.hide();
-        wnd.showCenter();
-        var workplace = $(wnd.workplace);
-        workplace.empty();
-        var iframe = $(document.createElement('iframe'));
-        iframe.css({
-            border: 0,
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            background: 'transparent'
-        }).attr({
-            name: wnd.instanceName,
-            scrolling: 'no',
-            border: 0,
-            width: workplace.width(),
-            height: workplace.height(),
-            src: '/admin/uploadimagefavorites/',
-            allowtransparency: 1,
-            frameborder: 0
-        });
-        workplace.append(iframe);
+        if (Capsule.isFramed()) {
+            location.href = '/admin/uploadimagefavorites/';
+            return;
+        }
+        if (null === favoritesWindow) {
+            favoritesWindow = new CapsuleUiDialog({
+                instanceName: this.instanceName + '-favorites',
+                hidden: true,
+                title: 'Избранное',
+                width: 640,
+                height: 480,
+                contentType: 'iframe',
+                iframeSrc: '/admin/uploadimagefavorites/',
+                opacity: .9
+            });
+        }
+        //favoritesWindow.hide();
+        favoritesWindow.showCenter();
     }
 }

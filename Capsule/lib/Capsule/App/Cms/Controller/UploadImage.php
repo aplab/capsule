@@ -133,25 +133,5 @@ class UploadImage extends DefaultController
         $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'storageSettings.php'));
         $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
         $this->ui->wrapper->append($view);
-        
-        $window = new DialogWindow($this->instanceName . '-history');
-        $window->hidden = true;
-        $window->caption = I18n::_('History');
-        $window->width = 640;
-        $window->height = 480;
-        $window->content = 'loading...';
-        $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
-        $this->ui->wrapper->append($view);
-        
-        $window = new DialogWindow($this->instanceName . '-favorites');
-        $window->hidden = true;
-        $window->caption = I18n::_('Favorites');
-        $window->width = 640;
-        $window->height = 480;
-        $window->content = 'loading...';
-        $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
-        $this->ui->wrapper->append($view);
     }
-    
-
 }
