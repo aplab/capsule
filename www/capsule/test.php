@@ -5,6 +5,7 @@ use Capsule\User\Auth;
 use Capsule\Plugin\Storage\Storage;
 use Capsule\File\Image\ImageInfo;
 use Capsule\App\Cms\Model\HistoryUploadImage;
+use Capsule\Reference\Imaged;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -26,10 +27,7 @@ if (!Auth::getInstance()->currentUser) die('unauth'); ?>
 <script src="/capsule/Ui/Dialog/cms/CapsuleUiDialog.js"></script>
 </head>
 <body>
-<div id="d1" style="width: 300px; height: 300px; background: green; float: left;">
-    <input type="button" value="Пинь!">
-</div>
-<div id="d2" style="width: 400px; height: 400px; background: blue; float: left;"></div> 
+
 <script>
 $(document).ready(function() {
     $('html, body').css({
@@ -61,6 +59,6 @@ $(document).ready(function() {
 //     });
 });
 </script>
-
+<?php \Capsule\Tools\Tools::dump(Imaged::_configDataJson())?>
 </body>
 </html>
