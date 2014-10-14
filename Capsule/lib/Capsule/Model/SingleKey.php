@@ -21,7 +21,7 @@ namespace Capsule\Model;
 use Capsule\Db\Result;
 use Capsule\DataModel\Inflector;
 use Capsule\Db\Db;
-use Capsule\Core\Functions as f;
+use Capsule\Core\Fn as f;
 use Capsule\DataModel\DataModel;
 /**
  * SingleKey.php

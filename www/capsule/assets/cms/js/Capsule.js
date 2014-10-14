@@ -70,4 +70,16 @@
             });
         });
     }
+    
+    Capsule.closeFrame = function() {
+        if (Capsule.isFramed()) {
+            var name = window.name;
+            if (!name) return;
+            var p = window.parent;
+            if ('object' != typeof(p)) return;
+            var d = window.parent.document;
+            if ('object' != typeof(d)) return;
+            $('#' + name, window.parent.document).hide();
+        }
+    }
 })(window);

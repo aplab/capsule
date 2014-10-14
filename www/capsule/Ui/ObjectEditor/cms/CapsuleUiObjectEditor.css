@@ -377,4 +377,64 @@
     overflow: hidden;
 }
 /* end of nested */
+/* image */
+.capsule-ui-oe-el-image {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-image-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-image-value {
+    width: 528px;
+    min-height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-image-value img {
+    max-height: 64px;
+    max-width: 64px;
+    display: block;
+    margin-top: 15px;
+}
+/* input image */
+.capsule-ui-oe-el-image-brdr {
+    border: #73706d 1px solid;
+    line-height: 13px;
+    background: #fff;
+    padding: 0;
+    height: 19px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+}
+.capsule-ui-oe-el-image-brdr input {
+    padding: 0 2px 0 2px;
+    margin: 0 auto;
+    display: block;
+    border: 0;
+    background: #fff;
+    font-family: "Segoe UI", Tahoma, "DejaVu Sans", "sans-serif";
+    font-size:11px;
+    line-height: 19px;
+    width: 99%;
+    height: 19px;
+    *margin-top: -1px;
+    outline: none;
+}
+/* end of input image */
+/* end of image */
 /* end of ELEMENTS */

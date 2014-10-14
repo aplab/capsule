@@ -2,7 +2,7 @@
     "title": "Справочник с изображением",
     "properties": {
         "image": {
-            "title": "Image",
+            "title": "Изображение",
             "description": "",
             "help": "",
             "comment": "",
@@ -26,14 +26,47 @@
                     "tab": "General"
                 }
             }
+        },
+        "imageAdditional": {
+            "title": "Дополнительное изображение",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 400,
+                    "order": 3000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Image",
+                    "order": 3000,
+                    "tab": "General"
+                }
+            }
         }
     },
     "table": {
         "columns": {
-            "name": {
+            "image": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "Изображение"
+                "comment": "Изображение",
+                "default": ""
+            },
+            "image_additional": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "Изображение 2",
+                "default": ""
             }
         }
     }

@@ -9,8 +9,14 @@ function CapsuleUiObjectEditor(instance_name) {
         if ('undefined' !== typeof(CapsuleUiObjectEditor.instances[instance_name])) {
             return CapsuleUiObjectEditor.instances[instance_name];
         }
+        for(var prop in CapsuleUiObjectEditor.instances) {
+            if (CapsuleUiObjectEditor.instances.hasOwnProperty(prop)) {
+                return CapsuleUiObjectEditor.instances[prop];
+            }
+            break;
+        }
         return null;
-    }
+    };
     if ('undefined' !== typeof(CapsuleUiObjectEditor.instances[instance_name])) {
         console.log('Instance already exists: ' + instance_name);
         console.error('Instance already exists: ' + instance_name);
@@ -20,7 +26,7 @@ function CapsuleUiObjectEditor(instance_name) {
     /**
      * End of static section
      */
-    var vidget = this;
+    var widget = this;
     this.instanceName = instance_name;
     this.block = $('#' + this.instanceName);
     this.container = $('#' + this.instanceName + '-container');
@@ -56,7 +62,7 @@ function CapsuleUiObjectEditor(instance_name) {
         this.form.submit();
     }
     this.fitEditors = function() {
-        var height = vidget.container.height();
+        var height = widget.container.height();
         for (var o in CKEDITOR.instances) {
             CKEDITOR.instances[o].resize(null, height);
         }
@@ -68,14 +74,14 @@ function CapsuleUiObjectEditor(instance_name) {
         if ('undefined' != typeof(CKEDITOR)) {
             CKEDITOR.on('instanceReady', function( ev ) {
                 var editor = ev.editor;
-                var height = vidget.container.height();
+                var height = widget.container.height();
                 editor.resize(null, height);
                 editor.on('afterCommandExec', function( e ) {
-                    var height = vidget.container.height();
+                    var height = widget.container.height();
                     editor.resize(null, height);
                 } );
                 $(window).resize(function() {
-                    vidget.fitEditors();
+                    widget.fitEditors();
                 })
             });
         }
@@ -114,5 +120,42 @@ function CapsuleUiObjectEditor(instance_name) {
                 loadNested();
             });
         })();
+        
+        $('.capsule-ui-oe-el-image input').click(function() {
+            $('.capsule-ui-oe-el-image input').removeClass('capsule-ui-oe-el-image-selected');
+            $(this).addClass('capsule-ui-oe-el-image-selected');
+            widget.selectImage();
+        });
     })
+    
+    var imagesWindow = null;
+    
+    this.selectImage = function() {
+        if (Capsule.isFramed()) {
+            location.href = '/admin/uploadimage/';
+            return;
+        }
+        if (null === imagesWindow) {
+            imagesWindow = new CapsuleUiDialog({
+                instanceName: this.instanceName + '-uploadimage',
+                hidden: true,
+                title: 'Загрузка изображения',
+                width: 640,
+                height: 480,
+                contentType: 'iframe',
+                iframeSrc: '/admin/uploadimage/',
+                opacity: .9
+            });
+        }
+        imagesWindow.showCenter();
+    }
+    
+    this.setImageVal = function(val) {
+        var result = 0;
+        $('.capsule-ui-oe-el-image input.capsule-ui-oe-el-image-selected').each(function(i, o) {
+            $(o).val(val);
+            result ++;
+        });
+        return !!result;
+    }
 }

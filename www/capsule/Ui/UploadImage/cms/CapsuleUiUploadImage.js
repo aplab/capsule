@@ -1382,6 +1382,17 @@ function CapsuleUiUploadImage(data)
         }
         this.inputFilename.val(o.url);
         this.historyId = o.historyId;
+        if (Capsule.isFramed()) {
+            var parent_win = window.parent;
+            var parent_doc = parent_win.document;
+            if ('undefined' === typeof(parent_win.CapsuleUiObjectEditor)) {
+                return;
+            }
+            var oe = parent_win.CapsuleUiObjectEditor.getInstance();
+            if (oe.setImageVal(o.url)) {
+                Capsule.closeFrame();
+            }
+        }
     }
     
     var historyWindow = null;

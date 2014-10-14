@@ -112,7 +112,19 @@ function CapsuleUiUploadImageHistory(data)
      */
     this.workplace.find('.item').click(function() {
         var o = $(this);
-        window.prompt('Ссылка на изображение (Ctrl + C - копировать ссылку, ESC - закрыть этот диалог)', o.find('img').attr('src'));
+        if (Capsule.isFramed()) {
+            var parent_win = window.parent;
+            var parent_doc = parent_win.document;
+            if ('undefined' === typeof(parent_win.CapsuleUiObjectEditor)) {
+                return;
+            }
+            var oe = parent_win.CapsuleUiObjectEditor.getInstance();
+            if (oe.setImageVal(o.find('img').attr('src'))) {
+                Capsule.closeFrame();
+            }
+        } else {
+            window.prompt('Ссылка на изображение (Ctrl + C - копировать ссылку, ESC - закрыть этот диалог)', o.find('img').attr('src'));
+        }
     }).hover(function(event) {
             var o = $(this);
             o.find('.fav').addClass('is-act').click(function(event) {
