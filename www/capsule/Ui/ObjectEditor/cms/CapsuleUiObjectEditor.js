@@ -125,8 +125,61 @@ function CapsuleUiObjectEditor(instance_name) {
             $('.capsule-ui-oe-el-image input').removeClass('capsule-ui-oe-el-image-selected');
             $(this).addClass('capsule-ui-oe-el-image-selected');
             widget.selectImage();
+        }).blur(function() {
+            widget.handleImages();
         });
-    })
+        widget.handleImages();
+    });
+    
+    var fullViewImage = null;
+    
+    this.handleImages = function() {
+        $('.capsule-ui-oe-el-image').each(function(i, o) {
+            var o = $(o);
+            var input = o.find('input');
+            var preview = o.find('[class$="preview"]');
+            var meta = o.find('[class$="meta"]');
+            var img = $(document.createElement('img'));
+            img.load(function() {
+                var h = this.height;
+                var w = this.width;
+                var o = $(this);
+                preview.empty().append(this);
+                var m = (preview.height() - o.height()) / 2;
+                o.css({
+                    marginTop: parseInt(m.toString(10), 10)
+                });
+                meta.empty().append('Width: ' + w + '<br>Height: ' + h);
+            }).attr({
+                src: input.val()
+            }).click(function() {
+                var im = $(this);
+                if (null === fullViewImage) {
+                    fullViewImage = new CapsuleUiDialog({
+                        instanceName: this.instanceName + '-fullviewimage',
+                        hidden: false,
+                        title: 'Изображение',
+                        width: 200,
+                        height: 200,
+                        contentType: 'iframe',
+                        iframeSrc: im.attr('src'),
+                        opacity: .9
+                    });
+                    fullViewImage.iframe.attr({
+                        scrolling: 'yes',
+                    });
+                    fullViewImage.showCenter();
+                } else {
+                    fullViewImage.iframe.attr({
+                        src: im.attr('src')
+                    });
+                    fullViewImage.showCenter();
+                }
+            }).error(function() {
+                alert('Неправильно указан адрес картинки');
+            });
+        });
+    };
     
     var imagesWindow = null;
     
@@ -153,7 +206,7 @@ function CapsuleUiObjectEditor(instance_name) {
     this.setImageVal = function(val) {
         var result = 0;
         $('.capsule-ui-oe-el-image input.capsule-ui-oe-el-image-selected').each(function(i, o) {
-            $(o).val(val);
+            $(o).val(val).blur();
             result ++;
         });
         return !!result;

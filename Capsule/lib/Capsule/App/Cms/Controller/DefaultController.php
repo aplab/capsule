@@ -29,7 +29,6 @@ use Capsule\Ui\Toolbar\Toolbar;
 use Capsule\App\Cms\Ui\Section;
 use Capsule\App\Cms\Ui\MainMenu\View;
 use Capsule\Capsule;
-use Capsule\Ui\DialogWindow\DialogWindow;
 use Capsule\Common\Path;
 use Capsule\App\Cms\Ui\Dialog\Dialog;
 /**

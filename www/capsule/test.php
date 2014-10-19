@@ -6,6 +6,7 @@ use Capsule\Plugin\Storage\Storage;
 use Capsule\File\Image\ImageInfo;
 use Capsule\App\Cms\Model\HistoryUploadImage;
 use Capsule\Reference\Imaged;
+use Capsule\Unit\DatedAdvanced;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -34,20 +35,20 @@ $(document).ready(function() {
         width: '100%',
         height: '100%'
     });
-    $('input').click(function() {
-        CapsuleUiDialog.getInstance('testwindow').center().setFocus();
-    });
-    new CapsuleUiDialog({
-        instanceName: 'testwindow',
-        hidden: false,
-        title: 'Новое окно',
-        width: 200,
-        height: 200,
-        contentType: 'iframe',
-        iframeSrc: '/admin/uploadimagehistory/',
-        opacity: .9
-    });
-    $('#d1').clone(1,1).appendTo($('#d2'));
+//     $('input').click(function() {
+//         CapsuleUiDialog.getInstance('testwindow').center().setFocus();
+//     });
+//     new CapsuleUiDialog({
+//         instanceName: 'testwindow',
+//         hidden: false,
+//         title: 'Новое окно',
+//         width: 200,
+//         height: 200,
+//         contentType: 'iframe',
+//         iframeSrc: '/admin/uploadimagehistory/',
+//         opacity: .9
+//     });
+//     $('#d1').clone(1,1).appendTo($('#d2'));
 //     new CapsuleUiDialog({
 //         instanceName: 'testwindow1',
 //         resizable: 0,
@@ -59,6 +60,8 @@ $(document).ready(function() {
 //     });
 });
 </script>
-<?php \Capsule\Tools\Tools::dump(Imaged::_configDataJson())?>
+<?php  
+\Capsule\Tools\Tools::dump(strtotime(''));
+?>
 </body>
 </html>

@@ -304,7 +304,7 @@ function CapsuleUiDialog(data) {
      */
     this.blink = function() {
         if (this.container.is(':visible')) {
-            for (var i = 1; i < 4; i++) {
+            for (var i = 1; i < 2; i++) {
                 setTimeout(function() {
                     dialog.blinking();
                 }, i * 100);
@@ -432,7 +432,7 @@ function CapsuleUiDialog(data) {
     this.showCenter = function() {
         this.center();
         if (this.container.is(':visible')) {
-            this.blink();
+            //this.blink();
         }
         this.show();
         return this;

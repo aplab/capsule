@@ -191,6 +191,10 @@
                         "caption": "dated",
                         "url": "dated"
                     },
+                    "dated advanced": {
+                        "caption": "dated advanced",
+                        "url": "datedadvanced"
+                    },
                     "unit with timestamp": {
                         "caption": "unit with timestamp",
                         "url": "unitts"
@@ -421,6 +425,7 @@
         "imaged": "Imaged",
         "richtext": "Richtext",
         "dated": "Dated",
+        "datedadvanced": "DatedAdvanced",
         "unitts": "UnitTs",
         "unitusr": "UnitUsr",
         "unittsusr": "UnitTsUsr",

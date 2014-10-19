@@ -12,7 +12,7 @@ var gbShortYear=false;   // year format   true: 2-digits; false: 4-digits
 var gbAutoPos=true;	// enable auto-adpative positioning or not
 var gbPopDown=true;	// true: pop the calendar below the dateCtrl; false: pop above if gbAutoPos is false.
 var gbAutoClose=true;	// whether to close the calendar after selecting a date.
-var gPosOffset=[3,0];	// Offsets used to adjust the pop-up postion, [leftOffset, topOffset].
+var gPosOffset=[1,0];	// Offsets used to adjust the pop-up postion, [leftOffset, topOffset].
 var gbFixedPos=false;	// true: pop the calendar absolutely at gPosOffset; false: pop it relatively.
 
 // ---- Common Options ----
