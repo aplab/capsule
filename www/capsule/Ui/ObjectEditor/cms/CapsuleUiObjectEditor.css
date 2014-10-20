@@ -450,4 +450,62 @@
 }
 /* end of input image */
 /* end of image */
+/* textarea */
+.capsule-ui-oe-el-textarea {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-textarea-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    textarea-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-textarea-value {
+    width: 528px;
+    height: auto;
+    line-height: 20px;
+    textarea-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of textarea */
+/* textarea-double */
+.capsule-ui-oe-el-textarea-double {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-textarea-double-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    textarea-double-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-textarea-double-value {
+    width: 528px;
+    height: auto;
+    line-height: 20px;
+    textarea-double-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+.capsule-ui-oe-el-textarea-double-value .capsule-cms-control-textarea {
+    height: auto;
+}
+.capsule-ui-oe-el-textarea-double-value .capsule-cms-control-textarea textarea {
+    resize: vertical !important;
+    height: 200px;
+    min-height: 100px;
+}
+/* end of textarea-double */
 /* end of ELEMENTS */

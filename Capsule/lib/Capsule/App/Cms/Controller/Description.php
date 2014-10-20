@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2014                                                   |
 // +---------------------------------------------------------------------------+
-// | 17.05.2014 6:32:23 YEKT 2014                                              |
+// | 08.03.2014 3:32:18 YEKT 2014                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,26 +16,17 @@
  * @package Capsule
  */
 
-namespace Capsule\Unit;
+namespace Capsule\App\Cms\Controller;
 
 /**
- * DatedAdvanced.php
+ * Description.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class DatedAdvanced extends Unit 
+class Description extends ReferenceController
 {
-    protected function setDatetime($v, $n) {
-        \Capsule\Tools\Tools::dump($v);
-        $t = new \DateTime($v);\Capsule\Tools\Tools::dump($t);
-        \Capsule\Tools\Tools::dump($t);
-        $this->data[$n] = $t->format('Y-m-d H:i:s');
-        $this->data['date'] = $t->format('Y-m-d');
-    }
+    protected $moduleClass = 'Capsule\\Reference\\Description';
     
-    protected function setDate($v, $n) {
-        $msg = 'Cannot set readonly property: ' . get_class($this) . '::$' . $n;
-        throw new \Exception($msg);
-    }
+    
 }

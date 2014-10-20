@@ -9,21 +9,22 @@
             "name": "",
             "label": "",
             "validator": {
-                "type": "StringLength",
+                "type": "MysqlDatetime",
                 "max": 255
             },
             "column": {
                 "c1": {
                     "width": 120,
-                    "order": 2000,
+                    "order": 4000,
                     "type": "Rtext"
                 }
             },
             "formElement": {
                 "f1": {
                     "type": "Datetime",
-                    "order": 2000,
-                    "tab": "General"
+                    "order": 4000,
+                    "tab": "General",
+                    "defaultNow": true
                 }
             }
         },

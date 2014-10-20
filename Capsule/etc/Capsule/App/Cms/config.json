@@ -132,6 +132,10 @@
                     "imaged": {
                         "caption": "Imaged",
                         "url": "imaged"
+                    },
+                    "description": {
+                        "caption": "Description",
+                        "url": "description"
                     }
                 }
             },
@@ -422,6 +426,7 @@
     "module": {
         "user": "User",
         "named": "Named",
+        "description": "Description",
         "imaged": "Imaged",
         "richtext": "Richtext",
         "dated": "Dated",

@@ -7,6 +7,8 @@ use Capsule\File\Image\ImageInfo;
 use Capsule\App\Cms\Model\HistoryUploadImage;
 use Capsule\Reference\Imaged;
 use Capsule\Unit\DatedAdvanced;
+use Capsule\Reference\Description;
+use Capsule\Reference\Named;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -61,7 +63,7 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(strtotime(''));
+\Capsule\Tools\Tools::dump(Description::_configDataJson());
 ?>
 </body>
 </html>
