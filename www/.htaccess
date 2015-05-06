@@ -1,3 +1,4 @@
+# apache2 htaccess
 # Запретить просмотр содержимого директории, следовать символическим ссылкам
 Options -indexes +FollowSymLinks
 
