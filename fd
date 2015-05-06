@@ -1,15 +1,23 @@
-echo "$ git status"
+echo -e "\e[01;32;40m$ git pull\e[0m"
+git pull
+
+echo -e "\e[01;32;40m$ git status\e[0m"
 git status
-echo "$ git add ."
-git add .
-echo "$ git status"
+
+echo -e "\e[01;32;40m$ git add\e[0m"
+git add -A
+
+echo -e "\e[01;32;40m$ git status\e[0m"
 git status
-echo "$ git commit -m \"Various fixes and performance improvements\""
-# git commit -m "Comment: $1"
-git commit -m "Various fixes and performance improvements"
-echo "$ git status"
-git status
-echo "$ git push"
+
+echo -e "\e[01;32;40m$ git commit\e[0m"
+if [ "${1}" == "" ]
+then
+    git commit -m "Various fixes and performance improvements"
+else
+    git commit -m "${1}"
+fi
+
+echo -e "\e[01;32;40m$ git push\e[0m"
 git push
-echo "$ git status"
-git status
+
