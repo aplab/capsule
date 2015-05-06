@@ -1,0 +1,3 @@
+# capsule
+
+yet another CMF
