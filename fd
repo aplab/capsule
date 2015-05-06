@@ -19,5 +19,5 @@ else
 fi
 
 echo -e "\e[01;32;40m$ git push\e[0m"
-git push
+git push origin
 
