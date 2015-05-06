@@ -128,22 +128,22 @@ class Db extends mysqli
         $this->init(); // mysqli_init
         try {
             if ($config->socket) {
-                if (!$this->real_connect(
-                        ($config->persistent ? 'p:' : '') . $config->host,
-                        $config->username,
-                        $config->passwd,
-                        $config->dbname,
-                        $config->port,
-                        $config->socket)) {
-                        }
+                $this->real_connect(
+                    ($config->persistent ? 'p:' : '') . $config->host,
+                    $config->username,
+                    $config->passwd,
+                    $config->dbname,
+                    $config->port,
+                    $config->socket
+                );
             } else {
-                if (!$this->real_connect(
-                        ($config->persistent ? 'p:' : '') . $config->host,
-                        $config->username,
-                        $config->passwd,
-                        $config->dbname,
-                        $config->port)) {
-                        }
+                $this->real_connect(
+                    ($config->persistent ? 'p:' : '') . $config->host,
+                    $config->username,
+                    $config->passwd,
+                    $config->dbname,
+                    $config->port
+                );
             }
         } catch (\mysqli_sql_exception $e) {
             die($e->getMessage());
