@@ -123,6 +123,10 @@ class Result extends mysqli_result
         return $ret;
     }
     
+    /**
+     * @param int
+     * @return array
+     */
     public function fetch_all($resulttype = MYSQLI_NUM) {
         if (method_exists('mysqli_result', 'fetch_all')) return parent::fetch_all($resulttype);# Compatibility layer with PHP < 5.3
         else for ($res = array(); $tmp = $this->fetch_array($resulttype);) $res[] = $tmp;
