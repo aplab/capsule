@@ -65,8 +65,8 @@ abstract class ReferenceController extends DefaultController
         } else {
             $this->listItems();
         }
-        $this->ui->menu->append(new \Capsule\App\Cms\Ui\MainMenu\View($this->app->registry->mainMenu));
-        $this->ui->toolbar->append(new \Capsule\App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
+        $this->ui->menu->append(new \App\Cms\Ui\MainMenu\View($this->app->registry->mainMenu));
+        $this->ui->toolbar->append(new \App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
         echo $this->ui->html;
     }
     
@@ -90,7 +90,7 @@ abstract class ReferenceController extends DefaultController
         $data_grid = new DataGrid('capsule-ui-datagrid', $c::page($p->currentPage, $p->itemsPerPage));
         $data_grid->baseUrl = $filter($this->mod);
         $data_grid->p = $p;
-        $this->ui->workplace->append(new \Capsule\App\Cms\Ui\DataGrid\View($data_grid));
+        $this->ui->workplace->append(new \App\Cms\Ui\DataGrid\View($data_grid));
     }
     
     protected function add() {

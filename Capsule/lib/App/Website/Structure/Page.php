@@ -42,7 +42,7 @@ class Page extends Element
      *
      * @param array $data
      * @throws \Exception
-     * @return \Capsule\App\Website\Structure\Page
+     * @return \App\Website\Structure\Page
      */
     final public static function createElement(array $data) {
         if (__CLASS__ === get_called_class()) {
@@ -54,7 +54,7 @@ class Page extends Element
     
     /**
      * (non-PHPdoc)
-     * @see \Capsule\App\Website\Structure\Element::_init()
+     * @see \App\Website\Structure\Element::_init()
      */
     protected function _init(array $data) {
         if (!array_key_exists(self::AREA, $this->data)) {

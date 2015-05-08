@@ -132,7 +132,7 @@ class NestedItem extends ReferenceController
         $data_grid = new DataGrid('capsule-ui-datagrid', $items);
         $data_grid->baseUrl = $filter($this->mod);
         $data_grid->p = $p;
-        $this->ui->workplace->append(new \Capsule\App\Cms\Ui\DataGrid\View($data_grid));
+        $this->ui->workplace->append(new \App\Cms\Ui\DataGrid\View($data_grid));
         
         $this->ui->wrapper->append($dial_view);
     }
@@ -175,7 +175,7 @@ class NestedItem extends ReferenceController
     
     /**
      * (non-PHPdoc)
-     * @see \Capsule\App\Cms\Controller\ReferenceController::pages()
+     * @see \App\Cms\Controller\ReferenceController::pages()
      */
     protected function pages($current_items_per_page) {
         $class = $this->moduleClass;

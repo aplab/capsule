@@ -82,7 +82,7 @@ class Ajax extends App
     
     /**
      * (non-PHPdoc)
-     * @see \Capsule\App\AbstractApp\App::run()
+     * @see \App\AbstractApp\App::run()
      */
     public function run() {
         if (!Auth::getInstance()->currentUser) return;

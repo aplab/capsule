@@ -417,7 +417,7 @@
         }
     },
     "controller": {
-        "defaultNamespace": "Capsule/App/Cms/Controller"
+        "defaultNamespace": "App/Cms/Controller"
     },
     "#": "Module configuration",
     "#": "команда админки : какой вызвать контроллер",

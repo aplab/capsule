@@ -121,9 +121,9 @@ class Cms extends App
     private function install() {
         DataStorage::getInstance()->destroy();
         Storage::getInstance()->destroy();
-        \Capsule\App\Website\Structure\Storage::getInstance()->destroy();
+        \App\Website\Structure\Storage::getInstance()->destroy();
         \Capsule\Cache\Cache::getInstance()->destroy();
-        \Capsule\App\Website\Cache::getInstance()->destroy();
+        \App\Website\Cache::getInstance()->destroy();
         $t = I18n::getInstance();
         if (!User::number()) {
             $user = new User;

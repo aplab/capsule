@@ -36,7 +36,7 @@ class Index extends UnitController
      * Страница журнала
      * 
      * (non-PHPdoc)
-     * @see \Capsule\App\Website\Controller\UnitController::handle()
+     * @see \App\Website\Controller\UnitController::handle()
      * 
      * @param void
      * @return void

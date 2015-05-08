@@ -54,7 +54,7 @@ class DefaultController extends AbstractController
         $this->initMainMenu();
         $this->initToolbar();
         $this->ui->menu->append(new View($this->app->registry->mainMenu));
-        $this->ui->toolbar->append(new \Capsule\App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
+        $this->ui->toolbar->append(new \App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
         echo $this->ui->html;
     }
     
@@ -164,7 +164,7 @@ class DefaultController extends AbstractController
 //         $window->width = 320;
 //         $window->height = 240;
 //         $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'about.php'));
-//         $view = new \Capsule\App\Cms\Ui\DialogWindow\View($window);
+//         $view = new \App\Cms\Ui\DialogWindow\View($window);
 //         $wrapper->append($view);
         
         

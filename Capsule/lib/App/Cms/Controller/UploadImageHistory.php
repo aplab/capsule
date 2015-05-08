@@ -42,8 +42,8 @@ class UploadImageHistory extends DefaultController
         $this->initMainMenu();
         $this->initToolbar();
         $this->overview();
-        $this->ui->menu->append(new \Capsule\App\Cms\Ui\MainMenu\View($this->app->registry->mainMenu));
-        $this->ui->toolbar->append(new \Capsule\App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
+        $this->ui->menu->append(new \App\Cms\Ui\MainMenu\View($this->app->registry->mainMenu));
+        $this->ui->toolbar->append(new \App\Cms\Ui\Toolbar\View($this->app->registry->toolbar));
         echo $this->ui->html;
     }
     

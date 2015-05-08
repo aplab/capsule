@@ -37,7 +37,7 @@ class Area extends Element
     
     /**
      * (non-PHPdoc)
-     * @see \Capsule\App\Website\Structure\Element::_init()
+     * @see \App\Website\Structure\Element::_init()
      */
     protected function _init(array $data) {
         if (!array_key_exists(self::UNIT, $this->data)) {

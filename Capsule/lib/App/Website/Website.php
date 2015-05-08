@@ -54,7 +54,7 @@ class Website extends App
     
     /**
      * (non-PHPdoc)
-     * @see \Capsule\App\AbstractApp\App::run()
+     * @see \App\AbstractApp\App::run()
      */
     public function run() {
         try {
