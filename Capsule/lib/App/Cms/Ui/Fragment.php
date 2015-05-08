@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui;
+namespace App\Cms\Ui;
 
 use Capsule\Exception;
 /**

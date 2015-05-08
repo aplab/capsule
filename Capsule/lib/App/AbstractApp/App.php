@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\AbstractApp;
+namespace App\AbstractApp;
 
 use Capsule\Core\Singleton;
 use Capsule\Common\Exception;

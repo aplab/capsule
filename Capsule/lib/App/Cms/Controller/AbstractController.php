@@ -16,10 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 use Capsule\Controller\AbstractController as a;
-use Capsule\App\Cms\Cms;
+use App\Cms\Cms;
 
 /**
  * AbstractController.php

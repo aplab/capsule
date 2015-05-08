@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Controller;
+namespace App\Website\Controller;
 
 /**
  * Test.php

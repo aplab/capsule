@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use Capsule\Url\Redirect;
@@ -24,7 +24,7 @@ use Capsule\Superglobals\Post;
 use Capsule\I18n\I18n;
 use Capsule\DataStruct\ReturnValue;
 use Capsule\Ui\ObjectEditor\Oe;
-use Capsule\App\Cms\Ui\ObjectEditor\View;
+use App\Cms\Ui\ObjectEditor\View;
 use Capsule\Ui\DataGrid\DataGrid;
 use Capsule\User\Env;
 use Capsule\Core\Fn;

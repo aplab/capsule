@@ -1,5 +1,5 @@
 <?php # onload scripts
-use Capsule\App\Cms\Cms as c; ?>
+use App\Cms\Cms as c; ?>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#capsule-cms-main-menu').css('height', '<?=c::getInstance()->config->ui->mainMenu->height?>px');

@@ -16,11 +16,11 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Controller;
+namespace App\Website\Controller;
 
-use Capsule\App\Website\Structure\Unit;
+use App\Website\Structure\Unit;
 use Capsule\Common\Path;
-use Capsule\App\Website\Website;
+use App\Website\Website;
 /**
  * UnitController.php
  *

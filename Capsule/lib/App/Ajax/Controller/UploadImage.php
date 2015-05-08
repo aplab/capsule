@@ -16,10 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Ajax\Controller;
+namespace App\Ajax\Controller;
 
-use Capsule\App\Ajax\Controller\Controller;
-use Capsule\App\Cms\Cms;
+use App\Ajax\Controller\Controller;
+use App\Cms\Cms;
 use Capsule\Common\Path;
 use Capsule\Capsule;
 use Capsule\DataStruct\ReturnValue;
@@ -27,7 +27,7 @@ use Capsule\Superglobals\Post;
 use Capsule\I18n\I18n;
 use Capsule\File\Upload\Msg;
 use Capsule\Plugin\Storage\Storage;
-use Capsule\App\Cms\Model\HistoryUploadImage;
+use App\Cms\Model\HistoryUploadImage;
 
 /**
  * UploadImage.php

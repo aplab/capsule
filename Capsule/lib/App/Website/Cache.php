@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website;
+namespace App\Website;
 
 use Capsule\Cache\Cache as _;
 /**

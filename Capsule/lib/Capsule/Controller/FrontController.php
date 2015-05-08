@@ -19,9 +19,9 @@
 namespace Capsule\Controller;
 
 use Capsule\Url\Path;
-use Capsule\App\Cms\Cms;
-use Capsule\App\Website\Website;
-use Capsule\App\Ajax\Ajax;
+use App\Cms\Cms;
+use App\Website\Website;
+use App\Ajax\Ajax;
 
 /**
  * Controller.php

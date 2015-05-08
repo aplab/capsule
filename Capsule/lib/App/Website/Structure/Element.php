@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Structure;
+namespace App\Website\Structure;
 
 /**
  * Element.php

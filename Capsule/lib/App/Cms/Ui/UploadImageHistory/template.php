@@ -1,6 +1,6 @@
 <?php
 use Capsule\Common\TplVar;
-use Capsule\App\Cms\Model\HistoryUploadImage;
+use App\Cms\Model\HistoryUploadImage;
 use Capsule\I18n\I18n;
 $tplvar = TplVar::getInstance();
 $in = $tplvar->instanceName;

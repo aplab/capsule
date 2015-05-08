@@ -16,13 +16,13 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui\Storage;
+namespace App\Cms\Ui\Storage;
 
 
-use Capsule\App\Cms\Ui\Ui;
-use Capsule\App\Cms\Ui\Stylesheet;
-use Capsule\App\Cms\Ui\Script;
-use Capsule\App\Cms\Cms;
+use App\Cms\Ui\Ui;
+use App\Cms\Ui\Stylesheet;
+use App\Cms\Ui\Script;
+use App\Cms\Cms;
 /**
  * View.php
  *

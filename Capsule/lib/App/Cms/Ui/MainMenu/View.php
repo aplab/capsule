@@ -16,9 +16,9 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui\MainMenu;
+namespace App\Cms\Ui\MainMenu;
 
-use Capsule\App\Cms\Ui\Ui;
+use App\Cms\Ui\Ui;
 use Capsule\Ui\DropdownMenu\Menu;
 use Capsule\Ui\DropdownMenu\Delimiter;
 use Capsule\Ui\DropdownMenu\SubPunct;

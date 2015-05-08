@@ -16,14 +16,14 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website;
+namespace App\Website;
 
-use Capsule\App\AbstractApp\App;
-use Capsule\App\Website\Structure\Router;
+use App\AbstractApp\App;
+use App\Website\Structure\Router;
 use Capsule\Capsule;
 use Capsule\Common\Path;
-use Capsule\App\Website\Exception\Error404Exception;
-use Capsule\App\Website\Structure\Page;
+use App\Website\Exception\Error404Exception;
+use App\Website\Structure\Page;
 use Capsule\Tools\Seo\Seo;
 /**
  * Website.php

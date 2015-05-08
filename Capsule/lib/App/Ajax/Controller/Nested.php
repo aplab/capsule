@@ -16,9 +16,9 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Ajax\Controller;
+namespace App\Ajax\Controller;
 
-use Capsule\App\Ajax\Controller\Controller;
+use App\Ajax\Controller\Controller;
 use Capsule\Superglobals\Request;
 use Capsule\Model\IdBased;
 use Capsule\User\Auth;

@@ -16,21 +16,21 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms;
+namespace App\Cms;
 
-use Capsule\App\AbstractApp\App;
+use App\AbstractApp\App;
 use Capsule\Url\Filter;
 use Capsule\Url\Path;
-use Capsule\App\Cms\Ui\Ui;
+use App\Cms\Ui\Ui;
 use Capsule\DataStorage\DataStorage;
 use Capsule\I18n\I18n;
 use Capsule\User\User;
 use Capsule\Capsule;
 use Capsule\User\Auth;
 use Capsule\Url\Redirect;
-use Capsule\App\Cms\Ui\Section;
+use App\Cms\Ui\Section;
 use Capsule\Core\Fn;
-use Capsule\App\Cms\Controller\DefaultController;
+use App\Cms\Controller\DefaultController;
 use Capsule\DataModel\Config\Storage;
 use Capsule\Tools\Sysinfo;
 

@@ -20,9 +20,9 @@ namespace Usr\Aplab\Controller\DevLog;
 
 use Capsule\Common\Path;
 use Capsule\Common\TplVar;
-use Capsule\App\Website\Structure\Router;
-use Capsule\App\Website\Website;
-use Capsule\App\Website\Controller\UnitController;
+use App\Website\Structure\Router;
+use App\Website\Website;
+use App\Website\Controller\UnitController;
 use Usr\Aplab\Model\DevLog;
 /**
  * Index.php

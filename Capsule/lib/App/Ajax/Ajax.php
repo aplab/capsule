@@ -16,12 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Ajax;
+namespace App\Ajax;
 
-use Capsule\App\AbstractApp\App;
+use App\AbstractApp\App;
 use Capsule\Capsule;
 use Capsule\Core\Fn;
-use Capsule\App\Ajax\Controller\Controller;
+use App\Ajax\Controller\Controller;
 use Capsule\User\Auth;
 /**
  * Ajax.php

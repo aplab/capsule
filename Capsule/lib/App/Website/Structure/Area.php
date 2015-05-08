@@ -16,9 +16,9 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Structure;
+namespace App\Website\Structure;
 
-use Capsule\App\Website\Cache;
+use App\Website\Cache;
 use Capsule\Core\Fn;
 /**
  * Area.php

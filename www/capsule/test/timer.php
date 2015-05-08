@@ -4,7 +4,7 @@ use Capsule\Capsule;
 use Capsule\User\Auth;
 use Capsule\Plugin\Storage\Storage;
 use Capsule\File\Image\ImageInfo;
-use Capsule\App\Cms\Model\HistoryUploadImage;
+use App\Cms\Model\HistoryUploadImage;
 use Capsule\Reference\Imaged;
 use Capsule\Unit\DatedAdvanced;
 

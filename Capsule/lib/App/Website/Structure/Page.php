@@ -16,12 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Structure;
+namespace App\Website\Structure;
 
-use Capsule\App\Website\Website;
+use App\Website\Website;
 use Capsule\Common\Path;
 use Capsule\Capsule;
-use Capsule\App\Website\Cache;
+use App\Website\Cache;
 /**
  * Page.php
  *

@@ -16,12 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use Capsule\Ui\DataGrid\DataGrid;
 use Capsule\Ui\DialogWindow\DialogWindow;
-use Capsule\App\Cms\Ui\DialogWindow\View;
+use App\Cms\Ui\DialogWindow\View;
 use Capsule\I18n\I18n;
 use Capsule\Common\Path;
 use Capsule\Capsule;

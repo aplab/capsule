@@ -16,11 +16,11 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Structure;
+namespace App\Website\Structure;
 
 use Capsule\Core\Fn;
-use Capsule\App\Website\Cache;
-use Capsule\App\Website\Website;
+use App\Website\Cache;
+use App\Website\Website;
 /**
  * Unit.php
  *

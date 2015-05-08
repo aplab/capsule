@@ -16,12 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui\Toolbar;
+namespace App\Cms\Ui\Toolbar;
 
 use Capsule\Ui\Toolbar\Delimiter;
 use Capsule\Ui\Toolbar\Toolbar as t;
 use Capsule\I18n\I18n;
-use Capsule\App\Cms\Ui\Ui;
+use App\Cms\Ui\Ui;
 
 /**
  * SysToolbarView.php

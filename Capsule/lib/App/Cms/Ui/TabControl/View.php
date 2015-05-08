@@ -16,13 +16,13 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui\TabControl;
+namespace App\Cms\Ui\TabControl;
 
 use Capsule\Ui\TabControl\TabControl as t;
-use Capsule\App\Cms\Ui\Script;
-use Capsule\App\Cms\Ui\Stylesheet;
-use Capsule\App\Cms\Cms;
-use Capsule\App\Cms\Ui\Ui;
+use App\Cms\Ui\Script;
+use App\Cms\Ui\Stylesheet;
+use App\Cms\Cms;
+use App\Cms\Ui\Ui;
 use Capsule\I18n\I18n;
 /**
  * View.php

@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Model;
+namespace App\Cms\Model;
 
 use Capsule\Unit\NamedTsUsr;
 use Capsule\Db\Db;

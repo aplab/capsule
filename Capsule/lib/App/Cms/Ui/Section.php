@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui;
+namespace App\Cms\Ui;
 
 use Capsule\Ui\Section as s;
 use Capsule\Core\Fn as f;

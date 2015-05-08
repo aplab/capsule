@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 /**
  * TitledTsUsr.php

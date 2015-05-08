@@ -16,21 +16,21 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
-use Capsule\App\Cms\Controller\AbstractController;
+use App\Cms\Controller\AbstractController;
 use Capsule\Ui\DropdownMenu\SubPunct;
 use Capsule\Ui\DropdownMenu\Punct;
 use Capsule\Ui\DropdownMenu\Menu;
-use Capsule\App\Cms\Ui\Ui;
-use Capsule\App\Cms\Ui\Script;
-use Capsule\App\Cms\Ui\Stylesheet;
+use App\Cms\Ui\Ui;
+use App\Cms\Ui\Script;
+use App\Cms\Ui\Stylesheet;
 use Capsule\Ui\Toolbar\Toolbar;
-use Capsule\App\Cms\Ui\Section;
-use Capsule\App\Cms\Ui\MainMenu\View;
+use App\Cms\Ui\Section;
+use App\Cms\Ui\MainMenu\View;
 use Capsule\Capsule;
 use Capsule\Common\Path;
-use Capsule\App\Cms\Ui\Dialog\Dialog;
+use App\Cms\Ui\Dialog\Dialog;
 /**
  * DefaultController.php
  *

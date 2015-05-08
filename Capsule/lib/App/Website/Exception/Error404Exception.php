@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Website\Exception;
+namespace App\Website\Exception;
 
 /**
  * Error404Exception.php

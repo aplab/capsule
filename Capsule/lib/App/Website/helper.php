@@ -20,7 +20,7 @@
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
 
-use Capsule\App\Website\Website;
+use App\Website\Website;
 
 /**
  * Возвращает вывод области текущей страницы с именем $name

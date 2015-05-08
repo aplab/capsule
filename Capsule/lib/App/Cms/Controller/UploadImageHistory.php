@@ -16,10 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
-use Capsule\App\Cms\Ui\UploadImageHistory\View;
+use App\Cms\Ui\UploadImageHistory\View;
 use Capsule\Capsule;
 use Capsule\I18n\I18n;
 /**

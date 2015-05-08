@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms;
+namespace App\Cms;
 
 use Capsule\Registry\Immutable;
 /**

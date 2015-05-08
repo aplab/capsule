@@ -16,10 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Ajax\Controller;
+namespace App\Ajax\Controller;
 
 use Capsule\Controller\IController;
-use Capsule\App\Ajax\Ajax;
+use App\Ajax\Ajax;
 /**
  * Controller.php
  *

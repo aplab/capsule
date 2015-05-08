@@ -16,16 +16,16 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Ui\ObjectEditor;
+namespace App\Cms\Ui\ObjectEditor;
 
 use Capsule\Ui\ObjectEditor\Oe;
 use Capsule\Ui\TabControl\Tab;
 use Capsule\Ui\TabControl\TabControl;
-use Capsule\App\Cms\Ui\Ui;
-use Capsule\App\Cms\Ui\Stylesheet;
-use Capsule\App\Cms\Ui\Script;
-use Capsule\App\Cms\Cms;
-use Capsule\App\Cms\Ui\TabControl\View as tv;
+use App\Cms\Ui\Ui;
+use App\Cms\Ui\Stylesheet;
+use App\Cms\Ui\Script;
+use App\Cms\Cms;
+use App\Cms\Ui\TabControl\View as tv;
 use Capsule\Superglobals\Post;
 
 /**

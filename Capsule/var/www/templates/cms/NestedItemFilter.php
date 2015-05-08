@@ -1,7 +1,7 @@
 <?php
 use Capsule\Ui\TabControl\TabControl;
 use Capsule\Ui\TabControl\Tab;
-use Capsule\App\Cms\Ui\TabControl\View;
+use App\Cms\Ui\TabControl\View;
 use Capsule\I18n\I18n;
 use Capsule\Core\Fn;
 $inst_name = 'nested-item-filter-dialog-window';

@@ -16,17 +16,17 @@
  * @package Capsule
  */
 
-namespace Capsule\App\Cms\Controller;
+namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
-use Capsule\App\Cms\Ui\UploadImage\View;
+use App\Cms\Ui\UploadImage\View;
 use Capsule\Ui\DialogWindow\DialogWindow;
 use Capsule\Common\Path;
 use Capsule\Capsule;
 use Capsule\I18n\I18n;
 use Capsule\Common\TplVar;
-use Capsule\App\Cms\Ui\Stylesheet;
-use Capsule\App\Cms\Ui\Script;
+use App\Cms\Ui\Stylesheet;
+use App\Cms\Ui\Script;
 /**
  * Storage.php
  *
