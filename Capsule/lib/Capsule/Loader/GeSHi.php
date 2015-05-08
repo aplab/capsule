@@ -29,6 +29,6 @@ use Capsule\Capsule;
 class GeSHi extends Singleton
 {
     protected function __construct() {
-        require_once Capsule::getInstance()->opt . '/GeSHi/geshi/geshi.php';
+        require_once Capsule::getInstance()->{Capsule::DIR_EXT} . '/GeSHi/geshi/geshi.php';
     }
 }
