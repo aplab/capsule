@@ -9,6 +9,7 @@ use Capsule\Reference\Imaged;
 use Capsule\Unit\DatedAdvanced;
 use Capsule\Reference\Description;
 use Capsule\Reference\Named;
+use Capsule\Model\IdBased;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -63,7 +64,7 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Description::_configDataJson());
+\Capsule\Tools\Tools::dump(IdBased::_configDataJson());
 ?>
 </body>
 </html>
