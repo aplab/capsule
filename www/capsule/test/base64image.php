@@ -1,4 +1,4 @@
-<?php include '../../Capsule/lib/Capsule/Capsule.php';
+<?php include '../../../Capsule/lib/Capsule/Capsule.php';
 use Capsule\Capsule;
 use Capsule\Unit\Nested\Tree\Item;
 use Capsule\User\Auth;
