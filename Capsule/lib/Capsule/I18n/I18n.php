@@ -67,7 +67,7 @@ class I18n extends Singleton
      * @return self
      */
     protected function __construct() {
-        $path = new Path(Capsule::getInstance()->etc, Fn::get_namespace($this));
+        $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, Fn::get_namespace($this));
         if (!is_scalar(self::$lang)) {
             return;
         }

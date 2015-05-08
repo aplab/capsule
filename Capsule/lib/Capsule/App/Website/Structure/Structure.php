@@ -135,7 +135,7 @@ class Structure extends Singleton
      */
     protected function _load() {
         $namespace = Fn::get_namespace($this);
-        $path = new Path(Capsule::getInstance()->etc, $namespace, 'config.json');
+        $path = new Path(Capsule::getInstance()->cfg, $namespace, 'config.json');
         $loader = new Loader();
         return $loader->loadJson($path);
     }

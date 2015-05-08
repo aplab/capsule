@@ -51,6 +51,13 @@ final class Capsule implements \Serializable
      */
     const OS_TYPE_WINDOWS = 'Windows', OS_TYPE_UNIX = 'UNIX';
     
+    const DIR_CFG = 'cfg'; // old etc
+    const DIR_LIB = 'lib';
+    const DIR_BIN = 'bin';
+    const DIR_EXT = 'ext'; // olg opt
+    const DIR_TMP = 'tmp';
+    const DIR_VAR = 'var';
+    
     /**
      * Developer mode flag
      *
@@ -113,21 +120,22 @@ final class Capsule implements \Serializable
     private function __construct($document_root) {
         $this->data['startTime'] = $this->microtime;
         $this->data['alreadyRunning'] = false;
-        $this->data['lib'] = $this->_normalizePath(dirname(__DIR__));
+        $this->data[self::DIR_LIB] = $this->_normalizePath(dirname(__DIR__));
         $this->data['systemRoot'] = dirname($this->lib);
-        $this->data['etc'] = $this->systemRoot . '/etc';
-        $this->data['opt'] = $this->systemRoot . '/opt';
-        $this->data['tmp'] = $this->systemRoot . '/tmp';
-        $this->data['var'] = $this->systemRoot . '/var';
+        $this->data[self::DIR_CFG] = $this->systemRoot . '/' . self::DIR_CFG;
+        $this->data[self::DIR_EXT] = $this->systemRoot . '/' . self::DIR_EXT;
+        $this->data[self::DIR_TMP] = $this->systemRoot . '/' . self::DIR_TMP;
+        $this->data[self::DIR_VAR] = $this->systemRoot . '/' . self::DIR_VAR;
+        $this->data[self::DIR_BIN] = $this->systemRoot . '/' . self::DIR_BIN;
         include 'Exception.php';
-        include $this->lib . '/Capsule/Core/Exception.php';
+        include $this->{self::DIR_LIB} . '/Capsule/Core/Exception.php';
         if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4 or PHP_RELEASE_VERSION < 3) {
             $msg = 'Supported php version 5.4.3+';
             throw new Core\Exception($msg);
         }
-        include $this->lib . '/Capsule/Core/Singleton.php';
-        include $this->lib . '/Capsule/Core/Autoload.php';
-        include $this->lib . '/Capsule/Core/global_functions.php';
+        include $this->{self::DIR_LIB} . '/Capsule/Core/Singleton.php';
+        include $this->{self::DIR_LIB} . '/Capsule/Core/Autoload.php';
+        include $this->{self::DIR_LIB} . '/Capsule/Core/global_functions.php';
         if (is_null($document_root)) {
             if (isset($_SERVER['DOCUMENT_ROOT'])) {
                 $this->data['documentRoot'] = $_SERVER['DOCUMENT_ROOT'];
@@ -231,7 +239,7 @@ final class Capsule implements \Serializable
             if ($storage->exists($class)) {
                 $this->data[$name] = $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->etc, $namespace, 'config.json');
+                $path = new Path(Capsule::getInstance()->{self::DIR_CFG}, $namespace, 'config.json');
                 $loader = new Loader();
                 $data = $loader->loadJson($path);
                 $$name = new Config($data);

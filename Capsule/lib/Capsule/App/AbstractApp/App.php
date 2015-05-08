@@ -95,7 +95,7 @@ abstract class App extends Singleton
             if ($storage->exists($class)) {
                 $this->data[$name] = $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->etc, $namespace, 'config.json');
+                $path = new Path(Capsule::getInstance()->cfg, $namespace, 'config.json');
                 $loader = new Loader();
                 $data = $loader->loadJson($path);
                 $$name = new Config($data);

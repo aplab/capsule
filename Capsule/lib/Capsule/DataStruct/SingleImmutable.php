@@ -47,7 +47,7 @@ abstract class SingleImmutable extends Singleton
      */
     protected function loadData() {
         $class = get_class($this);
-        $path = new Path(Capsule::getInstance()->etc, $class . '.json');
+        $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class . '.json');
         if (!file_exists($path)) {
             $msg = 'File "' . $path . '" not found';
             throw new Exception($msg);

@@ -407,7 +407,7 @@ abstract class DataModel
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] =
-                new Path(Capsule::getInstance()->etc, $class, self::CONFIG_FILENAME);
+                new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class, self::CONFIG_FILENAME);
         }
         return self::$common[$class][__FUNCTION__];
     }
