@@ -93,18 +93,12 @@ class NestedItem extends ReferenceController
         $this->filterByContainer();
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
         
-//         $dialog = new DialogWindow('filter-by-container-window');
-//         $dialog->hidden = true;
-//         $dialog->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'NestedItemFilter.php'));
-//         $dial_view = new View($dialog);
-//         $dialog->caption = I18n::_('Filter');
-        
         new Dialog(array(
             'title' => I18n::_('Filter'),
             'instanceName' => 'filter-by-container-window',
             'content' => include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'NestedItemFilter.php')),
             'appendTo' => 'capsule-cms-wrapper',
-            'hidden' => false,
+            'hidden' => true,
             'minWidth' => 320,
             'minHeight' => 240
         ));

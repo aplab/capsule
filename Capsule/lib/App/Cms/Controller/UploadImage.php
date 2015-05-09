@@ -27,6 +27,7 @@ use Capsule\I18n\I18n;
 use Capsule\Common\TplVar;
 use App\Cms\Ui\Stylesheet;
 use App\Cms\Ui\Script;
+use App\Cms\Ui\Dialog\Dialog;
 /**
  * Storage.php
  *
@@ -117,7 +118,7 @@ class UploadImage extends DefaultController
         $button = new Button;
         $toolbar->add($button);
         $button->caption = I18n::_('Settings');
-        $button->action = 'CapsuleUiDialogWindow.getInstance(\'' . $this->instanceName . '-settings\').showCenter()';
+        $button->action = 'CapsuleUiDialog.getInstance(\'' . $this->instanceName . '-settings\').showCenter()';
         $button->icon = $this->app->config->icons->cms . '/wrench-screwdriver.png';
         
         $view = new View($this->instanceName); 
@@ -125,13 +126,14 @@ class UploadImage extends DefaultController
         $this->ui->workplace->append($view);
         
         TplVar::getInstance()->instanceName = $this->instanceName;
-        $window = new DialogWindow($this->instanceName . '-settings');
-        $window->hidden = true;
-        $window->caption = I18n::_('Settings');
-        $window->width = 320;
-        $window->height = 240;
-        $window->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'storageSettings.php'));
-        $view = new \App\Cms\Ui\DialogWindow\View($window);
-        $this->ui->wrapper->append($view);
+        new Dialog(array(
+            'title' => I18n::_('Settings'),
+            'instanceName' => $this->instanceName . '-settings',
+            'content' => include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'storageSettings.php')),
+            'appendTo' => 'capsule-cms-wrapper',
+            'hidden' => true,
+            'minWidth' => 320,
+            'minHeight' => 240
+        ));
     }
 }
