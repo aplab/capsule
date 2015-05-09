@@ -5,7 +5,7 @@
             "column": {
                 "c1": {
                     "width": 400,
-                    "type": "tree"
+                    "type": "Tree"
                 }
             }
         },

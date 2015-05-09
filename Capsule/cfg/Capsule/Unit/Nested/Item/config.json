@@ -37,7 +37,7 @@
             "column": {
                 "c1": {
                     "width": 80,
-                    "type": "rtext",
+                    "type": "Rtext",
                     "order": 10000
                 }
             },
