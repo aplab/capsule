@@ -28,6 +28,7 @@ use Capsule\Capsule;
 use Capsule\Superglobals\Post;
 use Capsule\User\Env;
 use Capsule\Core\Fn;
+use App\Cms\Ui\Dialog\Dialog;
 /**
  * NestedItem.php
  *
@@ -92,11 +93,21 @@ class NestedItem extends ReferenceController
         $this->filterByContainer();
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
         
-        $dialog = new DialogWindow('filter-by-container-window');
-        $dialog->hidden = true;
-        $dialog->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'NestedItemFilter.php'));
-        $dial_view = new View($dialog);
-        $dialog->caption = I18n::_('Filter');
+//         $dialog = new DialogWindow('filter-by-container-window');
+//         $dialog->hidden = true;
+//         $dialog->content = include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'NestedItemFilter.php'));
+//         $dial_view = new View($dialog);
+//         $dialog->caption = I18n::_('Filter');
+        
+        new Dialog(array(
+            'caption' => I18n::_('Filter'),
+            'instanceName' => 'filter-by-container-window',
+            'content' => include(new Path(Capsule::getInstance()->systemRoot, $this->app->config->templates, 'NestedItemFilter.php')),
+            'appendTo' => 'capsule-cms-wrapper',
+            'hidden' => false,
+            'minWidth' => 320,
+            'minHeight' => 240
+        ));
         
         $toolbar = $this->app->registry->toolbar;
         $button = new Button;
@@ -115,7 +126,7 @@ class NestedItem extends ReferenceController
         $toolbar->add($button);
         $button->caption = I18n::_($variants[$this->filterByContainer]['text']);
         $button->icon = $this->app->config->icons->cms . '/funnel.png';
-        $button->action = 'CapsuleUiDialogWindow.getInstance("filter-by-container-window").showCenter()';
+        $button->action = 'CapsuleUiDialog.getInstance("filter-by-container-window").showCenter()';
     
         $c = $this->moduleClass;
         $p = $this->pagination();
@@ -134,7 +145,7 @@ class NestedItem extends ReferenceController
         $data_grid->p = $p;
         $this->ui->workplace->append(new \App\Cms\Ui\DataGrid\View($data_grid));
         
-        $this->ui->wrapper->append($dial_view);
+//         $this->ui->wrapper->append($dial_view);
     }
     
     /**
