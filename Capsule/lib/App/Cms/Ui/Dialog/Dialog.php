@@ -52,6 +52,8 @@ class Dialog
             $msg = 'Instance already exists: ' . $this->instanceName;
             throw new \Exception($msg);
         }
-        Ui::getInstance()->onload->append('new CapsuleUiDialog(' . json_encode($data) . ');');
+        // Здесь -1 нужен потому что окно с контентом должно быть выведено до того, как 
+        // будут вызваны обработчики контента окна. Иначе им нечего будет обрабатывать
+        Ui::getInstance()->onload->insert('new CapsuleUiDialog(' . json_encode($data) . ');', -1);
     }
 }

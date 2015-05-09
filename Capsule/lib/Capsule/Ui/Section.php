@@ -22,6 +22,7 @@ use ReflectionClass, Iterator, Countable;
 use Capsule\Exception;
 use Capsule\Core\Fn;
 use Capsule\I18n\I18n;
+use Capsule\Validator\SignedDigits;
 
 /**
  * Section.php
@@ -51,6 +52,13 @@ abstract class Section implements Iterator, Countable
      * @var array
      */
     protected $content = array();
+    
+    /**
+     * Element content with string index (was added with "as" parameter)
+     * 
+     * @var unknown
+     */
+    protected $index = array();
 
     /**
      * defined by Countable interface.
@@ -205,13 +213,91 @@ abstract class Section implements Iterator, Countable
             return $this;
         } else {
             Fn::is_key($as);
-            if (array_key_exists($as, $this->content)) {
+            if (array_key_exists($as, $this->index)) {
                 $msg = I18n::t('Key already exists: ') . $as;
                 throw new Exception($msg);
             }
-            $this->content[$as] = $content;
+            $this->content[] = $content;
+            $this->index[$as] = $content;
         }
         return $this;
+    }
+    
+    /**
+     * Prepend content part
+     *
+     * @param mixed $content
+     * @param string $as
+     * @throws Exception
+     * @return \Capsule\Ui\Section
+     */
+    public function prepend($content, $as = null) {
+        if (is_null($as)) {
+            array_unshift($this->content, $content);
+            return $this;
+        } else {
+            Fn::is_key($as);
+            if (array_key_exists($as, $this->index)) {
+                $msg = I18n::t('Key already exists: ') . $as;
+                throw new Exception($msg);
+            }
+            array_unshift($this->content, $content);
+            $this->index[$as] = $content;
+        }
+        return $this;
+    }
+    
+    /**
+     * Insertion content part
+     * If position is negative, the insertion from the end of content. 
+     * 
+     * @param mixed $content
+     * @param int $position
+     * @param string $as
+     */
+    public function insert($content, $position = null, $as = null) {
+        if (!is_null($as)) {
+            Fn::is_key($as);
+            if (array_key_exists($as, $this->index)) {
+                $msg = I18n::t('Key already exists: ') . $as;
+                throw new Exception($msg);
+            }
+            $this->index[$as] = $content;
+        }
+        if (is_null($position)) {
+            $this->content[] = $content;
+            return $this;
+        }
+        $validator = new SignedDigits();
+        $validator->name = 'position';
+        if ($validator->isValid($position)) {
+            $position = $validator->getClean();
+        } else {
+            $msg = $validator->message;
+            throw new Exception($msg);
+        }
+        settype($position, 'int');
+        $length = sizeof($this->content);
+        if ($position < 0) $position = $length + $position;
+        if ($position < 0) $position = 0;
+        if ($position == 0) {
+            array_unshift($this->content, $content);
+            return $this;
+        }
+        if ($position > $length) {
+            array_push($this->content, $content);
+            return $this;
+        }
+        $c = 0;
+        $tmp = $this->content;
+        $this->content = array();
+        foreach ($tmp as $v) {
+            if ($c == $position) {
+                $this->content[] = $content;
+            }
+            $this->content[] = $v;
+            $c++;
+        }
     }
     
     /**
@@ -227,7 +313,16 @@ abstract class Section implements Iterator, Countable
             return $this;
         } else {
             Fn::is_key($as);
-            $this->content[$as] = $content;
+            if (array_key_exists($as, $this->index)) {
+                $old = $this->index['$as'];
+                foreach ($this->content as $k => $v) {
+                    if ($old === $v) $this->content[$k] = $content;
+                }
+                $this->index['$as'] = $content;
+            } else {
+                $this->index[$as] = $content;
+                $this->content[] = $content;
+            }
         }
         return $this;
     }
@@ -240,6 +335,7 @@ abstract class Section implements Iterator, Countable
      */
     public function clear() {
         $this->content = array();
+        $this->index = array();
     }
     
     /**
@@ -250,7 +346,7 @@ abstract class Section implements Iterator, Countable
      */
     public function find($as) {
         Fn::is_key($as);
-        return array_key_exists($as, $this->content) ? $this->content[$as] : null;
+        return array_key_exists($as, $this->index) ? $this->index[$as] : null;
     }
     
     /**
@@ -260,36 +356,9 @@ abstract class Section implements Iterator, Countable
      * @return boolean
      */
     public function exists($as) {
-        return array_key_exists($as, $this->content);
+        return array_key_exists($as, $this->index);
     }
 
-    /**
-     * Prepend content part
-     *
-     * @param mixed $content
-     * @param string $as
-     * @throws Exception
-     * @return \Capsule\Ui\Section
-     */
-    public function prepend($content, $as = null) {
-        if (is_null($as)) {
-            array_unshift($this->content, $content);
-            return $this;
-        } else {
-            Fn::is_key($as);
-            if (array_key_exists($as, $this->content)) {
-                $msg = I18n::t('Key already exists: ') . $as;
-                throw new Exception($msg);
-            }
-            $tmp = $this->content;
-            $this->content = array($as => $content);
-            foreach ($tmp as $k => $v) {
-                $this->content[$k] = $v;
-            }
-        }
-        return $this;
-    }
-    
     /**
      * Cloning object
      *

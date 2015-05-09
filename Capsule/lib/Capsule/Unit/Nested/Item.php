@@ -145,11 +145,12 @@ class Item extends NamedTsUsr
 	 * Возвращает количество элементов у которых есть привязка к контейнеру
 	 *
 	 * @param void
-	 * @return array
+	 * @return int
 	 */
 	public static function numberWithContainer() {
 	    $container_class = Fn::create_classname(static::config()->container);
 	    $keys = $container_class::keys();
+	    if (empty ($keys)) return 0;
 	    $in = array();
 	    $db = Db::getInstance();
 	    array_walk($keys, function($v, $k) use(&$in, $db) {
@@ -169,6 +170,7 @@ class Item extends NamedTsUsr
 	public static function numberWithoutContainer() {
 	    $container_class = Fn::create_classname(static::config()->container);
 	    $keys = $container_class::keys();
+	    if (empty($keys)) return self::number();
 	    $in = array();
 	    $db = Db::getInstance();
 	    array_walk($keys, function($v, $k) use(&$in, $db) {
@@ -212,6 +214,7 @@ class Item extends NamedTsUsr
 	public static function pageWithContainer($page_number = 1, $items_per_page = 10) {
 	    $container_class = Fn::create_classname(static::config()->container);
 	    $keys = $container_class::keys();
+	    if (empty($keys)) return array();
 	    $in = array();
 	    $db = Db::getInstance();
 	    $from = $items_per_page * ($page_number - 1);
@@ -234,6 +237,7 @@ class Item extends NamedTsUsr
 	public static function pageWithoutContainer($page_number = 1, $items_per_page = 10) {
 	    $container_class = Fn::create_classname(static::config()->container);
 	    $keys = $container_class::keys();
+	    if (empty($keys)) return self::page($page_number, $items_per_page);
 	    $in = array();
 	    $db = Db::getInstance();
 	    $from = $items_per_page * ($page_number - 1);
