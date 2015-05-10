@@ -89,6 +89,7 @@ class NestedItem extends ReferenceController
         $module_class = $this->moduleClass;
         $module_config = $module_class::config();
         $container_class = Fn::create_classname($module_config->container);
+        foreach ($this->filterVariants as &$variant) $variant['text'] = '<strong>' . I18n::_($variant['text']) . '</strong>';
         $variants = array_replace($this->filterVariants, $container_class::optionsDataList());
         $this->filterByContainer();
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());

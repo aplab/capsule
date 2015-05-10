@@ -12,6 +12,30 @@
     "mainMenu": {
         "help": "Конфигурация главного меню",
         "item": {
+            "file": {
+                "caption": "File",
+                "help": "File",
+                "item": {
+                    "uploadimage": {
+                        "caption": "Upload image",
+                        "url": "uploadimage",
+                        "item": {
+                            "small_window": {
+                                "caption": "Popup",
+                                "action": "window.open('/admin/uploadimage/', '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
+                            },
+                            "new tab": {
+                                "caption": "Open in new tab",
+                                "action": "window.open('/admin/uploadimage/', '_blank')"
+                            },
+                            "history": {
+                                "caption": "View history",
+                                "action": "window.open('/admin/uploadimagehistory/', '_blank')"
+                            }
+                        }
+                    }
+                }
+            },
             "site": {
                 "caption": "Site",
                 "help": "Site",
@@ -251,30 +275,6 @@
                     }
                 }
             },
-            "file": {
-                "caption": "File",
-                "help": "File",
-                "item": {
-                    "uploadimage": {
-                        "caption": "Upload image",
-                        "url": "uploadimage",
-                        "item": {
-                            "small_window": {
-                                "caption": "Popup",
-                                "action": "window.open('/admin/uploadimage/', '', 'width=800, height=600, menubar=no, toolbar=no, location=no, directories=no, status=no, scrollbars=yes, resizable=yes')"
-                            },
-                            "new tab": {
-                                "caption": "Open in new tab",
-                                "action": "window.open('/admin/uploadimage/', '_blank')"
-                            },
-                            "history": {
-                                "caption": "View history",
-                                "action": "window.open('/admin/uploadimagehistory/', '_blank')"
-                            }
-                        }
-                    }
-                }
-            },
             "window": {
                 "caption": "Window",
                 "help": "Window",
@@ -315,7 +315,7 @@
                 "help": "Help",
                 "item": {
                     "help": {
-                        "caption": "Справка",
+                        "caption": "Help",
                         "url": "http://www.aplab.ru/",
                         "target": "_blank"
                     },
