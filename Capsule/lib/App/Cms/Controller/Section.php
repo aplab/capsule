@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 11 мая 2015 г. 1:15:01 YEKT 2015                                              |
+// | 12 мая 2015 г. 0:35:17 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,15 +16,18 @@
  * @package Capsule
  */
 
-namespace Capsule\Module\Catalog;
+namespace App\Cms\Controller;
 
+use App\Cms\Controller\Tree;
 /**
- * Property.php
+ * Section.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Property
+class Section extends Tree
 {
+    protected $moduleClass = 'Capsule\\Module\\Catalog\\Section';
+    
     
 }

@@ -34,7 +34,7 @@
             "column": {
                 "c1": {
                     "width": 80,
-                    "type": "rtext",
+                    "type": "Rtext",
                     "order": 10000
                 }
             },
@@ -66,47 +66,47 @@
             "parentid": {
                 "fields": {
                     "parent_id": [
-
+                        
                     ]
                 }
             },
             "sortorder": {
                 "fields": {
                     "sort_order": [
-
+                        
                     ]
                 }
             },
             "parentid_id": {
                 "fields": {
                     "parent_id": [
-
+                        
                     ],
                     "id": [
-
+                        
                     ]
                 }
             },
             "parentid_sortorder_id": {
                 "fields": {
                     "parent_id": [
-
+                        
                     ],
                     "sort_order": [
-
+                        
                     ],
                     "id": [
-
+                        
                     ]
                 }
             },
             "sortorder_id": {
                 "fields": {
                     "sort_order": [
-
+                        
                     ],
                     "id": [
-
+                        
                     ]
                 }
             }

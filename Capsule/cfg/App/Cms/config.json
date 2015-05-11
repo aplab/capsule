@@ -6,9 +6,13 @@
     "installCommand": "install",
     "defaultItemsPerPage": 100,
     "itemsPerPageVariants": [
-        10, 50, 100, 200, 500
+        10,
+        50,
+        100,
+        200,
+        500
     ],
-    "#": "Main menu configuration",
+    "comment": "Main menu configuration",
     "mainMenu": {
         "help": "Конфигурация главного меню",
         "item": {
@@ -18,7 +22,7 @@
                 "item": {
                     "uploadimage": {
                         "caption": "Upload image",
-                        "url": "uploadimage", 
+                        "url": "uploadimage",
                         "item": {
                             "small_window": {
                                 "caption": "Popup",
@@ -61,6 +65,51 @@
                 "caption": "Modules",
                 "help": "Modules",
                 "item": {
+                    "catalog": {
+                        "caption": "Catalog",
+                        "item": {
+                            "product": {
+                                "caption": "Product",
+                                "url": "product",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "product/add"
+                                    }
+                                }
+                            },
+                            "section": {
+                                "caption": "Section",
+                                "url": "section",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "section/add"
+                                    }
+                                }
+                            },
+                            "attribute": {
+                                "caption": "Attribute",
+                                "url": "attribute",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "attribute/add"
+                                    }
+                                }
+                            },
+                            "value": {
+                                "caption": "Value",
+                                "url": "value",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "value/add"
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "textblock": {
                         "caption": "Text blocks",
                         "url": "textblock"
@@ -453,7 +502,8 @@
         "storage": "Storage",
         "files": "Files",
         "uploadimage": "UploadImage",
-        "uploadimagehistory":  "UploadImageHistory",
-        "uploadimagefavorites":  "UploadImageFavorites"
+        "uploadimagehistory": "UploadImageHistory",
+        "uploadimagefavorites": "UploadImageFavorites",
+        "section": "Section"
     }
 }

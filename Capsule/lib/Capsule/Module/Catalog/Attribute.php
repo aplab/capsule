@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 11 мая 2015 г. 1:10:25 YEKT 2015                                              |
+// | 11 мая 2015 г. 1:15:01 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -18,14 +18,13 @@
 
 namespace Capsule\Module\Catalog;
 
-use Capsule\Unit\Tree;
 /**
- * Section.php
+ * Property.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Section extends Tree
+class Attribute
 {
     
 }
