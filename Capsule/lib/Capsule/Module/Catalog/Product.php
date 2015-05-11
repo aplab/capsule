@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\Catalog;
+namespace Capsule\Module\Catalog;
 
 /**
  * Product.php

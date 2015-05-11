@@ -18,7 +18,7 @@
                 "item": {
                     "uploadimage": {
                         "caption": "Upload image",
-                        "url": "uploadimage",
+                        "url": "uploadimage", 
                         "item": {
                             "small_window": {
                                 "caption": "Popup",
