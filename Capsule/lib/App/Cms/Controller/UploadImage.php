@@ -20,7 +20,6 @@ namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use App\Cms\Ui\UploadImage\View;
-use Capsule\Ui\DialogWindow\DialogWindow;
 use Capsule\Common\Path;
 use Capsule\Capsule;
 use Capsule\I18n\I18n;

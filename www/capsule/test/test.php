@@ -11,6 +11,7 @@ use Capsule\Reference\Description;
 use Capsule\Reference\Named;
 use Capsule\Model\IdBased;
 use Capsule\Module\Catalog\Section;
+use Capsule\Module\Catalog\Attribute;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -65,7 +66,7 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Section::_configDataJson());
+\Capsule\Tools\Tools::dump(Attribute::_configDataJson());
 ?>
 </body>
 </html>

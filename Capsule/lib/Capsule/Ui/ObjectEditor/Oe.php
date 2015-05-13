@@ -200,7 +200,7 @@ class Oe implements Iterator, Countable
             if (isset($property_data['form_element']->tab)) {
                 $tab_name = $property_data['form_element']->tab;
                 $element_class = $property_data['form_element']->type;
-                $element_class = Fn::create_classname($element_class, $element_ns);
+                $element_class = Fn::cc($element_class, $element_ns);
                 $element = new $element_class($this->model, $property_data['name'], $property_data['form_element']);
                 $groups[$tab_name]->attach($element);
             }

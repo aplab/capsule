@@ -504,6 +504,7 @@
         "uploadimage": "UploadImage",
         "uploadimagehistory": "UploadImageHistory",
         "uploadimagefavorites": "UploadImageFavorites",
-        "section": "Section"
+        "section": "Section",
+        "attribute": "Attribute"
     }
 }

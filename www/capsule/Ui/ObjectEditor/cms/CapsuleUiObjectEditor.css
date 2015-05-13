@@ -287,7 +287,7 @@
     width: 200px;
     height: 21px;
     line-height: 20px;
-    bind-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -296,7 +296,7 @@
     width: 528px;
     height: 21px;
     line-height: 20px;
-    bind-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -337,7 +337,7 @@
     width: 200px;
     height: 21px;
     line-height: 20px;
-    tree-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -346,7 +346,7 @@
     width: 528px;
     height: 21px;
     line-height: 20px;
-    tree-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -362,7 +362,7 @@
     width: 200px;
     height: 21px;
     line-height: 20px;
-    nested-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -371,7 +371,7 @@
     width: 528px;
     height: 21px;
     line-height: 20px;
-    nested-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -460,7 +460,7 @@
     width: 200px;
     height: 21px;
     line-height: 20px;
-    textarea-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -469,7 +469,7 @@
     width: 528px;
     height: auto;
     line-height: 20px;
-    textarea-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -485,7 +485,7 @@
     width: 200px;
     height: 21px;
     line-height: 20px;
-    textarea-double-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -494,7 +494,7 @@
     width: 528px;
     height: auto;
     line-height: 20px;
-    textarea-double-overflow: ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
     overflow: hidden;
@@ -508,4 +508,29 @@
     min-height: 100px;
 }
 /* end of textarea-double */
+/* variants */
+.capsule-ui-oe-el-variants {
+    padding-bottom: 15px;
+    overflow: hidden;
+    width: 740px;
+}
+.capsule-ui-oe-el-variants-title {
+    width: 200px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left; 
+    overflow: hidden;
+}
+.capsule-ui-oe-el-variants-value {
+    width: 528px;
+    height: 21px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    overflow: hidden;
+}
+/* end of variants */
 /* end of ELEMENTS */

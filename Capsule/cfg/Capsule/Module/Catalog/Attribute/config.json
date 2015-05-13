@@ -1,0 +1,40 @@
+{
+    "properties": {
+        "type": {
+            "title": "Type",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Variants",
+                    "variants": {
+                        "": "",
+                        "string": "String",
+                        "text": "Text",
+                        "integer": "Integer"
+                    },
+                    "default": "string",
+                    "order": 4100,
+                    "tab": "General"
+                }
+            }
+        }
+    },
+    "table": {
+        "columns": {
+            "type": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.type.title",
+                "default": ""
+            }
+        }
+    }
+}
