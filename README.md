@@ -1,3 +1,3 @@
 # capsule
 
-yet another CMF
+yet another CMS
