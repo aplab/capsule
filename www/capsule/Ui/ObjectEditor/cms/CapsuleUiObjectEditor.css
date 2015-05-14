@@ -474,6 +474,14 @@
     float: left;
     overflow: hidden;
 }
+.capsule-ui-oe-el-textarea-value .capsule-cms-control-textarea {
+    height: auto;
+}
+.capsule-ui-oe-el-textarea-value .capsule-cms-control-textarea textarea {
+    resize: vertical !important;
+    height: 100px;
+    min-height: 100px;
+}
 /* end of textarea */
 /* textarea-double */
 .capsule-ui-oe-el-textarea-double {

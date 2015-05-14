@@ -98,6 +98,16 @@
                                     }
                                 }
                             },
+                            "unit": {
+                                "caption": "Единица измерения",
+                                "url": "unit",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "unit/add"
+                                    }
+                                }
+                            },
                             "value": {
                                 "caption": "Value",
                                 "url": "value",
@@ -505,6 +515,7 @@
         "uploadimagehistory": "UploadImageHistory",
         "uploadimagefavorites": "UploadImageFavorites",
         "section": "Section",
+        "unit": "Unit",
         "attribute": "Attribute"
     }
 }

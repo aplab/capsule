@@ -25,6 +25,29 @@
                     "tab": "General"
                 }
             }
+        },
+        "unitId": {
+            "title": "Единица измерения",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "bind": "/Capsule/Module/Catalog/Unit",
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 2400,
+                    "type": "Bind"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Bind",
+                    "order": 3000,
+                    "tab": "General"
+                }
+            }
         }
     },
     "table": {
@@ -34,6 +57,12 @@
                 "length": 255,
                 "comment": "this.properties.type.title",
                 "default": ""
+            },
+            "unit_id": {
+                "type": "bigint",
+                "unsigned": true,
+                "comment": "this.properties.unitId.title",
+                "default": 0
             }
         }
     }
