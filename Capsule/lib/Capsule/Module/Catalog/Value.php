@@ -16,15 +16,16 @@
  * @package Capsule
  */
 
-namespace Capsule;
+namespace Capsule\Module\Catalog;
 
+use Capsule\Unit\Nested\Item;
 /**
  * Value.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Value
+class Value extends Item
 {
     
 }

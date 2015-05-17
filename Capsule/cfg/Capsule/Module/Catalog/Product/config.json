@@ -1,0 +1,212 @@
+{
+    "title": "Product",
+    "properties": {
+        "containerId": {
+            "title": "Section",
+            "formElement": {
+                "f1": {
+                    "default": "__CLASS__::sectionId"
+                }
+            }
+        },
+        "htmlTitle": {
+            "title": "Html title",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 6000,
+                    "tab": "SEO"
+                }
+            }
+        },
+        "text": {
+            "title": "Описание",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 16777215
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Ckeditor",
+                    "order": 5000,
+                    "tab": "this.properties.text.title"
+                }
+            }
+        },
+        "metaDescription": {
+            "title": "Meta description",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 65535
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Textarea",
+                    "order": 6100,
+                    "tab": "SEO"
+                }
+            }
+        },
+        "article": {
+            "title": "Артикул",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 100,
+                    "order": 2100,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 2050,
+                    "tab": "General"
+                }
+            }
+        },
+        "special": {
+            "title": "Спецпредложение",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "column": {
+                "c1": {
+                    "width": 32,
+                    "order": 2000,
+                    "type": "Active"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Flag",
+                    "order": 2500,
+                    "tab": "General"
+                }
+            }
+        },
+        "image1": {
+            "title": "Фото 1 (главное)",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Image",
+                    "order": 4000,
+                    "tab": "Photo"
+                }
+            }
+        },
+        "metaKeywords": {
+            "title": "Meta keywords",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 65535
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Textarea",
+                    "order": 6200,
+                    "tab": "SEO"
+                }
+            }
+        }
+    },
+    "table": {
+        "columns": {
+            "article": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.article.title"
+            },
+            "text": {
+                "type": "mediumtext",
+                "comment": "text 1"
+            },
+            "html_title": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.htmlTitle.title",
+                "default": ""
+            },
+            "meta_description": {
+                "type": "text",
+                "comment": "this.properties.metaDescription.title"
+            },
+            "meta_keywords": {
+                "type": "text",
+                "comment": "this.properties.metaKeywords.title"
+            },
+            "image1": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.image1.title",
+                "default": ""
+            },
+            "special": {
+                "type": "tinyint",
+                "length": 1,
+                "unsigned": true,
+                "comment": "activity"
+            }
+        },
+        "indexes": {
+            "container_id": {
+                "fields": {
+                    "container_id": [
+                        
+                    ]
+                }
+            },
+            "special": {
+                "fields": {
+                    "special": [
+                        
+                    ]
+                }
+            }
+        }
+    },
+    "container": "/Capsule/Module/Catalog/Section"
+}

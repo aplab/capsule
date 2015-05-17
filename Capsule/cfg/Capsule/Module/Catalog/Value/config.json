@@ -1,0 +1,14 @@
+{
+    "title": "Значение атрибута",
+    "properties": {
+        "containerId": {
+            "title": "Section",
+            "formElement": {
+                "f1": {
+                    "default": "__CLASS__::sectionId"
+                }
+            }
+        }
+    },
+    "container": "/Capsule/Module/Catalog/Section"
+}

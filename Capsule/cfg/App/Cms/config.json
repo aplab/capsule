@@ -516,6 +516,8 @@
         "uploadimagefavorites": "UploadImageFavorites",
         "section": "Section",
         "unit": "Unit",
+        "product": "Product",
+        "value": "Value",
         "attribute": "Attribute"
     }
 }

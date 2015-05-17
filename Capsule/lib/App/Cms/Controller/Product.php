@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 11 мая 2015 г. 1:16:09 YEKT 2015                                              |
+// | 12 мая 2015 г. 0:35:17 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,16 +16,17 @@
  * @package Capsule
  */
 
-namespace Capsule\Module\Catalog;
+namespace App\Cms\Controller;
 
-use Capsule\Unit\Nested\Item;
 /**
  * Product.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Product extends Item
+class Product extends NestedItem 
 {
+    protected $moduleClass = 'Capsule/Module/Catalog/Product';
+    
     
 }

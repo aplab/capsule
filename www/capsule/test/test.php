@@ -1,18 +1,7 @@
 <?php include '../../../Capsule/lib/Capsule/Capsule.php';
 use Capsule\Capsule;
-
 use Capsule\User\Auth;
-use Capsule\Plugin\Storage\Storage;
-use Capsule\File\Image\ImageInfo;
-use App\Cms\Model\HistoryUploadImage;
-use Capsule\Reference\Imaged;
-use Capsule\Unit\DatedAdvanced;
-use Capsule\Reference\Description;
-use Capsule\Reference\Named;
-use Capsule\Model\IdBased;
-use Capsule\Module\Catalog\Section;
-use Capsule\Module\Catalog\Attribute;
-use Capsule\Module\Catalog\Unit;
+use Capsule\Module\Catalog\Value;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -67,7 +56,7 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Unit::_configDataJson());
+\Capsule\Tools\Tools::dump(Value::_configDataJson());
 ?>
 </body>
 </html>
