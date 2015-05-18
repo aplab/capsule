@@ -191,9 +191,11 @@ class Oe implements Iterator, Countable
         foreach ($this->properties as $property_data) {
             if (isset($property_data['form_element']->tab)) {
                 $tab_name = $property_data['form_element']->tab;
-                $group = new Group;
-                $group->name = $tab_name;
-                $groups[$tab_name] = $group;
+                if (!array_key_exists($tab_name, $groups)) {
+                    $group = new Group;
+                    $group->name = $tab_name;
+                    $groups[$tab_name] = $group;
+                }
             }
         }
         foreach ($this->properties as $property_data) {
