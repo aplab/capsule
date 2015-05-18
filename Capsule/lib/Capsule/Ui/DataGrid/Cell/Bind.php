@@ -27,14 +27,15 @@ use Capsule\Core\Fn;
  */
 class Bind extends Cell
 {
-    protected static $cache;
+    protected static $cache = array();
     
     protected function options() {
-        if (!self::$cache) {
-            $class = Fn::create_classname($this->col->property->bind);
-            self::$cache = $class::optionsDataList();
+        $hash = spl_object_hash($this);
+        if (!array_key_exists($hash, self::$cache)) {
+            $class = Fn::cc($this->col->property->bind);
+            self::$cache[$hash] = $class::optionsDataList();
         }
-        return self::$cache;
+        return self::$cache[$hash];
     }
     
     public function getValue($id) {

@@ -19,6 +19,7 @@
 namespace Capsule\Module\Catalog;
 
 use Capsule\Unit\TokenTsUsr;
+use Capsule\Traits\optionsDataList;
 /**
  * Property.php
  *
@@ -27,5 +28,5 @@ use Capsule\Unit\TokenTsUsr;
  */
 class Attribute extends TokenTsUsr
 {
-    
+    use optionsDataList;
 }

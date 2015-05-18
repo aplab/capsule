@@ -8,6 +8,39 @@
                     "default": "__CLASS__::sectionId"
                 }
             }
+        },
+        "attributeId": {
+            "title": "Атрибут",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "bind": "/Capsule/Module/Catalog/Attribute",
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 2400,
+                    "type": "Bind"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Bind",
+                    "order": 2300,
+                    "tab": "General"
+                }
+            }
+        }
+    },
+    "table": {
+        "columns": {
+            "attribute_id": {
+                "type": "bigint",
+                "unsigned": true,
+                "comment": "this.properties.attributeId.title",
+                "default": 0
+            }
         }
     },
     "container": "/Capsule/Module/Catalog/Section"

@@ -21,7 +21,7 @@ namespace Capsule\Unit\Nested\Tree;
 use PHP\Exceptionizer\Exceptionizer;
 use Capsule\Db\Db;
 use Capsule\Core\Fn;
-use Capsule\Unit\Nested\Item as i;
+use Capsule\Unit\Nested\NamedItem;
 use Capsule\Model\IdBased;
 use Capsule\Exception;
 /**
@@ -30,7 +30,7 @@ use Capsule\Exception;
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Item extends i
+class Item extends NamedItem
 {
     use \Capsule\Traits\sortOrder;
     

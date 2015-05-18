@@ -1,11 +1,11 @@
 <?php
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 // +---------------------------------------------------------------------------+
-// | PHP version 5.4.5                                                         |
+// | PHP version 5.4.7                                                         |
 // +---------------------------------------------------------------------------+
-// | Copyright (c) 2006-2015                                                   |
+// | Copyright (c) 2006-2014                                                   |
 // +---------------------------------------------------------------------------+
-// | 11 мая 2015 г. 1:16:09 YEKT 2015                                              |
+// | 07.06.2014 9:06:02 YEKT 2014                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,16 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\Module\Catalog;
+namespace Capsule\Unit\Nested;
 
-use Capsule\Unit\Nested\NamedItem;
 /**
- * Product.php
+ * Item.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Product extends NamedItem
-{
-    
-}
+class NamedItem extends Item {}

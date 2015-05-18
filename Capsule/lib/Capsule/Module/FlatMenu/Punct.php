@@ -18,14 +18,14 @@
 
 namespace Capsule\Module\FlatMenu;
 
-use Capsule\Unit\Nested\Item;
+use Capsule\Unit\Nested\NamedItem;
 /**
  * Punct.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Punct extends Item
+class Punct extends NamedItem
 {
     use \Capsule\Traits\setActive;
 }

@@ -114,6 +114,32 @@
                 }
             }
         },
+        "price": {
+            "title": "Price",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "name": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 100,
+                    "order": 4000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 2100,
+                    "tab": "General"
+                }
+            }
+        },
         "image1": {
             "title": "Фото 1 (главное)",
             "description": "",
@@ -155,6 +181,11 @@
     },
     "table": {
         "columns": {
+            "price": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "Цена"
+            },
             "article": {
                 "type": "VARCHAR",
                 "length": 255,

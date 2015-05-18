@@ -18,17 +18,17 @@
 
 namespace Capsule\Unit\Nested;
 
-use Capsule\Unit\NamedTsUsr;
 use PHP\Exceptionizer\Exceptionizer;
 use Capsule\Db\Db;
 use Capsule\Core\Fn;
+use Capsule\Unit\UnitTsUsr;
 /**
  * Item.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Item extends NamedTsUsr
+class Item extends UnitTsUsr
 {
     use \Capsule\Traits\sortOrder;
     

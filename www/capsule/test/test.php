@@ -2,6 +2,7 @@
 use Capsule\Capsule;
 use Capsule\User\Auth;
 use Capsule\Module\Catalog\Value;
+use Capsule\Module\Catalog\Product;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -56,7 +57,7 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Value::_configDataJson());
+\Capsule\Tools\Tools::dump(Value::config());
 ?>
 </body>
 </html>

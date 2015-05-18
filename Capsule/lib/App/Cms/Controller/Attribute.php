@@ -27,6 +27,4 @@ namespace App\Cms\Controller;
 class Attribute extends ReferenceController
 {
     protected $moduleClass = 'Capsule/Module/Catalog/Attribute';
-    
-    
 }
