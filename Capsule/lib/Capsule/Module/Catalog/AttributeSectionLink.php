@@ -19,6 +19,7 @@
 namespace Capsule\Module\Catalog;
 
 use Capsule\Unit\Nested\Item;
+
 /**
  * AttributeSectionLink.php
  *

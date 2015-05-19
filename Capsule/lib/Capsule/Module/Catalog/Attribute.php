@@ -20,6 +20,7 @@ namespace Capsule\Module\Catalog;
 
 use Capsule\Unit\TokenTsUsr;
 use Capsule\Traits\optionsDataList;
+use Capsule\Db\Db;
 /**
  * Property.php
  *
@@ -29,4 +30,17 @@ use Capsule\Traits\optionsDataList;
 class Attribute extends TokenTsUsr
 {
     use optionsDataList;
+    
+    public static function section($section) {
+        $db = Db::getInstance();
+        $section_id = ($section instanceof Section) ? $section->id : intval($section, 10);
+        $attr_table = self::config()->table->name;
+        $link_table = AttributeSectionLink::config()->table->name; 
+        $sql = 'SELECT `at`.*, `lt`.`sort_order` FROM `' . $attr_table . '` AS `at`
+                INNER JOIN `' . $link_table . '` AS `lt`
+                ON `at`.`id` = `lt`.`attribute_id`
+                WHERE `lt`.`container_id` = ' . $db->qt($section_id) . '
+                ORDER BY `lt`.`sort_order` ASC';
+        return static::populate(Db::getInstance()->query($sql));
+    }
 }

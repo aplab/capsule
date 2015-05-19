@@ -27,5 +27,7 @@ use Capsule\Unit\Tree;
  */
 class Section extends Tree
 {
-    
+    public function attr() {
+        return Attribute::section($this);
+    }
 }

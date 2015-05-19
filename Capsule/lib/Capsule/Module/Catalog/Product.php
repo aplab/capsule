@@ -27,5 +27,7 @@ use Capsule\Unit\Nested\NamedItem;
  */
 class Product extends NamedItem
 {
-    
+    public function attr() {
+        
+    }
 }

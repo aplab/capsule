@@ -100,11 +100,7 @@
             "name": "",
             "label": "",
             "column": {
-                "c1": {
-                    "width": 32,
-                    "order": 2000,
-                    "type": "Active"
-                }
+                
             },
             "formElement": {
                 "f1": {
