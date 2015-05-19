@@ -20,12 +20,12 @@ namespace Capsule\Module\Catalog;
 
 use Capsule\Unit\Nested\Item;
 /**
- * Value.php
+ * AttributeSectionLink.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Value extends Item
+class AttributeSectionLink extends Item
 {
     
 }

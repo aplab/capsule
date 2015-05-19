@@ -108,13 +108,13 @@
                                     }
                                 }
                             },
-                            "value": {
-                                "caption": "Value",
-                                "url": "value",
+                            "attribute-section-link": {
+                                "caption": "Attribute Section Link",
+                                "url": "attribute-section-link",
                                 "item": {
                                     "add": {
                                         "caption": "add",
-                                        "url": "value/add"
+                                        "url": "attribute-section-link/add"
                                     }
                                 }
                             }
@@ -517,7 +517,7 @@
         "section": "Section",
         "unit": "Unit",
         "product": "Product",
-        "value": "Value",
+        "attribute-section-link": "AttributeSectionLink",
         "attribute": "Attribute"
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 // +---------------------------------------------------------------------------+
-// | PHP version 5.4.7                                                         |
+// | PHP version 5.4.5                                                         |
 // +---------------------------------------------------------------------------+
-// | Copyright (c) 2006-2014                                                   |
+// | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 10.07.2014 14:01:05 YEKT 2014                                              |
+// | 19 мая 2015 г. 1:08:20 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,14 +16,21 @@
  * @package Capsule
  */
 
-namespace App\Cms\Controller;
+namespace Capsule\Ui\ObjectEditor;
 
+use Capsule\Ui\ObjectEditor\Oe;
+use Capsule\DataModel\DataModel;
+use App\Cms\Cms;
 /**
- * Value.php
+ * Oe2.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Value extends NestedItem {
-    protected $moduleClass = 'Capsule/Module/Catalog/Value';
+class Oe2 extends Oe 
+{
+    public function __construct(DataModel $object, $instance_name) {
+        parent::__construct($object, $instance_name);
+        Cms::getInstance()->ui->title->prepend('жажа');
+    }
 }

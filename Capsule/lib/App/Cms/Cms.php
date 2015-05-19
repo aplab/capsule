@@ -45,7 +45,7 @@ use Capsule\Tools\Sysinfo;
  * @property string $mod
  * @property string $cmd
  * @property string $param
- * @property string $ui
+ * @property Ui $ui
  */
 class Cms extends App
 {
