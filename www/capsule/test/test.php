@@ -4,6 +4,8 @@ use Capsule\User\Auth;
 use Capsule\Module\Catalog\Value;
 use Capsule\Module\Catalog\Product;
 use Capsule\Module\Catalog\Attribute;
+use Capsule\Ui\ObjectEditor\Oe;
+use Capsule\Module\Catalog\Oe2;
 
 
 header('Content-Type: text/html; charset=utf-8');
@@ -58,7 +60,8 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Value::getInstance()->product(2));
+\Capsule\Tools\Tools::dump(Product::config());
+
 ?>
 </body>
 </html>

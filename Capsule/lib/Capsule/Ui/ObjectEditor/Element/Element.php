@@ -68,7 +68,7 @@ abstract class Element implements IElement
         $this->data['settings'] = $settings;
         $this->data['class'] = get_class($object);
         $properties = $this->config->properties;
-        $this->data['property'] = $properties->$name;
+        $this->data['property'] = $properties->get($name);
         if (isset($object->$name)) {
             $this->data['value'] = $object->$name;
             $this->data['hasValue'] = true;

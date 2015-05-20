@@ -24,6 +24,9 @@ use Capsule\Core\Fn;
 use Capsule\DataModel\Config\Properties\FormElement;
 use Capsule\Capsule;
 use Iterator, Countable;
+use App\Cms\Ui\Ui;
+use Capsule\DataModel\Config\Properties\Property;
+use Capsule\DataModel\Config\AbstractConfig;
 /**
  * Oe.php
  *
@@ -58,6 +61,7 @@ class Oe implements Iterator, Countable
         $this->data['config'] = $object->config();
         $this->data['instanceName'] = $instance_name;
         $this->configureProperties();
+        $this->configureAttributes();
         $this->configureGroups();
     }
     
@@ -179,6 +183,20 @@ class Oe implements Iterator, Countable
         $this->data['properties'] = $tmp;
     }
     
+    protected function configureAttributes() {
+        if (!method_exists($this->model, 'attr')) return;
+        #$property = new Property($data);
+        array_push($this->data['properties'], array(
+            'property' => null,
+            'name' => 'attr[34]',
+            'form_element' => new FormElement(array(
+                'type' => 'Text',
+                'order' => 2100,
+                'tab' => 'General'
+            ))
+        ));
+    }
+    
     /**
      * Конфигурация вкладок для формы
      *
@@ -187,7 +205,7 @@ class Oe implements Iterator, Countable
      */
     protected function configureGroups() {
         $groups = & $this->data['groups'];
-        $element_ns = Fn::get_namespace($this) . '\\Element';
+        $element_ns = self::ns() . '\\Element';
         foreach ($this->properties as $property_data) {
             if (isset($property_data['form_element']->tab)) {
                 $tab_name = $property_data['form_element']->tab;
@@ -267,5 +285,9 @@ class Oe implements Iterator, Countable
      */
     public function valid() {
         return ($this->key() !== null);
+    }
+    
+    public static function ns() {
+        return __NAMESPACE__;
     }
 }
