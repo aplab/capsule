@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "column": {
                 "c1": {
@@ -37,7 +36,7 @@
             "active": {
                 "fields": {
                     "active": [
-
+                        
                     ]
                 }
             }

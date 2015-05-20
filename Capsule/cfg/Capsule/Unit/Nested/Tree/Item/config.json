@@ -27,10 +27,9 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "formElement": [
-
+                
             ]
         }
     },
@@ -47,16 +46,16 @@
             "containerid_parentid_sortorder_id": {
                 "fields": {
                     "container_id": [
-
+                        
                     ],
                     "parent_id": [
-
+                        
                     ],
                     "sort_order": [
-
+                        
                     ],
                     "id": [
-
+                        
                     ]
                 }
             }

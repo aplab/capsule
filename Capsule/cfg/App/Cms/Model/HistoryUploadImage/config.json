@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": ""
         },
         "height": {
@@ -14,7 +13,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": ""
         },
         "comment": {
@@ -22,7 +20,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -34,7 +31,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -46,7 +42,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -58,7 +53,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": ""
         }
     },
@@ -115,24 +109,36 @@
                     "path": {
                         "length": 255
                     },
-                    "id": []
+                    "id": [
+                        
+                    ]
                 }
             },
             "favorites": {
                 "fields": {
-                    "favorites": []
+                    "favorites": [
+                        
+                    ]
                 }
             },
             "id_favorites": {
                 "fields": {
-                    "id": [],
-                    "favorites": []
+                    "id": [
+                        
+                    ],
+                    "favorites": [
+                        
+                    ]
                 }
             },
             "favorites_id": {
                 "fields": {
-                    "favorites": [],
-                    "id": []
+                    "favorites": [
+                        
+                    ],
+                    "id": [
+                        
+                    ]
                 }
             }
         },

@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "bind": "/Capsule/Unit/BindTsUsr",
             "column": {
@@ -38,7 +37,7 @@
             "bind_id": {
                 "fields": {
                     "bind_id": [
-
+                        
                     ]
                 }
             }

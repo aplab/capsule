@@ -5,7 +5,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -24,7 +23,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -43,7 +41,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -62,7 +59,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -81,7 +77,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",

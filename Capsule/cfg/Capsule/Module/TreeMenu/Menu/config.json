@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -39,7 +38,9 @@
         "indexes": {
             "token": {
                 "fields": {
-                    "token": []
+                    "token": [
+                        
+                    ]
                 }
             }
         },

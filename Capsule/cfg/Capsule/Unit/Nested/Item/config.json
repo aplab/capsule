@@ -7,7 +7,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "bind": "this.container",
             "column": {
@@ -32,7 +31,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "column": {
                 "c1": {
@@ -69,34 +67,38 @@
             "container_id": {
                 "fields": {
                     "container_id": [
-
+                        
                     ]
                 }
             },
             "containerid_sortorder": {
                 "fields": {
                     "container_id": [
-
+                        
                     ],
                     "sort_order": [
-                                   
+                        
                     ]
                 }
             },
             "containerid_sortorder_id": {
                 "fields": {
                     "container_id": [
-
+                        
                     ],
                     "sort_order": [
-                                   
+                        
                     ],
-                    "id": []
+                    "id": [
+                        
+                    ]
                 }
             },
             "sort_order": {
                 "fields": {
-                    "sort_order": []
+                    "sort_order": [
+                        
+                    ]
                 }
             }
         }

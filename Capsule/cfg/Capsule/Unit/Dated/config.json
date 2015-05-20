@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "MysqlDatetime",

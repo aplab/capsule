@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "MysqlDatetime",
@@ -33,7 +32,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "column": {
                 "c1": {
@@ -55,7 +53,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -74,7 +71,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "StringLength",
@@ -114,37 +110,41 @@
             "active": {
                 "fields": {
                     "active": [
-
+                        
                     ]
                 }
             },
             "datetime": {
                 "fields": {
                     "datetime": [
-
+                        
                     ]
                 }
             },
             "datetime_active": {
                 "fields": {
                     "datetime": [
-
+                        
                     ],
-                    "active": []
+                    "active": [
+                        
+                    ]
                 }
             },
             "active_datetime": {
                 "fields": {
                     "active": [
-
+                        
                     ],
-                    "datetime": []
+                    "datetime": [
+                        
+                    ]
                 }
             },
             "active_datetime_id": {
                 "fields": {
                     "active": [
-
+                        
                     ],
                     "datetime": {
                         "order": "desc"

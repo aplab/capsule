@@ -6,7 +6,6 @@
             "description": "",
             "help": "",
             "comment": "",
-            "name": "",
             "label": "",
             "validator": {
                 "type": "MysqlDatetime",
@@ -50,12 +49,16 @@
         "indexes": {
             "datetime": {
                 "fields": {
-                    "datetime": []
+                    "datetime": [
+                        
+                    ]
                 }
             },
             "date": {
                 "fields": {
-                    "date": []
+                    "date": [
+                        
+                    ]
                 }
             }
         }
