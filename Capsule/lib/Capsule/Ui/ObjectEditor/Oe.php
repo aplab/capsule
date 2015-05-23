@@ -60,8 +60,8 @@ class Oe implements Iterator, Countable
         $this->data['model'] = $object;
         $this->data['config'] = $object->config();
         $this->data['instanceName'] = $instance_name;
-        $this->configureProperties();
         $this->configureAttributes();
+        $this->configureProperties();
         $this->configureGroups();
     }
     
@@ -185,16 +185,22 @@ class Oe implements Iterator, Countable
     
     protected function configureAttributes() {
         if (!method_exists($this->model, 'attr')) return;
-        #$property = new Property($data);
-        array_push($this->data['properties'], array(
-            'property' => null,
-            'name' => 'attr[34]',
-            'form_element' => new FormElement(array(
-                'type' => 'Text',
-                'order' => 2100,
-                'tab' => 'General'
-            ))
-        ));
+        $json = '{
+            "title":"attr[34]",
+            "description":"",
+            "help":"",
+            "comment":"",
+            "name":"attr[34]",
+            "label":"",
+            "formElement":{
+                "f1":{
+                    "type":"Text",
+                    "order":5000,
+                    "tab":"Attr"
+                }
+            }
+        }';
+        $this->config->properties->inject(new Property(json_decode($json, true)));
     }
     
     /**

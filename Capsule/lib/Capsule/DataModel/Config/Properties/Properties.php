@@ -51,4 +51,16 @@ class Properties extends AbstractConfig
     public function toString() {
         return __CLASS__;
     }
+    
+    /**
+     * Внедрить свойство, которого нет в конфиге, динамически.
+     * 
+     * @param Property $property
+     * @return boolean
+     */
+    public function inject(Property $property) {
+        $name = $property->name;
+        if (array_key_exists($name, $this->data)) return false;
+        $this->data[$name] = $property;
+    }
 }
