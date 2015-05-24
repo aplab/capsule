@@ -87,6 +87,10 @@ abstract class ReferenceController extends DefaultController
         $button->action = 'CapsuleUiDataGrid.getInstance("capsule-ui-datagrid").del()';
     
         $c = $this->moduleClass;
+        $config = $c::config();
+        $title = $config->get('title')?:untitled;
+        $this->ui->title->prepend($title.'::List items');
+        
         $data_grid = new DataGrid('capsule-ui-datagrid', $c::page($p->currentPage, $p->itemsPerPage));
         $data_grid->baseUrl = $filter($this->mod);
         $data_grid->p = $p;
@@ -123,6 +127,11 @@ abstract class ReferenceController extends DefaultController
         $button->action = 'CapsuleUiObjectEditor.getInstance("object_editor").saveAndAdd()';
         $button->url = null;
     
+        $c = $this->moduleClass;
+        $config = $c::config();
+        $title = $config->get('title')?:untitled;
+        $this->ui->title->prepend($title.'::Add new');
+        
         $class = $this->moduleClass;
         $tmp = $this->createElement($class);
         if ($tmp->status) {
@@ -222,6 +231,11 @@ abstract class ReferenceController extends DefaultController
         $button->icon = $this->app->config->icons->cms . '/disk--plus.png';
         $button->action = 'CapsuleUiObjectEditor.getInstance("object_editor").saveAndAdd()';
         $button->url = null;
+        
+        $c = $this->moduleClass;
+        $config = $c::config();
+        $title = $config->get('title')?:untitled;
+        $this->ui->title->prepend($title.'::Edit');
     
         $tmp = $this->updateItem($item);
         if ($tmp->status) {

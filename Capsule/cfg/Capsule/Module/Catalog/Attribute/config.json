@@ -1,5 +1,56 @@
 {
+    "title": "Атрибут",
     "properties": {
+        "name": {
+            "title": "Name",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 2000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 2000,
+                    "tab": "General"
+                }
+            }
+        },
+        "token": {
+            "title": "Token",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 10000000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 10000000,
+                    "tab": "Additional"
+                }
+            }
+        },
         "type": {
             "title": "Type",
             "description": "",
@@ -35,14 +86,14 @@
             "column": {
                 "c1": {
                     "width": 200,
-                    "order": 2400,
+                    "order": 2500,
                     "type": "Bind"
                 }
             },
             "formElement": {
                 "f1": {
                     "type": "Bind",
-                    "order": 3000,
+                    "order": 4000,
                     "tab": "General"
                 }
             }
@@ -50,6 +101,16 @@
     },
     "table": {
         "columns": {
+            "name": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "Наименование"
+            },
+            "token": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "Token"
+            },
             "type": {
                 "type": "VARCHAR",
                 "length": 255,
@@ -62,6 +123,16 @@
                 "comment": "this.properties.unitId.title",
                 "default": 0
             }
-        }
+        },
+        "indexes": {
+            "token": {
+                "fields": {
+                    "token": [
+                        
+                    ]
+                }
+            }
+        },
+        "name": "capsule_module_catalog_attribute"
     }
 }

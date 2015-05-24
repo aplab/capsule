@@ -124,6 +124,10 @@ class NestedItem extends ReferenceController
         $button->action = 'CapsuleUiDialog.getInstance("filter-by-container-window").showCenter()';
     
         $c = $this->moduleClass;
+        $config = $c::config();
+        $title = $config->get('title')?:untitled;
+        $this->ui->title->prepend($title.'::List items');
+        
         $p = $this->pagination();
         $items = array();
         if (self::ALL === $this->filterByContainer) {

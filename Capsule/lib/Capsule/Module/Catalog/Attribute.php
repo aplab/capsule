@@ -18,17 +18,21 @@
 
 namespace Capsule\Module\Catalog;
 
-use Capsule\Unit\TokenTsUsr;
 use Capsule\Traits\optionsDataList;
 use Capsule\Db\Db;
+use Capsule\Unit\UnitTsUsr;
 /**
  * Property.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Attribute extends TokenTsUsr
+class Attribute extends UnitTsUsr
 {
+    const DEFAULT_TAB = 'Attribute';
+    
+    const DEFAULT_ORDER = 10000000;
+    
     use optionsDataList;
     
     public static function section($section) {
@@ -42,5 +46,23 @@ class Attribute extends TokenTsUsr
                 WHERE `lt`.`container_id` = ' . $db->qt($section_id) . '
                 ORDER BY `lt`.`sort_order` ASC';
         return static::populate(Db::getInstance()->query($sql));
+    }
+    
+    protected function getTab($name) {
+        if (!array_key_exists($name, $this->data)) return self::DEFAULT_TAB; 
+        return $this->data[$name];
+    }
+    
+    protected function issetTab($name) {
+        return true;
+    }
+    
+    protected function getOrder($name) {
+        if (!array_key_exists($name, $this->data)) return self::DEFAULT_ORDER;
+        return $this->data[$name];
+    }
+    
+    protected function issetOrder($name) {
+        return true;
     }
 }

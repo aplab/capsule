@@ -94,9 +94,7 @@
             "help": "",
             "comment": "",
             "label": "",
-            "column": {
-                
-            },
+            "column": [],
             "formElement": {
                 "f1": {
                     "type": "Flag",
@@ -211,18 +209,9 @@
             }
         },
         "indexes": {
-            "container_id": {
-                "fields": {
-                    "container_id": [
-                        
-                    ]
-                }
-            },
             "special": {
                 "fields": {
-                    "special": [
-                        
-                    ]
+                    "special": []
                 }
             }
         }

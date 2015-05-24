@@ -451,6 +451,10 @@ abstract class DataModel
      * @return boolean
      */
     public function __isset($name) {
+        $method = 'isset' . ucfirst($name);
+        if (in_array($method, self::_listMethods())) {
+            return $this->$method($name);
+        }
         return array_key_exists($name, $this->data);
     }
 

@@ -30,6 +30,24 @@
                     "tab": "General"
                 }
             }
+        },
+        "tabName": {
+            "title": "Tab name",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 1002000,
+                    "tab": "General"
+                }
+            }
         }
     },
     "table": {
@@ -39,6 +57,11 @@
                 "unsigned": true,
                 "comment": "this.properties.attributeId.title",
                 "default": 0
+            },
+            "tab_name": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.tab.title"
             }
         }
     },
