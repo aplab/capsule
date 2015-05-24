@@ -97,6 +97,78 @@
                     "tab": "General"
                 }
             }
+        },
+        "label": {
+            "title": "Label",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 6000,
+                    "tab": "General"
+                }
+            }
+        },
+        "description": {
+            "title": "Description",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 65535
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Textarea",
+                    "order": 6100,
+                    "tab": "General"
+                }
+            }
+        },
+        "comment": {
+            "title": "Comment",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 65535
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Textarea",
+                    "order": 6200,
+                    "tab": "General"
+                }
+            }
+        },
+        "help": {
+            "title": "Help",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 65535
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Textarea",
+                    "order": 6300,
+                    "tab": "General"
+                }
+            }
         }
     },
     "table": {
@@ -122,6 +194,23 @@
                 "unsigned": true,
                 "comment": "this.properties.unitId.title",
                 "default": 0
+            },
+            "description": {
+                "type": "text",
+                "comment": "this.properties.description.title"
+            },
+            "help": {
+                "type": "text",
+                "comment": "this.properties.help.title"
+            },
+            "comment": {
+                "type": "text",
+                "comment": "this.properties.comment.title"
+            },
+            "label": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.label.title"
             }
         },
         "indexes": {

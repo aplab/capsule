@@ -60,7 +60,8 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Attribute::_configDataJson());
+\Capsule\Tools\Tools::dump(Value::getInstance());
+\Capsule\Tools\Tools::dump(Product::_configDataJson());
 
 ?>
 </body>

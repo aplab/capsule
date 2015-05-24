@@ -47,7 +47,8 @@ class Value extends Singleton
                     `product_id` BIGINT UNSIGNED NOT NULL COMMENT "идентификатор товара",
                     `attribute_id` BIGINT UNSIGNED NOT NULL COMMENT "идентификатор атрибута",
                     
-                    `integer` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT "Value if type is integer",
+                    `integer` BIGINT NOT NULL DEFAULT 0 COMMENT "Value if type is signed integer",
+                    `unsigned_integer` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT "Value if type is unsigned integer",
                     `string` VARCHAR(255) NOT NULL DEFAULT "" COMMENT "Value if type is string",
                     `text` TEXT COMMENT "Value if type is text",
     

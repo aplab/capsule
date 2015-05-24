@@ -80,5 +80,8 @@
     "Description": "Описание",
     "Price": "Цена",
     "Photo": "Фото",
+    "Label": "Метка",
+    "Comment": "Комментарий",
+    "Attribute section link": "Привязка атрибутов к разделам",
     "Tab name": "Имя вкладки"
 }
