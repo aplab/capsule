@@ -25,9 +25,4 @@ use Capsule\Unit\Tree;
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Section extends Tree
-{
-    public function attr() {
-        return Attribute::section($this);
-    }
-}
+class Section extends Tree {}
