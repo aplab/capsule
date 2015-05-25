@@ -60,9 +60,12 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-\Capsule\Tools\Tools::dump(Value::getInstance());
-\Capsule\Tools\Tools::dump(Product::_configDataJson());
-
+#\Capsule\Tools\Tools::dump(Value::getInstance()->product(1));
+#\Capsule\Tools\Tools::dump(Product::_configDataJson());
+$attr = Attribute::section(1);
+$attr = array_pop($attr);
+\Capsule\Tools\Tools::dump($attr);
+\Capsule\Tools\Tools::dump($attr->property());
 ?>
 </body>
 </html>

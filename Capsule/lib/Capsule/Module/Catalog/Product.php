@@ -28,6 +28,11 @@ use Capsule\Unit\Nested\NamedItem;
 class Product extends NamedItem
 {
     public function attr() {
-        
+        $ret = array();
+        $attr_list = Attribute::product($this);
+        foreach ($attr_list as $attr) {
+            $ret[] = $attr->property();
+        }
+        return $ret;
     }
 }

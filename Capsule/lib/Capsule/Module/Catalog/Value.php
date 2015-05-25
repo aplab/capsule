@@ -62,6 +62,11 @@ class Value extends Singleton
         }
     }
     
+    /**
+     * Возвращает значения атрибутов продукта.
+     * 
+     * @param Product|int $product
+     */
     public function product($product) {
         $product_id = ($product instanceof Product) ? $product->id : intval($product, 10);
         $db = Db::getInstance();

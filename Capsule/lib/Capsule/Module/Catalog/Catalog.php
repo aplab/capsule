@@ -27,5 +27,13 @@ use Capsule\Core\Singleton;
  */
 class Catalog extends Singleton
 {
-    
+    /**
+     * Привязка к namespace
+     *
+     * @param void
+     * @return string
+     */
+    public static function ns() {
+        return __NAMESPACE__;
+    }
 }

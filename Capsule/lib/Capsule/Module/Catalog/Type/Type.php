@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule;
+namespace Capsule\Module\Catalog\Type;
 
 /**
  * Type.php
@@ -26,5 +26,22 @@ namespace Capsule;
  */
 abstract class Type
 {
+    /**
+     * Привязка к namespace
+     *
+     * @param void
+     * @return string
+     */
+    public static function ns() {
+        return __NAMESPACE__;
+    }
     
+    public static function config() {
+        $data = json_decode(static::$json, true, 10, JSON_BIGINT_AS_STRING);
+        if (json_last_error()) {
+            $msg = json_last_error_msg();
+            throw new \Exception($msg);
+        }
+        return $data;
+    }
 }

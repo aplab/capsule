@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 11 мая 2015 г. 16:03:39 YEKT 2015                                              |
+// | 25 мая 2015 г. 23:57:10 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,37 +16,35 @@
  * @package Capsule
  */
 
-namespace Capsule\Module\Catalog;
-
-use Capsule\Unit\Nested\Item;
+namespace Capsule\Module\Catalog\Type;
 
 /**
- * AttributeSectionLink.php
+ * String.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class AttributeSectionLink extends Item
+class String extends Type
 {
-    const DEFAULT_TAB_NAME = 'Attribute';
-    
-    const DEFAULT_SORT_ORDER = 10000000;
-    
-    protected function getTabName($name) {
-        if (!array_key_exists($name, $this->data)) return self::DEFAULT_TAB_NAME;
-        return $this->data[$name];
+    protected static $json = <<<'JSON'
+    {
+        "title":"Untitled string",
+        "description":"",
+        "help":"",
+        "comment":"",
+        "name":"",
+        "label":"",
+        "validator":{
+            "type":"StringLength",
+            "max":255
+        },
+        "formElement":{
+            "f1":{
+                "type":"Text",
+                "order":1000000,
+                "tab":"Attribute"
+            }
+        }
     }
-    
-    protected function issetTabName($name) {
-        return true;
-    }
-    
-    protected function getSortOrder($name) {
-        if (!array_key_exists($name, $this->data)) return self::DEFAULT_SORT_ORDER;
-        return $this->data[$name];
-    }
-    
-    protected function issetSortOrder($name) {
-        return true;
-    }
+JSON;
 }

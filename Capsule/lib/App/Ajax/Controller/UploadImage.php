@@ -237,12 +237,12 @@ class UploadImage extends Controller
             return false;
         }
         if (!is_uploaded_file($tmp_name)) {
-            $ret->error = I18n::_('Unable to upload file');
+            $this->result->error = I18n::_('Unable to upload file');
             return false;
         }
         $extension = pathinfo($name, PATHINFO_EXTENSION);
         if (!$extension) {
-            $ret->error = I18n::_('File without extension');
+            $this->result->error = I18n::_('File without extension');
             return false;
         }
         $extension = strtolower($extension);
@@ -252,10 +252,11 @@ class UploadImage extends Controller
             'png'  => 'png',
             'gif'  => 'gif',
         );
-        if (!in_array($extension, $type_to_extension)) {
-            $ret->error = I18n::_('Unsupported extension');
+        if (!array_key_exists($extension, $type_to_extension)) {
+            $this->result->error = I18n::_('Unsupported extension');
             return false;
         }
+        $extension = $type_to_extension[$extension];
         $image = null;
         /**
          * Сначала создаем изображение поддерживаеиого типа а потом уже
@@ -275,7 +276,7 @@ class UploadImage extends Controller
                 $image = @imagecreatefromgif($tmp_name);
                 break;
             default:
-                $ret->error = I18n::_('Unsupported extension');
+                $this->result->error = I18n::_('Unsupported extension');
                 return false;
                 break;
         }

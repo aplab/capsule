@@ -185,22 +185,8 @@ class Oe implements Iterator, Countable
     
     protected function configureAttributes() {
         if (!method_exists($this->model, 'attr')) return;
-        $json = '{
-            "title":"attr[34]",
-            "description":"",
-            "help":"",
-            "comment":"",
-            "name":"attr[34]",
-            "label":"",
-            "formElement":{
-                "f1":{
-                    "type":"Text",
-                    "order":5000,
-                    "tab":"Attr"
-                }
-            }
-        }';
-        $this->config->properties->inject(new Property(json_decode($json, true)));
+        $prp = $this->model->attr();
+        foreach ($prp as $i) $this->config->properties->inject($i);
     }
     
     /**
@@ -293,6 +279,12 @@ class Oe implements Iterator, Countable
         return ($this->key() !== null);
     }
     
+    /**
+     * Привязка к namespace
+     *
+     * @param void
+     * @return string
+     */
     public static function ns() {
         return __NAMESPACE__;
     }
