@@ -18,6 +18,11 @@
 
 namespace App\Cms\Controller;
 
+use Capsule\User\Env;
+use Capsule\Superglobals\Post;
+use Capsule\DataStruct\ReturnValue;
+use Capsule\I18n\I18n;
+use Capsule\Common\Filter;
 /**
  * Product.php
  *
@@ -27,4 +32,49 @@ namespace App\Cms\Controller;
 class Product extends NestedItem 
 {
     protected $moduleClass = 'Capsule/Module/Catalog/Product';
+    
+    /**
+     * @param string $class
+     * @return ReturnValue
+     */
+    protected function createElement($class) {
+        $item = new $class;
+        $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
+        if (Filter::digit($this->filterByContainer)) $item->containerId = $this->filterByContainer;
+        $config = $class::config();
+        $properties = $config->properties;
+        $post = Post::getInstance();
+        $ret = new ReturnValue;
+        $ret->item = $item;
+        foreach ($properties as $name => $property) {
+            if ($class::isKey($name)) {
+                continue;
+            }
+            if (!isset($property->formElement)) {
+                continue;
+            }
+            if (!isset($post->$name)) {
+                $ret->status = 1;
+                return $ret;
+            }
+            try {
+                $item->$name = $post->$name;
+            } catch (\Exception $e) {
+                $ret->status = 1;
+                $this->ui->alert->append(I18n::_($e->getMessage()));
+            }
+        }
+        if ($ret->status) {
+            return $ret;
+        }
+        try {
+            $item->store();
+        } catch (\Exception $e) {
+            $this->ui->alert->append(I18n::_($e->getMessage()));
+            $ret->status = 1;
+            return $ret;
+        }
+        $ret->status = 0;
+        return $ret;
+    }
 }
