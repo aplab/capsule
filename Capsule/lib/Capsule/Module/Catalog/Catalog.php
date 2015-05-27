@@ -27,6 +27,8 @@ use Capsule\Core\Singleton;
  */
 class Catalog extends Singleton
 {
+    const ATTRIBUTE_TOKEN_PREFIX = 'attribute';
+    
     /**
      * Привязка к namespace
      *
