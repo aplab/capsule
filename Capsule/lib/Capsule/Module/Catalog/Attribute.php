@@ -34,6 +34,8 @@ class Attribute extends UnitTsUsr
 {
     use optionsDataList;
     
+    protected static $section_cache = array();
+    
     /**
      * Возвращает массив объектов атрибутов, привязанных к данномй разделу
      * 
@@ -43,6 +45,7 @@ class Attribute extends UnitTsUsr
     public static function section($section) {
         $db = Db::getInstance();
         $section_id = ($section instanceof Section) ? $section->id : intval($section, 10);
+        if (!isset(self::$cache)) тут продолжить думать
         $attr_table = self::config()->table->name;
         $link_table = AttributeSectionLink::config()->table->name; 
         $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`  
@@ -76,7 +79,7 @@ class Attribute extends UnitTsUsr
         $type = Fn::cc(ucfirst($this->type), Type::ns());
         $config = $type::config();
         $config['title'] = $this->name;
-        $config['name'] = $this->token ?: 'attr[' . $this->id . ']';
+        $config['name'] = $this->token ?: Catalog::ATTRIBUTE_TOKEN_PREFIX . $this->id;
         if (isset($config['formElement'])) {
             foreach ($config['formElement'] as & $f) {
                 $f['tab'] = $this->tabName;

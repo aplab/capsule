@@ -29,7 +29,19 @@ use Capsule\Db\Db;
  */
 class Value extends Singleton
 {
-    private $table;
+    /**
+     * Связанная таблица
+     * 
+     * @var string
+     */
+    protected $table;
+    
+    /**
+     * Уже полученные данные из таблицы
+     * 
+     * @var array
+     */
+    protected $cache = array();
     
     /**
      * Защищенный конструктор
@@ -69,16 +81,19 @@ class Value extends Singleton
      */
     public function product($product) {
         $product_id = ($product instanceof Product) ? $product->id : intval($product, 10);
-        $db = Db::getInstance();
-        $table_attr = Attribute::config()->table->name;
-        $sql = 'SELECT `tv`.*, `ta`.`type`
-                FROM `' . $this->table . '` AS `tv` 
-                INNER JOIN `' . $table_attr . '` AS `ta`
-                ON `tv`.`attribute_id` = `ta`.`id`
-                WHERE `tv`.`product_id` = ' . $db->qt($product_id);
-        $data = $db->query($sql);
-        $ret = array();
-        foreach ($data as $i) if (array_key_exists($i['type'], $i)) $ret[$i['attribute_id']] = $i[$i['type']];
-        return $ret;
+        if (!array_key_exists($product_id, $this->cache)) {
+            $db = Db::getInstance();
+            $table_attr = Attribute::config()->table->name;
+            $sql = 'SELECT `tv`.*, `ta`.`type`
+                    FROM `' . $this->table . '` AS `tv` 
+                    INNER JOIN `' . $table_attr . '` AS `ta`
+                    ON `tv`.`attribute_id` = `ta`.`id`
+                    WHERE `tv`.`product_id` = ' . $db->qt($product_id);
+            $data = $db->query($sql);
+            $tmp = array();
+            foreach ($data as $i) if (array_key_exists($i['type'], $i)) $tmp[$i['attribute_id']] = $i[$i['type']];
+            $this->cache[$product_id] = $tmp;
+        }
+        return $this->cache[$product_id];
     }
 }
