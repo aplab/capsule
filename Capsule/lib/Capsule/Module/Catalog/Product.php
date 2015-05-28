@@ -43,8 +43,61 @@ class Product extends NamedItem
         $values = Value::getInstance()->product($this);
         if (array_key_exists($attr, $values)) return $values[$attr];
         foreach ($attr_list as $i) {
-            if ($attr === $i->property()->name) return $values[$i->id];
+            if ($attr === $i->property()->name) return isset($values[$i->id]) ? $values[$i->id] : null;
         }
         return null;
     }
+    
+    /**
+     * Возвращает значение свойства. Если свойство не определено или
+     * отсутствует, то генерируется исключение.
+     *
+     * @param  string
+     * @throws Exception
+     * @return mixed
+     */
+    public function __get($name) {
+        $getter = self::_getter($name);
+        if ($getter) {
+            return $this->$getter($name);
+        }
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+        $properties = $this->config()->get('properties', new \stdClass());
+        if (!isset($properties->$name)) {
+            $msg = 'Undefined property: ';
+            $msg.= get_class($this) . '::$' . $name;
+            throw new \Exception($msg);
+        }
+        $method = Catalog::ATTRIBUTE_TOKEN_PREFIX;
+        if (!method_exists($this, $method)) {
+            $msg = 'Unknown property: ';
+            $msg.= get_class($this) . '::$' . $name;
+            throw new \Exception($msg);
+        }
+        return $this->$method($name);
+    }
+    
+    /**
+     * isset() overloading
+     *
+     * @param  string $name
+     * @return boolean
+     */
+    public function __isset($name) {
+        $method = 'isset' . ucfirst($name);
+        if (in_array($method, self::_listMethods())) {
+            return $this->$method($name);
+        }
+        if (array_key_exists($name, $this->data)) return true;
+        $method = Catalog::ATTRIBUTE_TOKEN_PREFIX;
+        if (!method_exists($this, $method)) {
+            return false;
+        }
+        return !is_null($this->$method($name));
+    }
+    
+    
+    
 }

@@ -38,6 +38,8 @@ use Capsule\DataModel\Config\AbstractConfig;
  */
 class Oe implements Iterator, Countable
 {
+    const ATTR_ACCESSOR = 'attr';
+    
     /**
      * Internal data
      *
@@ -184,8 +186,9 @@ class Oe implements Iterator, Countable
     }
     
     protected function configureAttributes() {
-        if (!method_exists($this->model, 'attr')) return;
-        $prp = $this->model->attr();
+        $m = self::ATTR_ACCESSOR;
+        if (!method_exists($this->model, $m)) return;
+        $prp = $this->model->$m();
         foreach ($prp as $i) $this->config->properties->inject($i->property());
     }
     
