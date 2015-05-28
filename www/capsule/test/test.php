@@ -6,8 +6,6 @@ use Capsule\Module\Catalog\Product;
 use Capsule\Module\Catalog\Attribute;
 use Capsule\Ui\ObjectEditor\Oe;
 use Capsule\Module\Catalog\Oe2;
-
-
 header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', true);
@@ -60,12 +58,14 @@ $(document).ready(function() {
 });
 </script>
 <?php  
-#\Capsule\Tools\Tools::dump(Value::getInstance()->product(1));
-#\Capsule\Tools\Tools::dump(Product::_configDataJson());
-$attr = Attribute::section(1);
-$attr = array_pop($attr);
-\Capsule\Tools\Tools::dump($attr);
-\Capsule\Tools\Tools::dump($attr->property());
+$product = Product::id(7);
+\Capsule\Tools\Tools::dump($product->attr(1));
+\Capsule\Tools\Tools::dump($product->attr(2));
+\Capsule\Tools\Tools::dump($product->attr(3));
+\Capsule\Tools\Tools::dump($product->attr(4));
+
+\Capsule\Tools\Tools::dump($app->worktime);
+\Capsule\Tools\Tools::dump($app->memory);
 ?>
 </body>
 </html>

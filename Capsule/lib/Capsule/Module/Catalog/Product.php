@@ -28,11 +28,23 @@ use Capsule\Unit\Nested\NamedItem;
 class Product extends NamedItem
 {
     public function attr() {
-        $ret = array();
-        $attr_list = Attribute::product($this);
-        foreach ($attr_list as $attr) {
-            $ret[] = $attr->property();
+        $n = func_num_args();
+        if (!$n) return Attribute::product($this); 
+        if (1 === $n) return $this->_attr_get_value(func_get_arg(0));
+        if (2 === $n) return $this->_attr_set_value(func_get_arg(0), func_get_arg(1));
+        $msg = 'Wrong parameters';
+        throw new \Exception($msg);
+    }
+    
+    protected function _attr_get_value($attr) {
+        // Получаем все атрибуты
+        $attr_list = $this->attr();
+        // Получаем все значения
+        $values = Value::getInstance()->product($this);
+        if (array_key_exists($attr, $values)) return $values[$attr];
+        foreach ($attr_list as $i) {
+            if ($attr === $i->property()->name) return $values[$i->id];
         }
-        return $ret;
+        return null;
     }
 }

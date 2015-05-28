@@ -186,7 +186,7 @@ class Oe implements Iterator, Countable
     protected function configureAttributes() {
         if (!method_exists($this->model, 'attr')) return;
         $prp = $this->model->attr();
-        foreach ($prp as $i) $this->config->properties->inject($i);
+        foreach ($prp as $i) $this->config->properties->inject($i->property());
     }
     
     /**

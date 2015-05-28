@@ -34,7 +34,19 @@ class Attribute extends UnitTsUsr
 {
     use optionsDataList;
     
+    /**
+     * Кеширование атрибутов по секциям
+     * 
+     * @var array
+     */
     protected static $section_cache = array();
+    
+    /**
+     * Виртуальное свойство
+     * 
+     * @var Property
+     */
+    protected $virtualProperty;
     
     /**
      * Возвращает массив объектов атрибутов, привязанных к данномй разделу
@@ -45,16 +57,19 @@ class Attribute extends UnitTsUsr
     public static function section($section) {
         $db = Db::getInstance();
         $section_id = ($section instanceof Section) ? $section->id : intval($section, 10);
-        if (!isset(self::$cache)) тут продолжить думать
-        $attr_table = self::config()->table->name;
-        $link_table = AttributeSectionLink::config()->table->name; 
-        $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`  
-                FROM `' . $attr_table . '` AS `at`
-                INNER JOIN `' . $link_table . '` AS `lt`
-                ON `at`.`id` = `lt`.`attribute_id`
-                WHERE `lt`.`container_id` = ' . $db->qt($section_id) . '
-                ORDER BY `lt`.`sort_order` ASC';
-        return static::populate(Db::getInstance()->query($sql));
+        $class = get_called_class();
+        if (!isset(self::$cache[$class][$section_id])) {
+            $attr_table = self::config()->table->name;
+            $link_table = AttributeSectionLink::config()->table->name; 
+            $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`  
+                    FROM `' . $attr_table . '` AS `at`
+                    INNER JOIN `' . $link_table . '` AS `lt`
+                    ON `at`.`id` = `lt`.`attribute_id`
+                    WHERE `lt`.`container_id` = ' . $db->qt($section_id) . '
+                    ORDER BY `lt`.`sort_order` ASC';
+            self::$cache[$class][$section_id] = static::populate(Db::getInstance()->query($sql));
+        }
+        return self::$cache[$class][$section_id];
     }
     
     /**
@@ -76,17 +91,20 @@ class Attribute extends UnitTsUsr
      * @return Property|null
      */
     public function property() {
-        $type = Fn::cc(ucfirst($this->type), Type::ns());
-        $config = $type::config();
-        $config['title'] = $this->name;
-        $config['name'] = $this->token ?: Catalog::ATTRIBUTE_TOKEN_PREFIX . $this->id;
-        if (isset($config['formElement'])) {
-            foreach ($config['formElement'] as & $f) {
-                $f['tab'] = $this->tabName;
-                $f['order'] = $this->sortOrder;
+        if (is_null($this->virtualProperty)) {
+            $type = Fn::cc(ucfirst($this->type), Type::ns());
+            $config = $type::config();
+            $config['title'] = $this->name;
+            $config['name'] = $this->token ?: Catalog::ATTRIBUTE_TOKEN_PREFIX . $this->id;
+            if (isset($config['formElement'])) {
+                foreach ($config['formElement'] as & $f) {
+                    $f['tab'] = $this->tabName;
+                    $f['order'] = $this->sortOrder;
+                }
             }
+            $this->virtualProperty = new Property($config);
         }
-        return new Property($config);
+        return $this->virtualProperty;
     }
     
     /**
