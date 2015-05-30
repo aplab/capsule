@@ -28,6 +28,7 @@ use App\Cms\Ui\ObjectEditor\View;
 use Capsule\Ui\DataGrid\DataGrid;
 use Capsule\User\Env;
 use Capsule\Core\Fn;
+use Capsule\DataModel\DataModel;
 /**
  * ReferenceController.php
  *
@@ -39,6 +40,8 @@ abstract class ReferenceController extends DefaultController
     const SAVE_AND_EXIT = 'saveAndExit';
     
     const SAVE_AND_ADD = 'saveAndAdd';
+    
+    const SAVE_AS_NEW = 'saveAsNew';
     
     /**
      * Класс модуля
@@ -155,7 +158,7 @@ abstract class ReferenceController extends DefaultController
      * @return ReturnValue
      */
     protected function createElement($class) {
-        $item = new $class;
+        $item = ($class instanceof DataModel) ? $class : new $class;
         $config = $class::config();
         $properties = $config->properties;
         $post = Post::getInstance();
@@ -232,11 +235,26 @@ abstract class ReferenceController extends DefaultController
         $button->action = 'CapsuleUiObjectEditor.getInstance("object_editor").saveAndAdd()';
         $button->url = null;
         
+        $button = clone $button;
+        $toolbar->add($button, 'save as new');
+        $button->caption = 'Save as new';
+        $button->icon = $this->app->config->icons->cms . '/documents.png';
+        $button->action = 'CapsuleUiObjectEditor.getInstance("object_editor").saveAsNew()';
+        $button->url = null;
+        
         $c = $this->moduleClass;
         $config = $c::config();
         $title = $config->get('title')?:untitled;
         $this->ui->title->prepend($title.'::Edit');
     
+        if (isset(Post::getInstance()->{self::SAVE_AS_NEW})) {
+            $copy = clone $item;
+            $tmp = $this->createElement($copy);
+            if (!$tmp->status) {
+                Redirect::go($filter($this->mod, 'edit', $tmp->item->id));
+                return;
+            }
+        }
         $tmp = $this->updateItem($item);
         if ($tmp->status) {
             $oe = new Oe($item, 'object_editor');
@@ -283,7 +301,7 @@ abstract class ReferenceController extends DefaultController
                 $this->ui->alert->append(I18n::_($e->getMessage()));
             }
         }
-        if ($ret->fail) {
+        if (isset($ret->status) && $ret->status) {
             return $ret;
         }
         try {

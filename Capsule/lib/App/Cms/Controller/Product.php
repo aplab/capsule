@@ -23,6 +23,7 @@ use Capsule\Superglobals\Post;
 use Capsule\DataStruct\ReturnValue;
 use Capsule\I18n\I18n;
 use Capsule\Common\Filter;
+use Capsule\DataModel\DataModel;
 /**
  * Product.php
  *
@@ -38,7 +39,7 @@ class Product extends NestedItem
      * @return ReturnValue
      */
     protected function createElement($class) {
-        $item = new $class;
+        $item = ($class instanceof DataModel) ? $class : new $class;
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
         if (Filter::digit($this->filterByContainer)) $item->containerId = $this->filterByContainer;
         $config = $class::config();

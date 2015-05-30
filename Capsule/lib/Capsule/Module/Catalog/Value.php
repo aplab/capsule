@@ -80,7 +80,7 @@ class Value extends Singleton
      * @param Product|int $product
      */
     public function product($product) {
-        $product_id = ($product instanceof Product) ? $product->id : intval($product, 10);
+        $product_id = ($product instanceof Product) ? $product->get('id') : intval($product, 10);
         if (!array_key_exists($product_id, $this->cache)) {
             $db = Db::getInstance();
             $table_attr = Attribute::config()->table->name;

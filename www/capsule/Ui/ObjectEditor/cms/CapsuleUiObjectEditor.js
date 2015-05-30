@@ -5,6 +5,7 @@ function CapsuleUiObjectEditor(instance_name) {
     if ('undefined' === typeof(CapsuleUiObjectEditor.instances)) {
         CapsuleUiObjectEditor.instances = new Array();
     }
+    
     CapsuleUiObjectEditor.getInstance = function(instance_name) {
         if ('undefined' !== typeof(CapsuleUiObjectEditor.instances[instance_name])) {
             return CapsuleUiObjectEditor.instances[instance_name];
@@ -17,12 +18,15 @@ function CapsuleUiObjectEditor(instance_name) {
         }
         return null;
     };
+    
     if ('undefined' !== typeof(CapsuleUiObjectEditor.instances[instance_name])) {
         console.log('Instance already exists: ' + instance_name);
         console.error('Instance already exists: ' + instance_name);
         return;
     }
+    
     CapsuleUiObjectEditor.instances[instance_name] = this;
+    
     /**
      * End of static section
      */
@@ -40,6 +44,7 @@ function CapsuleUiObjectEditor(instance_name) {
         this.form.append(e);
         this.save();
     }
+    
     this.saveAndAdd = function() {
         var e = document.createElement('input');
         $(e).attr({
@@ -49,6 +54,17 @@ function CapsuleUiObjectEditor(instance_name) {
         this.form.append(e);
         this.save();
     }
+    
+    this.saveAsNew = function() {
+        var e = document.createElement('input');
+        $(e).attr({
+            'name': 'saveAsNew',
+            'value': 'Y'
+        });
+        this.form.append(e);
+        this.save();
+    }
+    
     this.save = function() {
         var t = CapsuleUiTabControl.getInstance('object-editor-tab-control');
         if ('undefined' != typeof(t)) {
@@ -61,12 +77,14 @@ function CapsuleUiObjectEditor(instance_name) {
         }
         this.form.submit();
     }
+    
     this.fitEditors = function() {
         var height = widget.container.height();
         for (var o in CKEDITOR.instances) {
             CKEDITOR.instances[o].resize(null, height);
         }
     }
+    
     $(document).ready(function() {
         /**
          * ckeditor handler
