@@ -27,9 +27,30 @@ use Capsule\Unit\Nested\NamedItem;
  */
 class Product extends NamedItem
 {
+    /**
+     * Attribute cache
+     * 
+     * @var array
+     */
+    protected static $attr = array();
+    
+    /**
+     * 
+     * @throws \Exception
+     * @return array|Ambigous <mixed, NULL>
+     */
     public function attr() {
         $n = func_num_args();
-        if (!$n) return Attribute::product($this); 
+        if (!$n) {
+            $class = get_class($this);
+            if (!array_key_exists($class, self::$attr)) {
+                $tmp = Attribute::product($this);
+                self::$attr[$class] = $tmp;
+                $prp = $this::config()->properties;
+                foreach ($tmp as $i) $prp->inject($i->property());
+            }
+            return self::$attr[$class];
+        }
         if (1 === $n) return $this->_attr_get_value(func_get_arg(0));
         if (2 === $n) return $this->_attr_set_value(func_get_arg(0), func_get_arg(1));
         $msg = 'Wrong parameters';

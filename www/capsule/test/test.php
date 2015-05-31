@@ -61,7 +61,7 @@ $(document).ready(function() {
 $product = Product::id(7);
 #\Capsule\Tools\Tools::dump($product->attr(1, 34));
 \Capsule\Tools\Tools::dump($product->attr(1));
-\Capsule\Tools\Tools::dump($product->{1});
+\Capsule\Tools\Tools::dump($product->attr1);
 // \Capsule\Tools\Tools::dump($product->attr(2));
 // \Capsule\Tools\Tools::dump($product->attr(3));
 // \Capsule\Tools\Tools::dump($product->attr(4));

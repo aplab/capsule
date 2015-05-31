@@ -24,9 +24,6 @@ use Capsule\Core\Fn;
 use Capsule\DataModel\Config\Properties\FormElement;
 use Capsule\Capsule;
 use Iterator, Countable;
-use App\Cms\Ui\Ui;
-use Capsule\DataModel\Config\Properties\Property;
-use Capsule\DataModel\Config\AbstractConfig;
 /**
  * Oe.php
  *
@@ -62,7 +59,6 @@ class Oe implements Iterator, Countable
         $this->data['model'] = $object;
         $this->data['config'] = $object->config();
         $this->data['instanceName'] = $instance_name;
-        $this->configureAttributes();
         $this->configureProperties();
         $this->configureGroups();
     }
@@ -156,6 +152,8 @@ class Oe implements Iterator, Countable
      * @return void
      */
     protected function configureProperties() {
+        $m = self::ATTR_ACCESSOR;
+        if (method_exists($this->model, $m)) $this->model->$m();
         $properties = $this->config->properties;
         $tmp = array();
         foreach ($properties as $property_name => $property) {
@@ -164,7 +162,7 @@ class Oe implements Iterator, Countable
                 continue;
             }
             foreach ($form_element as $form_item) {
-                if ($form_item instanceof FormElement) {
+                if ($form_item instanceof FormElement) { 
                     if (!isset($form_item->order)) {
                         $form_item->order = 0;
                     }
@@ -183,13 +181,6 @@ class Oe implements Iterator, Countable
             return ($a['form_element']->order < $b['form_element']->order) ? -1 : 1;
         });
         $this->data['properties'] = $tmp;
-    }
-    
-    protected function configureAttributes() {
-        $m = self::ATTR_ACCESSOR;
-        if (!method_exists($this->model, $m)) return;
-        $prp = $this->model->$m();
-        foreach ($prp as $i) $this->config->properties->inject($i->property());
     }
     
     /**
