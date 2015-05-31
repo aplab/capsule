@@ -44,6 +44,13 @@ class Value extends Singleton
     protected $cache = array();
     
     /**
+     * Несохраненные данные
+     * 
+     * @var array
+     */
+    protected $unsaved = array();
+    
+    /**
      * Защищенный конструктор
      *
      * @param void
@@ -78,22 +85,27 @@ class Value extends Singleton
      * Возвращает значения атрибутов продукта.
      * 
      * @param Product|int $product
+     * @return mixed
      */
     public function product($product) {
         $product_id = ($product instanceof Product) ? $product->get('id') : intval($product, 10);
         if (!array_key_exists($product_id, $this->cache)) {
             $db = Db::getInstance();
             $table_attr = Attribute::config()->table->name;
-            $sql = 'SELECT `tv`.*, `ta`.`type`
-                    FROM `' . $this->table . '` AS `tv` 
-                    INNER JOIN `' . $table_attr . '` AS `ta`
-                    ON `tv`.`attribute_id` = `ta`.`id`
-                    WHERE `tv`.`product_id` = ' . $db->qt($product_id);
+            $sql = 'SELECT `val`.*, `attr`.`type`
+                    FROM `' . $this->table . '` AS `val` 
+                    INNER JOIN `' . $table_attr . '` AS `attr`
+                    ON `val`.`attribute_id` = `attr`.`id`
+                    WHERE `val`.`product_id` = ' . $db->qt($product_id);
             $data = $db->query($sql);
             $tmp = array();
             foreach ($data as $i) if (array_key_exists($i['type'], $i)) $tmp[$i['attribute_id']] = $i[$i['type']];
             $this->cache[$product_id] = $tmp;
         }
         return $this->cache[$product_id];
+    }
+    
+    public function set($object, $attr, $val) {
+        \Capsule\Tools\Tools::dump(func_get_args());
     }
 }

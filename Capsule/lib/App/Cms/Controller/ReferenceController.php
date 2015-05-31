@@ -248,8 +248,7 @@ abstract class ReferenceController extends DefaultController
         $this->ui->title->prepend($title.'::Edit');
     
         if (isset(Post::getInstance()->{self::SAVE_AS_NEW})) {
-            $copy = clone $item;
-            $tmp = $this->createElement($copy);
+            $tmp = $this->copyItem($item);
             if (!$tmp->status) {
                 Redirect::go($filter($this->mod, 'edit', $tmp->item->id));
                 return;
@@ -271,6 +270,16 @@ abstract class ReferenceController extends DefaultController
         }
         $oe = new Oe($item, 'object_editor');
         $this->ui->workplace->append(new View($oe));
+    }
+    
+    /**
+     * @param unknown $item
+     * @param string $deep
+     */
+    protected function copyItem($item, $deep = false) {
+        $copy = clone $item;
+        $tmp = $this->createElement($copy);
+        return $tmp;
     }
     
     /**

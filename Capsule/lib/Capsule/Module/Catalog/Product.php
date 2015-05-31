@@ -36,6 +36,12 @@ class Product extends NamedItem
         throw new \Exception($msg);
     }
     
+    /**
+     * Возвращает значение атрибута или null
+     * 
+     * @param string $attr
+     * @return mixed|null
+     */
     protected function _attr_get_value($attr) {
         // Получаем все атрибуты
         $attr_list = $this->attr();
@@ -46,6 +52,40 @@ class Product extends NamedItem
             if ($attr === $i->property()->name) return isset($values[$i->id]) ? $values[$i->id] : null;
         }
         return null;
+    }
+    
+    /**
+     * Возвращает значение атрибута или null
+     *
+     * @param string $name
+     * @return mixed|null
+     */
+    protected function _attr_set_value($name, $value) {
+        // Получаем все атрибуты
+        $attr_list = $this->attr();
+        $attr = null;
+        $attr_id = null;
+        if (array_key_exists($name, $attr_list)) {
+            $attr = $attr_list[$name]; 
+        } else {
+            foreach ($attr_list as $i) {
+                if ($name === $i->property()->name) $attr = $i;
+            }
+        }
+        if ($attr instanceof Attribute) {
+            $property = $attr->property();
+            $validator = $property->get('validator');
+            if ($validator) {
+                if ($validator->isValid($value)) {
+                    $value = $validator->getClean();
+                } else {
+                    $msg = 'Invalid value: ' . get_class($this) . '::$' . $name;
+                    throw new \Exception($msg);
+                }
+            }
+            Value::getInstance()->set($this, $attr, $value);
+        }
+        return $this;
     }
     
     /**
@@ -98,6 +138,39 @@ class Product extends NamedItem
         return !is_null($this->$method($name));
     }
     
-    
+    /**
+     * Обрабатывает изменение значения свойства.
+     *
+     * @param  string $name
+     * @param  mixed $value
+     * @throws Exception
+     * @return self
+     */
+    public function __set($name, $value) {
+        $properties = $this->config()->get('properties', new \stdClass);
+        if (isset($properties->$name)) {
+            $property = $this->config()->properties->$name;
+            $validator = $property->get('validator', null);
+            if ($validator) {
+                if ($validator->isValid($value)) {
+                    $value = $validator->getClean();
+                } else {
+                    $msg = 'Invalid value: ' . get_class($this) . '::$' . $name;
+                    throw new \Exception($msg);
+                }
+            }
+        }
+        $setter = self::_setter($name);
+        if (method_exists($this, $setter)) {
+            return $this->$setter($value, $name);
+        }
+        $method = Catalog::ATTRIBUTE_TOKEN_PREFIX;
+        if (!method_exists($this, $method)) {
+            $this->data[$name] = $value;
+        } else {
+            $this->$method($name, $value);
+        }
+        return $this;
+    }
     
 }
