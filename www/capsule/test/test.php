@@ -59,6 +59,7 @@ $(document).ready(function() {
 </script>
 <?php
 $product = Product::id(7);
+$product->attr();// Loading additional properties
 #\Capsule\Tools\Tools::dump($product->attr(1, 34));
 \Capsule\Tools\Tools::dump($product->attr(1));
 \Capsule\Tools\Tools::dump($product->attr1);
