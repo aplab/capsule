@@ -29,13 +29,16 @@ class Product extends NamedItem
 {
     /**
      * Attribute cache
-     * 
+     *
      * @var array
      */
     protected static $attr = array();
-    
+
     /**
-     * 
+     * Without parameters initialize dynamic properties and returns all binding attributes.
+     * With one parameter returns value of required attribute.
+     * With two parameters trying to assign value to said attribute.
+     *
      * @throws \Exception
      * @return array|Ambigous <mixed, NULL>
      */
@@ -56,10 +59,10 @@ class Product extends NamedItem
         $msg = 'Wrong parameters';
         throw new \Exception($msg);
     }
-    
+
     /**
      * Возвращает значение атрибута или null
-     * 
+     *
      * @param string $attr
      * @return mixed|null
      */
@@ -74,7 +77,7 @@ class Product extends NamedItem
         }
         return null;
     }
-    
+
     /**
      * Возвращает значение атрибута или null
      *
@@ -87,7 +90,7 @@ class Product extends NamedItem
         $attr = null;
         $attr_id = null;
         if (array_key_exists($name, $attr_list)) {
-            $attr = $attr_list[$name]; 
+            $attr = $attr_list[$name];
         } else {
             foreach ($attr_list as $i) {
                 if ($name === $i->property()->name) $attr = $i;
@@ -108,7 +111,7 @@ class Product extends NamedItem
         }
         return $this;
     }
-    
+
     /**
      * Возвращает значение свойства. Если свойство не определено или
      * отсутствует, то генерируется исключение.
@@ -139,7 +142,7 @@ class Product extends NamedItem
         }
         return $this->$method($name);
     }
-    
+
     /**
      * isset() overloading
      *
@@ -158,7 +161,7 @@ class Product extends NamedItem
         }
         return !is_null($this->$method($name));
     }
-    
+
     /**
      * Обрабатывает изменение значения свойства.
      *
@@ -193,5 +196,5 @@ class Product extends NamedItem
         }
         return $this;
     }
-    
+
 }

@@ -57,7 +57,7 @@ $(document).ready(function() {
 //     });
 });
 </script>
-<?php  
+<?php
 $product = Product::id(7);
 #\Capsule\Tools\Tools::dump($product->attr(1, 34));
 \Capsule\Tools\Tools::dump($product->attr(1));
