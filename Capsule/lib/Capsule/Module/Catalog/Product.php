@@ -41,23 +41,20 @@ class Product extends NamedItem
      * @return array
      */
     public function attr() {
-        $n = func_num_args();
-        if (!$n) {
-            $class = get_class($this);
-            if (!array_key_exists($class, self::$attr)) {
-                $attr_list = Attribute::product($this);
-                self::$attr[$class] = $attr_list;
-                $properties = $this::config()->properties;
-                $values = Value::getInstance()->product($this);
-                foreach ($attr_list as $attr_id => $attr) {
-                    $property = $attr->property();
-                    if ($properties->inject($property)) {
-                        if (array_key_exists($attr_id, $values)) $this->data[$property->name] = $values[$attr_id];
-                    }
-                }
-            }
-            return self::$attr[$class];
+        $class = get_class($this);
+        if (!array_key_exists($class, self::$attr)) {
+            $attr_list = Attribute::product($this);
+            self::$attr[$class] = $attr_list;
+            $properties = $this::config()->properties;
+            foreach ($attr_list as $attr_id => $attr) $properties->inject($attr->property());
         }
+        $values = Value::getInstance()->product($this);
+        $attr_list = self::$attr[$class];
+        foreach ($attr_list as $attr_id => $attr) {
+            $property = $attr->property();
+            if (array_key_exists($attr_id, $values)) $this->data[$property->name] = $values[$attr_id];
+        }
+        return self::$attr[$class];
     }
 
     /**
