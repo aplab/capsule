@@ -59,13 +59,8 @@ $(document).ready(function() {
 </script>
 <?php
 $product = Product::id(7);
-$product->attr();// Loading additional properties
-#\Capsule\Tools\Tools::dump($product->attr(1, 34));
-\Capsule\Tools\Tools::dump($product->attr(1));
-\Capsule\Tools\Tools::dump($product->attr1);
-// \Capsule\Tools\Tools::dump($product->attr(2));
-// \Capsule\Tools\Tools::dump($product->attr(3));
-// \Capsule\Tools\Tools::dump($product->attr(4));
+$a = -324;
+\Capsule\Tools\Tools::dump(preg_filter('/^\\d+$/', '$0', $a)?:0);
 
 \Capsule\Tools\Tools::dump($app->worktime);
 \Capsule\Tools\Tools::dump($app->memory);

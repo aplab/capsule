@@ -24,6 +24,7 @@ use Capsule\DataStruct\ReturnValue;
 use Capsule\I18n\I18n;
 use Capsule\Common\Filter;
 use Capsule\DataModel\DataModel;
+use Capsule\Module\Catalog\Value;
 /**
  * Product.php
  *
@@ -72,6 +73,7 @@ class Product extends NestedItem
         try {
             $item->store();
             $item->attrPush();
+            Value::getInstance()->store();
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;
@@ -117,6 +119,7 @@ class Product extends NestedItem
         try {
             $item->store();
             $item->attrPush();
+            Value::getInstance()->store();
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;

@@ -106,12 +106,58 @@ class Value extends Singleton
     }
 
     /**
-     *
      * @param Product $object
      * @param Attribute $attr
      * @param mixed $value
      */
-    public function set(Product $object, Attribute $attr, $value) {
-        \Capsule\Tools\Tools::dump(func_get_args());
+    public function set(Product $product, Attribute $attr, $value) {
+        $product_id = $product->id;
+        $attribute_id = $attr->id;
+        $this->cache[$product_id][$attribute_id] = $value;
+        $this->unsaved[$product_id][$attribute_id] = $value;
+    }
+
+    /**
+     * Clear all data
+     *
+     * @param void
+     * @return void
+     */
+    public function clear() {
+        $this->cache = array();
+        $this->unsaved = array();
+    }
+
+    /**
+     * Save all unsaved
+     *
+     * @param void
+     * @return void
+     */
+    public function store() {
+        $db = Db::getInstance();
+        $sql = 'REPLACE INTO `' . $this->table . '` (
+                    `product_id`,
+                    `attribute_id`,
+                    `integer`,
+                    `unsigned_integer`,
+                    `string`,
+                    `text`
+                ) VALUES ';
+        $lines = array();
+        foreach ($this->unsaved as $product_id => $data) {
+            foreach ($data as $attribute_id => $value) {
+                $line = array($db->qt($product_id));
+                $line[] = $db->qt($attribute_id);
+                $line[] = $db->qt(preg_filter('/^\\d+$/', '$0', $value) ?: 0);
+                $line[] = $db->qt(preg_filter('/^-?\\d+$/', '$0', $value) ?: 0);
+                $line[] = $db->qt(preg_filter('/^.{1,255}$/u', '$0', $value) ?: '');
+                $line[] = $db->qt(preg_filter('/^.{1,65535}$/u', '$0', $value) ?: '');
+                $lines[] = '(' . join(',', $line) . ')';
+            }
+        }
+        if (empty($lines)) return;
+        $sql .= join(',', $lines);
+        $db->query($sql);
     }
 }
