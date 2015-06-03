@@ -31,25 +31,25 @@ class Value extends Singleton
 {
     /**
      * Связанная таблица
-     * 
+     *
      * @var string
      */
     protected $table;
-    
+
     /**
      * Уже полученные данные из таблицы
-     * 
+     *
      * @var array
      */
     protected $cache = array();
-    
+
     /**
      * Несохраненные данные
-     * 
+     *
      * @var array
      */
     protected $unsaved = array();
-    
+
     /**
      * Защищенный конструктор
      *
@@ -62,15 +62,15 @@ class Value extends Singleton
         $db = Db::getInstance();
         if (!$db->tableExists($this->table)) {
             $sql = 'CREATE TABLE IF NOT EXISTS `' . $this->table . '` (
-                    
+
                     `product_id` BIGINT UNSIGNED NOT NULL COMMENT "идентификатор товара",
                     `attribute_id` BIGINT UNSIGNED NOT NULL COMMENT "идентификатор атрибута",
-                    
+
                     `integer` BIGINT NOT NULL DEFAULT 0 COMMENT "Value if type is signed integer",
                     `unsigned_integer` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT "Value if type is unsigned integer",
                     `string` VARCHAR(255) NOT NULL DEFAULT "" COMMENT "Value if type is string",
                     `text` TEXT COMMENT "Value if type is text",
-    
+
                     PRIMARY KEY (`product_id`, `attribute_id`))
                     ENGINE = InnoDB COMMENT = ' . $db->qt(__CLASS__);
             $db->query($sql);
@@ -80,10 +80,10 @@ class Value extends Singleton
             }
         }
     }
-    
+
     /**
      * Возвращает значения атрибутов продукта.
-     * 
+     *
      * @param Product|int $product
      * @return mixed
      */
@@ -93,7 +93,7 @@ class Value extends Singleton
             $db = Db::getInstance();
             $table_attr = Attribute::config()->table->name;
             $sql = 'SELECT `val`.*, `attr`.`type`
-                    FROM `' . $this->table . '` AS `val` 
+                    FROM `' . $this->table . '` AS `val`
                     INNER JOIN `' . $table_attr . '` AS `attr`
                     ON `val`.`attribute_id` = `attr`.`id`
                     WHERE `val`.`product_id` = ' . $db->qt($product_id);
@@ -104,8 +104,14 @@ class Value extends Singleton
         }
         return $this->cache[$product_id];
     }
-    
-    public function set($object, $attr, $val) {
+
+    /**
+     *
+     * @param Product $object
+     * @param Attribute $attr
+     * @param mixed $value
+     */
+    public function set(Product $object, Attribute $attr, $value) {
         \Capsule\Tools\Tools::dump(func_get_args());
     }
 }

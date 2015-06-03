@@ -35,8 +35,6 @@ use Iterator, Countable;
  */
 class Oe implements Iterator, Countable
 {
-    const ATTR_ACCESSOR = 'attr';
-    
     /**
      * Internal data
      *
@@ -48,7 +46,7 @@ class Oe implements Iterator, Countable
         'properties' => array(),
         'groups' => array()
     );
-    
+
     /**
      * Create instance
      *
@@ -62,7 +60,7 @@ class Oe implements Iterator, Countable
         $this->configureProperties();
         $this->configureGroups();
     }
-    
+
     /**
      * Getter
      *
@@ -72,7 +70,7 @@ class Oe implements Iterator, Countable
     public function __get($name) {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
     }
-    
+
     /**
      * Setter
      *
@@ -89,7 +87,7 @@ class Oe implements Iterator, Countable
         }
         return $this;
     }
-    
+
     /**
      * Disable set model directly
      *
@@ -100,7 +98,7 @@ class Oe implements Iterator, Countable
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set instance_name
      *
@@ -111,7 +109,7 @@ class Oe implements Iterator, Countable
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set config directly
      *
@@ -122,7 +120,7 @@ class Oe implements Iterator, Countable
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set properties directly
      *
@@ -133,7 +131,7 @@ class Oe implements Iterator, Countable
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set groups directly
      *
@@ -144,7 +142,7 @@ class Oe implements Iterator, Countable
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Конфигурация свойств для формы
      *
@@ -152,8 +150,6 @@ class Oe implements Iterator, Countable
      * @return void
      */
     protected function configureProperties() {
-        $m = self::ATTR_ACCESSOR;
-        if (method_exists($this->model, $m)) $this->model->$m();
         $properties = $this->config->properties;
         $tmp = array();
         foreach ($properties as $property_name => $property) {
@@ -162,7 +158,7 @@ class Oe implements Iterator, Countable
                 continue;
             }
             foreach ($form_element as $form_item) {
-                if ($form_item instanceof FormElement) { 
+                if ($form_item instanceof FormElement) {
                     if (!isset($form_item->order)) {
                         $form_item->order = 0;
                     }
@@ -182,7 +178,7 @@ class Oe implements Iterator, Countable
         });
         $this->data['properties'] = $tmp;
     }
-    
+
     /**
      * Конфигурация вкладок для формы
      *
@@ -212,7 +208,7 @@ class Oe implements Iterator, Countable
             }
         }
     }
-    
+
     /**
      * count(): defined by Countable interface.
      *
@@ -222,7 +218,7 @@ class Oe implements Iterator, Countable
     public function count() {
         return sizeof($this->data['groups']);
     }
-    
+
     /**
      * current(): defined by Iterator interface.
      *
@@ -232,7 +228,7 @@ class Oe implements Iterator, Countable
     public function current() {
         return current($this->data['groups']);
     }
-    
+
     /**
      * key(): defined by Iterator interface.
      *
@@ -242,7 +238,7 @@ class Oe implements Iterator, Countable
     public function key() {
         return key($this->data['groups']);
     }
-    
+
     /**
      * next(): defined by Iterator interface.
      *
@@ -252,7 +248,7 @@ class Oe implements Iterator, Countable
     public function next() {
         next($this->data['groups']);
     }
-    
+
     /**
      * rewind(): defined by Iterator interface.
      *
@@ -262,7 +258,7 @@ class Oe implements Iterator, Countable
     public function rewind() {
         reset($this->data['groups']);
     }
-    
+
     /**
      * valid(): defined by Iterator interface.
      *
@@ -272,7 +268,7 @@ class Oe implements Iterator, Countable
     public function valid() {
         return ($this->key() !== null);
     }
-    
+
     /**
      * Привязка к namespace
      *

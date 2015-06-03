@@ -195,7 +195,7 @@ abstract class SingleKey extends DataModel
     public static function getElementByKey($key) {
         return static::k($key);
     }
-    
+
     /**
      * Возвращает объект по его ключу
      *
@@ -216,7 +216,7 @@ abstract class SingleKey extends DataModel
         // array_shift returns NULL if array is empty
         return array_shift($objects);
     }
-    
+
     /**
      * Возвращает массив ключей
      *
@@ -249,7 +249,7 @@ abstract class SingleKey extends DataModel
         }
         return null;
     }
-    
+
     /**
      * Возвращает объект по его ключу, если такой есть в кэше
      *

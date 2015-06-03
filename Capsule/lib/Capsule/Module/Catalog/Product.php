@@ -37,10 +37,10 @@ class Product extends NamedItem
     /**
      * Initialize dynamic properties and returns all binding attributes.
      *
-     * @throws \Exception
+     * @param void
      * @return array
      */
-    public function attr() {
+    public function attrInit() {
         $class = get_class($this);
         if (!array_key_exists($class, self::$attr)) {
             $attr_list = Attribute::product($this);
@@ -48,47 +48,32 @@ class Product extends NamedItem
             $properties = $this::config()->properties;
             foreach ($attr_list as $attr_id => $attr) $properties->inject($attr->property());
         }
-        $values = Value::getInstance()->product($this);
-        $attr_list = self::$attr[$class];
-        foreach ($attr_list as $attr_id => $attr) {
-            $property = $attr->property();
-            if (array_key_exists($attr_id, $values)) $this->data[$property->name] = $values[$attr_id];
-        }
         return self::$attr[$class];
     }
 
     /**
-     * Обрабатывает изменение значения свойства.
+     * Load attribute values from database
      *
-     * @param  string $name
-     * @param  mixed $value
-     * @throws Exception
-     * @return self
+     * @param void
+     * @return array
      */
-    public function __set($name, $value) {
-        $attr_list = $this->attr();
-        $properties = $this->config()->get('properties', new \stdClass);
-        if (isset($properties->$name)) {
-            $property = $this->config()->properties->$name;
-            $validator = $property->get('validator', null);
-            if ($validator) {
-                if ($validator->isValid($value)) {
-                    $value = $validator->getClean();
-                } else {
-                    $msg = 'Invalid value: ' . get_class($this) . '::$' . $name;
-                    throw new \Exception($msg);
-                }
-            }
+    public function attrPull() {
+        $values = Value::getInstance()->product($this);
+        $attr_list = $this->attrInit();
+        foreach ($attr_list as $attr_id => $attr) {
+            $property = $attr->property();
+            if (array_key_exists($attr_id, $values)) $this->data[$property->name] = $values[$attr_id];
         }
-        $setter = self::_setter($name);
-        if (method_exists($this, $setter)) {
-            return $this->$setter($value, $name);
-        }
-        foreach ($attr_list as $i) {
-            if ($name === $i->property()->name) return isset($values[$i->id]) ? $values[$i->id] : null;
-        }
-        $this->data[$name] = $value;
-        return $this;
     }
 
+    public function attrPush() {
+        $attr_list = $this->attrInit();
+        foreach ($attr_list as $attr) {
+            $property = $attr->property();
+            $property_name = $property->name;
+            if (array_key_exists($property_name, $this->data)) {
+                Value::getInstance()->set($this, $attr, $this->data[$property_name]);
+            }
+        }
+    }
 }
