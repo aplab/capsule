@@ -20,8 +20,6 @@ namespace App\Cms\Controller;
 
 use Capsule\Ui\Toolbar\Button;
 use Capsule\Ui\DataGrid\DataGrid;
-use Capsule\Ui\DialogWindow\DialogWindow;
-use App\Cms\Ui\DialogWindow\View;
 use Capsule\I18n\I18n;
 use Capsule\Common\Path;
 use Capsule\Capsule;
@@ -29,6 +27,9 @@ use Capsule\Superglobals\Post;
 use Capsule\User\Env;
 use Capsule\Core\Fn;
 use App\Cms\Ui\Dialog\Dialog;
+use Capsule\DataStruct\ReturnValue;
+use Capsule\DataModel\DataModel;
+use Capsule\Common\Filter;
 /**
  * NestedItem.php
  *
@@ -38,28 +39,28 @@ use App\Cms\Ui\Dialog\Dialog;
 class NestedItem extends ReferenceController
 {
     protected $moduleClass = 'Capsule\\Unit\\Nested\\Item';
-    
+
     /**
      * Значение фильтра по контейнеру
      *
      * @var string
      */
     protected $filterByContainer;
-    
+
     /**
      * Some variants
      *
      * @var string
      */
     const ALL = 'all', BOUND = 'bound', WITHOUT_BINDING = 'without_binding';
-    
+
     /**
      * Ключ суперглобального массива фильтра по контейнеру
      *
      * @var string
      */
     const FILTER_BY_CONTAINER = 'containerId';
-    
+
     /**
      * Варианты значений фильтра
      *
@@ -82,10 +83,10 @@ class NestedItem extends ReferenceController
             'selected' => false
         )
     );
-    
+
     protected function listItems() {
         $filter = $this->app->urlFilter;
-        
+
         $module_class = $this->moduleClass;
         $module_config = $module_class::config();
         $container_class = Fn::create_classname($module_config->container);
@@ -93,7 +94,7 @@ class NestedItem extends ReferenceController
         $variants = array_replace($this->filterVariants, $container_class::optionsDataList());
         $this->filterByContainer();
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
-        
+
         new Dialog(array(
             'title' => I18n::_('Filter'),
             'instanceName' => 'filter-by-container-window',
@@ -103,31 +104,31 @@ class NestedItem extends ReferenceController
             'minWidth' => 320,
             'minHeight' => 240
         ));
-        
+
         $toolbar = $this->app->registry->toolbar;
         $button = new Button;
         $toolbar->add($button);
         $button->caption = 'New';
         $button->url = $filter($this->mod, 'add');
         $button->icon = $this->app->config->icons->cms . '/document--plus.png';
-    
+
         $button = new Button;
         $toolbar->add($button);
         $button->caption = 'Delete selected';
         $button->icon = $this->app->config->icons->cms . '/cross-script.png';
         $button->action = 'CapsuleUiDataGrid.getInstance("capsule-ui-datagrid").del()';
-        
+
         $button = new Button;
         $toolbar->add($button);
         $button->caption = I18n::_($variants[$this->filterByContainer]['text']);
         $button->icon = $this->app->config->icons->cms . '/funnel.png';
         $button->action = 'CapsuleUiDialog.getInstance("filter-by-container-window").showCenter()';
-    
+
         $c = $this->moduleClass;
         $config = $c::config();
         $title = $config->get('title')?:untitled;
         $this->ui->title->prepend($title.'::List items');
-        
+
         $p = $this->pagination();
         $items = array();
         if (self::ALL === $this->filterByContainer) {
@@ -143,10 +144,10 @@ class NestedItem extends ReferenceController
         $data_grid->baseUrl = $filter($this->mod);
         $data_grid->p = $p;
         $this->ui->workplace->append(new \App\Cms\Ui\DataGrid\View($data_grid));
-        
+
 //         $this->ui->wrapper->append($dial_view);
     }
-    
+
     /**
      * Инициализация переменной окружения - выбор текущего контейнера
      *
@@ -172,7 +173,7 @@ class NestedItem extends ReferenceController
             $env->set($key, $default);
         }
     }
-    
+
     /**
      * Возвращает ключ для хранения текущего контейнера в Env - переменные окружения пользователя
      *
@@ -182,7 +183,7 @@ class NestedItem extends ReferenceController
     protected function filterByContainerKey() {
         return Fn::concat_ws('::', $this->moduleClass, self::FILTER_BY_CONTAINER);
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see \App\Cms\Controller\ReferenceController::pages()
@@ -199,5 +200,50 @@ class NestedItem extends ReferenceController
             return $class::pagesWithoutContainer($current_items_per_page);
         }
         return $class::pagesByContainer($this->filterByContainer, $current_items_per_page);
+    }
+
+    /**
+     * @param string $class
+     * @return ReturnValue
+     */
+    protected function createElement($class) {
+        $item = ($class instanceof DataModel) ? $class : new $class;
+        $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
+        if (Filter::digit($this->filterByContainer)) $item->containerId = $this->filterByContainer;
+        $config = $class::config();
+        $properties = $config->properties;
+        $post = Post::getInstance();
+        $ret = new ReturnValue;
+        $ret->item = $item;
+        foreach ($properties as $name => $property) {
+            if ($class::isKey($name)) {
+                continue;
+            }
+            if (!isset($property->formElement)) {
+                continue;
+            }
+            if (!isset($post->$name)) {
+                $ret->status = 1;
+                return $ret;
+            }
+            try {
+                $item->$name = $post->$name;
+            } catch (\Exception $e) {
+                $ret->status = 1;
+                $this->ui->alert->append(I18n::_($e->getMessage()));
+            }
+        }
+        if ($ret->status) {
+            return $ret;
+        }
+        try {
+            $item->store();
+        } catch (\Exception $e) {
+            $this->ui->alert->append(I18n::_($e->getMessage()));
+            $ret->status = 1;
+            return $ret;
+        }
+        $ret->status = 0;
+        return $ret;
     }
 }

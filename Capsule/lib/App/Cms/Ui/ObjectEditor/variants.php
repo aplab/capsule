@@ -10,7 +10,7 @@ $element = TplVar::getInstance()->element;
             <div>
                 <select name="<?=$element->name?>">
                     <?php foreach ($element->options as $value => $optn) : ?>
-                        <option value="<?=$value?>"<?=array_key_exists('selected', $optn)?' selected="selected"':''?>><?=$optn['text']?></option>
+                        <option value="<?=String::htmlspecialchars($value)?>"<?=array_key_exists('selected', $optn)?' selected="selected"':''?>><?=String::htmlspecialchars($optn['text'])?></option>
                     <?php endforeach ?>
                 </select>
             </div>

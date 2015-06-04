@@ -24,6 +24,9 @@ namespace App\Cms\Controller;
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class AttributeSectionLink extends NestedItem {
+class AttributeSectionLink extends NestedItem
+{
     protected $moduleClass = 'Capsule/Module/Catalog/AttributeSectionLink';
+
+
 }
