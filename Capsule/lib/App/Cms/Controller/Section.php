@@ -19,6 +19,7 @@
 namespace App\Cms\Controller;
 
 use App\Cms\Controller\Tree;
+use Capsule\Module\Catalog\AttributeSectionLink;
 /**
  * Section.php
  *
@@ -28,6 +29,24 @@ use App\Cms\Controller\Tree;
 class Section extends Tree
 {
     protected $moduleClass = 'Capsule\\Module\\Catalog\\Section';
-    
-    
+
+    /**
+     * @param unknown $item
+     * @param string $deep
+     */
+    protected function copyItem($item, $deep = false) {
+        $copy = clone $item;
+        $tmp = $this->createElement($copy);
+        $new_item = $tmp->item;
+        if (isset($new_item->id) && $new_item->id) {
+            $new_item_id = $new_item->id;
+            $links = AttributeSectionLink::getElementsByContainer($item->id);
+            foreach ($links as $link) {
+                $new_link = clone($link);
+                $new_link->containerId = $new_item_id;
+                $new_link->store();
+            }
+        }
+        return $tmp;
+    }
 }

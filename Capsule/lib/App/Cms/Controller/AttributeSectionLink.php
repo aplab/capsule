@@ -27,6 +27,4 @@ namespace App\Cms\Controller;
 class AttributeSectionLink extends NestedItem
 {
     protected $moduleClass = 'Capsule/Module/Catalog/AttributeSectionLink';
-
-
 }
