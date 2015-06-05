@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace App\Cms\Controller;
+namespace App\Cms\Controller\Catalog;
 
 use Capsule\User\Env;
 use Capsule\Superglobals\Post;
@@ -25,6 +25,7 @@ use Capsule\I18n\I18n;
 use Capsule\Common\Filter;
 use Capsule\DataModel\DataModel;
 use Capsule\Module\Catalog\Value;
+use App\Cms\Controller\NestedItem;
 /**
  * Product.php
  *

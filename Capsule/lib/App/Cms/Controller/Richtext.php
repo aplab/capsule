@@ -27,6 +27,4 @@ namespace App\Cms\Controller;
 class Richtext extends ReferenceController
 {
     protected $moduleClass = 'Capsule\\Unit\\Richtext';
-    
-    
 }

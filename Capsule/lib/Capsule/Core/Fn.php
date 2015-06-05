@@ -62,7 +62,7 @@ class Fn
         $se = array_shift($args);
         return join($se, array_filter($args));
     }
-    
+
     /**
      * @param string $path
      * @param number $level
@@ -140,7 +140,7 @@ class Fn
         array_push($tmp, 'Controller');
         return join('\\', $tmp);
     }
-    
+
     /**
      * Alias of Create classname
      *
@@ -148,7 +148,7 @@ class Fn
      * @param string|object $context
      */
     public static function cc($name, $context = null) {
-        $name = str_replace('/', '\\', $name);
+        $name = preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/u', '\\', $name);
         $name = preg_replace('/\\\\{2,}/', '\\', $name);
         if (is_null($context)) {
             if (preg_match('/^\\\\/', $name)) {
@@ -159,14 +159,15 @@ class Fn
         if (is_object($context)) {
             $context = self::get_namespace($context);
         }
-        $context = str_replace('/', '\\', $context);
+        $context = preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/u', '\\', $context);
+        $context = preg_replace('/\\\\{2,}/', '\\', $context);
         if (preg_match('/^\\\\/', $name)) {
             return $name;
         }
         return preg_replace('/\\\\{2,}/', '\\', '\\' .
                 self::concat_ws('\\', $context, $name));
     }
-    
+
     /**
      * Create classname
      *
@@ -176,7 +177,7 @@ class Fn
     public static function create_classname($name, $context = null) {
         return static::cc($name, $context);
     }
-    
+
     /**
      * @param string $str
      * @return string
@@ -186,7 +187,7 @@ class Fn
         preg_match_all('/[^\\r\\n]+/', $str, $matches);
         return join(array_map('trim', array_shift($matches)));
     }
-    
+
     /**
      * Являетс ли массив списком с числовыми ключами
      * Первый параметр массив для проверки
@@ -209,7 +210,7 @@ class Fn
         }
         return $keys === join(range(0,sizeof($array) - 1));
     }
-    
+
     /**
      * Возвращает true, если $key может быть ключом массива.
      * В противном случае возвращает false.
@@ -230,7 +231,7 @@ class Fn
         }
         return true;
     }
-    
+
     /**
      * Возвращает array, содержащие все значения из массива array1, которых нет
      * в array2
@@ -257,7 +258,7 @@ class Fn
         }
         return $difference;
     }
-    
+
     /**
      * Принимает вывод функции microtime(false)
      * Возвращает разницу
@@ -272,11 +273,11 @@ class Fn
         $end = bcadd($m, $t, 6);
         return bcsub($end, $start, 6);
     }
-    
+
     /**
      * Возвращает массив элементов если $val является значением с точечной нотацией,
      * Или null если не является
-     * 
+     *
      * @param unknown $val
      * @return NULL|multitype:
      */
@@ -292,5 +293,5 @@ class Fn
             return null;
         }
         return $tmp;
-    } 
+    }
 }

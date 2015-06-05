@@ -1,5 +1,2 @@
 <?php
-namespace n1 {
-    
-}
-
+namespace name_space;

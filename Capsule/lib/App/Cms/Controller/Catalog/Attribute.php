@@ -16,15 +16,16 @@
  * @package Capsule
  */
 
-namespace App\Cms\Controller;
+namespace App\Cms\Controller\Catalog;
 
+use App\Cms\Controller\ReferenceController;
 /**
- * Unit.php
+ * Attribute.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Unit extends ReferenceController
+class Attribute extends ReferenceController
 {
-    protected $moduleClass = 'Capsule/Module/Catalog/Unit';
+    protected $moduleClass = 'Capsule/Module/Catalog/Attribute';
 }

@@ -52,7 +52,7 @@ class Cms extends App
     protected function __construct() {
         $this->_init();
     }
-    
+
     protected function _init() {
         $data = Path::getInstance()->data;
         $this->data['base'] = array_shift($data); // base (switch (select) app trigger)
@@ -61,7 +61,7 @@ class Cms extends App
         $this->data['param'] = $data; // /user/edit/12/ 12 - parameter
         $this->data['ui'] = Ui::getInstance();
     }
-    
+
     protected function getUrlFilter($name) {
         if (!array_key_exists($name, $this->data)) {
             $filter = new Filter;
@@ -74,14 +74,14 @@ class Cms extends App
         }
         return $this->data[$name];
     }
-    
+
     protected function getRegistry($name) {
         if (!array_key_exists($name, $this->data)) {
             $this->data[$name] = Registry::getInstance();
         }
         return $this->data[$name];
     }
-    
+
     public function run() {
         $mod = $this->mod;
         if ($this->config->installCommand === $mod) {
@@ -109,7 +109,7 @@ class Cms extends App
         $config = Cms::getInstance()->config->module;
         $controller_name = $config->get($mod);
         if ($controller_name) {
-            $controller_name = Fn::create_classname($controller_name, $this->config->controller->defaultNamespace);
+            $controller_name = Fn::cc($controller_name, $this->config->controller->defaultNamespace);
             if ($controller_name) {
                 $controller_name::getInstance()->handle();
                 return;
@@ -117,7 +117,7 @@ class Cms extends App
         }
         DefaultController::getInstance()->handle();
     }
-    
+
     private function install() {
         DataStorage::getInstance()->destroy();
         Storage::getInstance()->destroy();

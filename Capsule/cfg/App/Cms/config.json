@@ -448,7 +448,7 @@
             "top": 29
         }
     },
-    "#": "Icons configuration",
+    "comment": "Icons configuration",
     "icons": {
         "cms": "/capsule/assets/share/icons/cms"
     },
@@ -514,10 +514,10 @@
         "uploadimage": "UploadImage",
         "uploadimagehistory": "UploadImageHistory",
         "uploadimagefavorites": "UploadImageFavorites",
-        "section": "Section",
-        "unit": "Unit",
-        "product": "Product",
-        "attribute-section-link": "AttributeSectionLink",
-        "attribute": "Attribute"
+        "section": "Catalog.Section",
+        "unit": "Catalog.Unit",
+        "product": "Catalog.Product",
+        "attribute-section-link": "Catalog.AttributeSectionLink",
+        "attribute": "Catalog.Attribute"
     }
 }

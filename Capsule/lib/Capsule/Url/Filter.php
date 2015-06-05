@@ -32,7 +32,7 @@ class Filter
      * @var string
      */
     public $base = '/';
-    
+
     /**
      * Определять, что переданный url уже начинается с baseUrl
      * и не приписывать базовый url к началу строки повторно в том
@@ -51,7 +51,7 @@ class Filter
      * @var boolean
      */
     public $detectBase = true;
-    
+
     /**
      * Если строка не начинается с символа "/" (без кавычек)
      * то он будет добавлен в начало строки
@@ -59,23 +59,23 @@ class Filter
      * @var boolean
      */
     public $autoRoot = true;
-    
+
     /**
      * Соглашение, используемое в системе
      * Если в строке есть точка то это файл
-     * Если в строке нет точки то это директория
+     * Если в строке нет точки то это каталог
      *
      * @var boolean
      */
     public $handleDot = true;
-    
+
     /**
      * Не обрабатывать следующие строки
      *
      * @var array
      */
     protected $exclude = array();
-    
+
     /**
      * Добавить исключения.
      * Если задать null то очистить список исключений.
@@ -101,7 +101,7 @@ class Filter
         }
         return $this->exclude;
     }
-    
+
     /**
      * Handler
      *
@@ -144,7 +144,7 @@ class Filter
         }
         return $this->prepare($url);
     }
-    
+
     /**
      * helper
      *

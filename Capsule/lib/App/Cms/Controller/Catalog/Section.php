@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace App\Cms\Controller;
+namespace App\Cms\Controller\Catalog;
 
 use App\Cms\Controller\Tree;
 use Capsule\Module\Catalog\AttributeSectionLink;

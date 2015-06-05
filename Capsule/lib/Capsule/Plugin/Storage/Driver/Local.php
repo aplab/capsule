@@ -32,12 +32,12 @@ use Capsule\Capsule;
 class Local extends Driver
 {
     /**
-     * Директория для файлов
-     * 
+     * Каталог для файлов
+     *
      * @var Path
      */
     protected $files;
-    
+
     /**
      * @param Config $config
      * @throws \Exception
@@ -52,7 +52,7 @@ class Local extends Driver
             throw new \Exception($msg);
         }
     }
-    
+
     /**
      * @param void
      * @return Path
@@ -60,7 +60,7 @@ class Local extends Driver
     public function path() {
         return $this->files;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see \Capsule\Plugin\Storage\Driver\IDriver::addFile()
@@ -121,12 +121,12 @@ class Local extends Driver
             'url' => '/' . $file_absolute_path->substract(Capsule::getInstance()->documentRoot)->toString()
         );
     }
-    
+
     public function delFile($filename) {
         $e = new Exceptionizer;
         // calculate file param
-        $file_relative_dir = '/' . join('/', array_slice(str_split($filename, 3), 0, 3));
-        $file_absolute_dir = new Path($this->files, $file_relative_dir);
+        $file_relative_dir  = '/' . join('/', array_slice(str_split($filename, 3), 0, 3));
+        $file_absolute_dir  = new Path($this->files, $file_relative_dir);
         $file_relative_path = new Path($file_relative_dir, $filename);
         $file_absolute_path = new Path($this->files, $file_relative_path);
         if (file_exists($file_absolute_path)) {
