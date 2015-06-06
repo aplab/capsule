@@ -1,6 +1,9 @@
 {
     "title": "Атрибут",
     "properties": {
+        "containerId": {
+            "title": "Attribute group"
+        },
         "name": {
             "title": "Name",
             "description": "",
@@ -221,7 +224,7 @@
                     ]
                 }
             }
-        },
-        "name": "capsule_module_catalog_attribute"
-    }
+        }
+    },
+    "container": "Capsule.Module.Catalog.AttributeGroup"
 }

@@ -83,5 +83,6 @@
     "Label": "Метка",
     "Comment": "Комментарий",
     "Attribute section link": "Привязка атрибутов к разделам",
-    "Tab name": "Имя вкладки"
+    "Tab name": "Имя вкладки",
+    "Attribute group": "Группа атрибутов"
 }

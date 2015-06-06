@@ -26,7 +26,8 @@ namespace Capsule\Tools;
  */
 class Tools
 {
-    public static function dump($var, $html = true) {
+    public static function dump($var, $html = true, $xdebug_depth = 512) {
+        @ini_set('xdebug.var_display_max_depth', $xdebug_depth);
         ob_start();
         echo"\n";
         echo'[Tools::dump]';
@@ -43,7 +44,7 @@ class Tools
         echo"\n";
         echo ob_get_clean();
     }
-    
+
     public static function export($var, $html = true) {
         echo"\n";
         echo $html ? '<pre>' : '';

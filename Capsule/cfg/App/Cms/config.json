@@ -98,6 +98,16 @@
                                     }
                                 }
                             },
+                            "attributegroup": {
+                                "caption": "Attribute group",
+                                "url": "attributegroup",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "attributegroup/add"
+                                    }
+                                }
+                            },
                             "unit": {
                                 "caption": "Единица измерения",
                                 "url": "unit",
@@ -518,6 +528,7 @@
         "unit": "Catalog.Unit",
         "product": "Catalog.Product",
         "attribute-section-link": "Catalog.AttributeSectionLink",
-        "attribute": "Catalog.Attribute"
+        "attribute": "Catalog.Attribute",
+        "attributegroup": "Catalog.AttributeGroup"
     }
 }

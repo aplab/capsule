@@ -36,7 +36,8 @@ class Config extends AbstractConfig
      * @var string
      */
     const PROPERTIES = 'properties',
-          TABLE = 'table';
+          TABLE = 'table',
+          TAB_ORDER = 'tabOrder';
 
     /**
      * @param array $data
@@ -50,6 +51,9 @@ class Config extends AbstractConfig
         }
         if (array_key_exists(self::TABLE, $this->data)) {
             $this->data[self::TABLE] = new Table($this->data[self::TABLE]);
+        }
+        if (array_key_exists(self::TAB_ORDER, $this->data)) {
+            $this->data[self::TAB_ORDER] = new TabOrder($this->data[self::TAB_ORDER]);
         }
     }
 

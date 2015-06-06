@@ -121,6 +121,7 @@ class Product extends NestedItem
             $item->store();
             $item->attrPush();
             Value::getInstance()->store();
+            $item->attrInit(true);
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;

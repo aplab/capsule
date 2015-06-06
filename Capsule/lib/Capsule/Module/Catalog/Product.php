@@ -40,10 +40,10 @@ class Product extends NamedItem
      * @param void
      * @return array
      */
-    public function attrInit() {
+    public function attrInit($reload = false) {
         $class = get_class($this);
-        if (!array_key_exists($class, self::$attr)) {
-            $attr_list = Attribute::product($this);
+        if ($reload || !array_key_exists($class, self::$attr)) {
+            $attr_list = Attribute::product($this, $reload);
             self::$attr[$class] = $attr_list;
             $properties = $this::config()->properties;
             foreach ($attr_list as $attr_id => $attr) $properties->inject($attr->property());

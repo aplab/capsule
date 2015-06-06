@@ -1,11 +1,11 @@
 <?php
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 // +---------------------------------------------------------------------------+
-// | PHP version 5.4.7                                                         |
+// | PHP version 5.4.5                                                         |
 // +---------------------------------------------------------------------------+
-// | Copyright (c) 2006-2014                                                   |
+// | Copyright (c) 2006-2015                                                   |
 // +---------------------------------------------------------------------------+
-// | 08.03.2014 3:32:18 YEKT 2014                                              |
+// | 07 июня 2015 г. 0:49:00 YEKT 2015                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,17 +16,25 @@
  * @package Capsule
  */
 
-namespace App\Cms\Controller\Catalog;
+namespace Capsule\DataModel\Config;
 
-use App\Cms\Controller\ReferenceController;
-use App\Cms\Controller\NestedItem;
 /**
- * Attribute.php
+ * TabOrder.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Attribute extends NestedItem
+class TabOrder extends AbstractConfig
 {
-    protected $moduleClass = 'Capsule/Module/Catalog/Attribute';
+    public function __construct(array $data = array()) {
+        foreach ($data as $k => $v) {
+            $v = is_scalar($v) ? $v : 0;
+            $this->data[$k] = intval(preg_filter('/^-?\\d+$/', '$0', $v)) ?: null;
+        }
+        asort($this->data);
+    }
+
+    public function toString() {
+        return json_encode($this->data);
+    }
 }

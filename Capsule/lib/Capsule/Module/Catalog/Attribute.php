@@ -20,48 +20,50 @@ namespace Capsule\Module\Catalog;
 
 use Capsule\Traits\optionsDataList;
 use Capsule\Db\Db;
-use Capsule\Unit\UnitTsUsr;
 use Capsule\DataModel\Config\Properties\Property;
 use Capsule\Module\Catalog\Type\Type;
 use Capsule\Core\Fn;
+use Capsule\Unit\Nested\Item;
+
+
 /**
  * Property.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Attribute extends UnitTsUsr
+class Attribute extends Item
 {
     use optionsDataList;
-    
+
     /**
      * Кеширование атрибутов по секциям
-     * 
+     *
      * @var array
      */
     protected static $section_cache = array();
-    
+
     /**
      * Виртуальное свойство
-     * 
+     *
      * @var Property
      */
     protected $virtualProperty;
-    
+
     /**
      * Возвращает массив объектов атрибутов, привязанных к данномй разделу
-     * 
+     *
      * @param Section|int $section
      * @return Attribute[]
      */
-    public static function section($section) {
+    public static function section($section, $reload = false) {
         $db = Db::getInstance();
         $section_id = ($section instanceof Section) ? $section->id : intval($section, 10);
         $class = get_called_class();
         if (!isset(self::$cache[$class][$section_id])) {
             $attr_table = self::config()->table->name;
-            $link_table = AttributeSectionLink::config()->table->name; 
-            $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`  
+            $link_table = AttributeSectionLink::config()->table->name;
+            $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`
                     FROM `' . $attr_table . '` AS `at`
                     INNER JOIN `' . $link_table . '` AS `lt`
                     ON `at`.`id` = `lt`.`attribute_id`
@@ -71,22 +73,22 @@ class Attribute extends UnitTsUsr
         }
         return self::$cache[$class][$section_id];
     }
-    
+
     /**
      * Возвращает массив объектов атрибутов, привязанных к данномй продукту
-     * 
+     *
      * @param Product $product
      * @return array
      */
-    public static function product(Product $product) {
-        return self::section($product->get('containerId'));
+    public static function product(Product $product, $reload = false) {
+        return self::section($product->get('containerId'), $reload);
     }
-    
+
     /**
-     * Создает свойство. Могут быть дополнительные свойства 
+     * Создает свойство. Могут быть дополнительные свойства
      * sortOrder и tabName у атрибута, если атрибут загружен с привязкой к
      * секции или продукту
-     * 
+     *
      * @param void
      * @return Property|null
      */
@@ -106,10 +108,10 @@ class Attribute extends UnitTsUsr
         }
         return $this->virtualProperty;
     }
-    
+
     /**
      * Привязка к namespace
-     * 
+     *
      * @param void
      * @return string
      */

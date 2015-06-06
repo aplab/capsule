@@ -207,6 +207,21 @@ class Oe implements Iterator, Countable
                 $groups[$tab_name]->attach($element);
             }
         }
+        $to = $this->model->config()->tabOrder;
+        foreach ($this->groups as $name => $group) {
+            if (isset($to->$name)) $group->order = $to->$name;
+        }
+        $tmp = $this->data['groups'];
+        uasort($tmp, function($a, $b) {
+            $ao = $a->order;
+            $bo = $b->order;
+            if (is_null($ao) && is_null($bo)) return 0;
+            if ($ao === $bo) return 0;
+            if (is_null($ao)) return 1;
+            if (is_null($bo)) return -1;
+            return ($a->order < $b->order) ? -1 : 1;
+        });
+        $this->data['groups'] = $tmp;
     }
 
     /**

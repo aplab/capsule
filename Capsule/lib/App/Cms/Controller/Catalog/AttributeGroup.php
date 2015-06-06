@@ -19,14 +19,13 @@
 namespace App\Cms\Controller\Catalog;
 
 use App\Cms\Controller\ReferenceController;
-use App\Cms\Controller\NestedItem;
 /**
  * Attribute.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Attribute extends NestedItem
+class AttributeGroup extends ReferenceController
 {
-    protected $moduleClass = 'Capsule/Module/Catalog/Attribute';
+    protected $moduleClass = 'Capsule/Module/Catalog/AttributeGroup';
 }
