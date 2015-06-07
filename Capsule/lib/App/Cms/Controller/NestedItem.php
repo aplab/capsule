@@ -86,10 +86,9 @@ class NestedItem extends ReferenceController
 
     protected function listItems() {
         $filter = $this->app->urlFilter;
-
         $module_class = $this->moduleClass;
         $module_config = $module_class::config();
-        $container_class = Fn::create_classname($module_config->container);
+        $container_class = Fn::cc($module_config->container, Fn::ns($module_class));
         foreach ($this->filterVariants as &$variant) $variant['text'] = '<strong>' . I18n::_($variant['text']) . '</strong>';
         $variants = array_replace($this->filterVariants, $container_class::optionsDataList());
         $this->filterByContainer();
@@ -157,7 +156,7 @@ class NestedItem extends ReferenceController
     protected function filterByContainer() {
         $module_class = $this->moduleClass;
         $module_config = $module_class::config();
-        $container_class = Fn::create_classname($module_config->container);
+        $container_class = Fn::cc($module_config->container, Fn::ns($module_class));
         $variants = array_replace($this->filterVariants, $container_class::optionsDataList());
         $post = Post::getInstance();
         $env = Env::getInstance();

@@ -15,7 +15,7 @@
             "help": "",
             "comment": "",
             "label": "",
-            "bind": "/Capsule/Module/Catalog/Attribute",
+            "bind": "Attribute",
             "column": {
                 "c1": {
                     "width": 200,
@@ -65,5 +65,5 @@
             }
         }
     },
-    "container": "/Capsule/Module/Catalog/Section"
+    "container": "Section"
 }

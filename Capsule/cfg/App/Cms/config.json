@@ -130,6 +130,71 @@
                             }
                         }
                     },
+                    "usrcatalog": {
+                        "caption": "Usr Catalog",
+                        "item": {
+                            "product": {
+                                "caption": "Product",
+                                "url": "usrproduct",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrproduct/add"
+                                    }
+                                }
+                            },
+                            "section": {
+                                "caption": "Section",
+                                "url": "usrsection",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrsection/add"
+                                    }
+                                }
+                            },
+                            "attribute": {
+                                "caption": "Attribute",
+                                "url": "usrattribute",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrattribute/add"
+                                    }
+                                }
+                            },
+                            "attributegroup": {
+                                "caption": "Attribute group",
+                                "url": "usrattributegroup",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrattributegroup/add"
+                                    }
+                                }
+                            },
+                            "unit": {
+                                "caption": "Единица измерения",
+                                "url": "usrunit",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrunit/add"
+                                    }
+                                }
+                            },
+                            "attribute-section-link": {
+                                "caption": "Attribute Section Link",
+                                "url": "usrattribute-section-link",
+                                "item": {
+                                    "add": {
+                                        "caption": "add",
+                                        "url": "usrattribute-section-link/add"
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "textblock": {
                         "caption": "Text blocks",
                         "url": "textblock"
@@ -524,11 +589,19 @@
         "uploadimage": "Upload.Image.Upload",
         "uploadimagehistory": "Upload.Image.History",
         "uploadimagefavorites": "Upload.Image.Favorites",
+        "#catalog": "---------------------------------------------------------",
         "section": "Catalog.Section",
         "unit": "Catalog.Unit",
         "product": "Catalog.Product",
         "attribute-section-link": "Catalog.AttributeSectionLink",
         "attribute": "Catalog.Attribute",
-        "attributegroup": "Catalog.AttributeGroup"
+        "attributegroup": "Catalog.AttributeGroup",
+        "#usrcatalog": "------------------------------------------------------",
+        "usrsection": "Usr.Catalog.Section",
+        "usrunit": "Usr.Catalog.Unit",
+        "usrproduct": "Usr.Catalog.Product",
+        "usrattribute-section-link": "Usr.Catalog.AttributeSectionLink",
+        "usrattribute": "Usr.Catalog.Attribute",
+        "usrattributegroup": "Usr.Catalog.AttributeGroup"
     }
 }

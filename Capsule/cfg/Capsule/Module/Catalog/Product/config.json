@@ -28,7 +28,7 @@
             }
         },
         "text": {
-            "title": "Описание",
+            "title": "Description",
             "description": "",
             "help": "",
             "comment": "",
@@ -216,5 +216,5 @@
             }
         }
     },
-    "container": "/Capsule/Module/Catalog/Section"
+    "container": "Section"
 }

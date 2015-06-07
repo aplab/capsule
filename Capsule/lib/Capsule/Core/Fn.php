@@ -111,6 +111,16 @@ class Fn
     }
 
     /**
+     * Returns namespace without classname
+     *
+     * @param string|object $class
+     * @return string
+     */
+    public static function ns($class) {
+        return self::get_namespace($class);
+    }
+
+    /**
      * Returns classname without namespace
      *
      * @param string|object $class

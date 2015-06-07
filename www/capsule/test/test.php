@@ -1,12 +1,7 @@
 <?php include '../../../Capsule/lib/Capsule/Capsule.php';
 use Capsule\Capsule;
 use Capsule\User\Auth;
-use Capsule\Module\Catalog\Value;
-use Capsule\Module\Catalog\Product;
-use Capsule\Module\Catalog\Attribute;
-use Capsule\Ui\ObjectEditor\Oe;
-use Capsule\Module\Catalog\Oe2;
-use Capsule\Module\Catalog\AttributeGroup;
+use Capsule\Module\TreeMenu\Punct;
 header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', true);
@@ -59,7 +54,7 @@ $(document).ready(function() {
 });
 </script>
 <?php
-\Capsule\Tools\Tools::dump(Attribute::config()->tabOrder->Seo);
+\Capsule\Tools\Tools::dump(Punct::_configDataJson());
 
 \Capsule\Tools\Tools::dump($app->worktime);
 \Capsule\Tools\Tools::dump($app->memory);

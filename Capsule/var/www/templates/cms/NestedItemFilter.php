@@ -21,7 +21,7 @@ $view = new View($tab_control);
 
 $module_class = $this->moduleClass;
 $module_config = $module_class::config();
-$container_class = Fn::create_classname($module_config->container);
+$container_class = Fn::cc($module_config->container, Fn::ns($module_class));
 
 $variants = array_replace($this->filterVariants, $container_class::optionsDataList());
 

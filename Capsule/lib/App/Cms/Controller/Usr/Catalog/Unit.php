@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | Copyright (c) 2006-2014                                                   |
 // +---------------------------------------------------------------------------+
-// | 07.04.2014 5:40:15 YEKT 2014                                              |
+// | 08.03.2014 3:32:18 YEKT 2014                                              |
 // | Класс - type_description_here                                             |
 // +---------------------------------------------------------------------------+
 // | Author: Alexander Polyanin <polyanin@gmail.com>                           |
@@ -16,28 +16,16 @@
  * @package Capsule
  */
 
-namespace Capsule\Ui\ObjectEditor\Element;
+namespace App\Cms\Controller\Usr\Catalog;
 
-use Capsule\DataModel\DataModel;
-use Capsule\Core\Fn;
-use Capsule\DataModel\Config\Properties\FormElement;
-use Capsule\User\Env;
+use App\Cms\Controller\Catalog\Unit as u;
 /**
- * Bind.php
+ * Unit.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Bind extends Element
+class Unit extends u
 {
-    public function __construct(DataModel $object, $name, $settings) {
-        parent::__construct($object, $name, $settings);
-        $this->data['bind'] = Fn::cc($this->property->bind, $object);
-        $class = $this->data['bind'];
-        $this->data['options'] = $class::optionsDataList();
-        if ($settings instanceof FormElement) {
-            $default = $settings->default;
-            $this->data['default'] = Env::getInstance()->get($default);
-        }
-    }
+    protected $moduleClass = 'Usr.Catalog.Unit';
 }
