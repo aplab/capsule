@@ -36,6 +36,8 @@ class Product extends NestedItem
 {
     protected $moduleClass = 'Capsule/Module/Catalog/Product';
 
+    const CONTAINER_ID = 'containerId';
+
     /**
      * @param string $class
      * @return ReturnValue
@@ -43,7 +45,7 @@ class Product extends NestedItem
     protected function createElement($class) {
         $item = ($class instanceof DataModel) ? $class : new $class;
         $this->filterByContainer = Env::getInstance()->get($this->filterByContainerKey());
-        if (Filter::digit($this->filterByContainer)) $item->containerId = $this->filterByContainer;
+        if (Filter::digit($this->filterByContainer)) $item->{self::CONTAINER_ID} = $this->filterByContainer;
         $item->attrInit();// Strictly after assign container id
         $config = $class::config();
         $properties = $config->properties;
@@ -89,11 +91,19 @@ class Product extends NestedItem
      * @return ReturnValue
      */
     protected function updateItem($item) {
+        $post = Post::getInstance();
+        $k = self::CONTAINER_ID;
+        if (isset($post->$k)) {
+            try {
+                $item->$k = $post->$k;
+            } catch (\Exception $e) {
+                // return old $k property value if needed
+            }
+        }
         $item->attrInit();
         $item->attrPull();
         $config = $item::config();
         $properties = $config->properties;
-        $post = Post::getInstance();
         $ret = new ReturnValue;
         $ret->item = $item;
         foreach ($properties as $name => $property) {
@@ -121,7 +131,6 @@ class Product extends NestedItem
             $item->store();
             $item->attrPush();
             Value::getInstance()->store();
-            $item->attrInit(true);
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;
