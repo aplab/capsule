@@ -28,16 +28,16 @@ use Capsule\Core\Fn;
 class Bind extends Cell
 {
     protected static $cache = array();
-    
+
     protected function options() {
         $hash = spl_object_hash($this);
         if (!array_key_exists($hash, self::$cache)) {
-            $class = Fn::cc($this->col->property->bind);
+            $class = Fn::cc($this->col->property->bind, Fn::ns($this->col->cell->item));
             self::$cache[$hash] = $class::optionsDataList();
         }
         return self::$cache[$hash];
     }
-    
+
     public function getValue($id) {
         $options = $this->options();
         return array_key_exists($id, $options) ? $options[$id] : null;
