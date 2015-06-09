@@ -19,6 +19,8 @@
 namespace Capsule\Module\Catalog;
 
 use Capsule\Unit\Nested\NamedItem;
+use Capsule\Core\Fn;
+
 /**
  * Product.php
  *
@@ -43,7 +45,7 @@ class Product extends NamedItem
     public function attrInit($reload = false) {
         $class = get_class($this);
         if ($reload || !array_key_exists($class, self::$attr)) {
-            $attr_list = Attribute::product($this, $reload);
+            $attr_list = forward_static_call(array(Fn::cc('Attribute', Fn::ns($this)), 'product'), $this, $reload);
             self::$attr[$class] = $attr_list;
             $properties = $this::config()->properties;
             foreach ($attr_list as $attr_id => $attr) $properties->inject($attr->property());
@@ -58,7 +60,7 @@ class Product extends NamedItem
      * @return array
      */
     public function attrPull() {
-        $values = Value::getInstance()->product($this);
+        $values = forward_static_call(array(Fn::cc('Value', $this), 'getInstance'))->product($this);
         $attr_list = $this->attrInit();
         foreach ($attr_list as $attr_id => $attr) {
             $property = $attr->property();
@@ -68,11 +70,12 @@ class Product extends NamedItem
 
     public function attrPush() {
         $attr_list = $this->attrInit();
+        $value = forward_static_call(array(Fn::cc('Value', $this), 'getInstance'));
         foreach ($attr_list as $attr) {
             $property = $attr->property();
             $property_name = $property->name;
             if (array_key_exists($property_name, $this->data)) {
-                Value::getInstance()->set($this, $attr, $this->data[$property_name]);
+                $value->set($this, $attr, $this->data[$property_name]);
             }
         }
     }

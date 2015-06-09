@@ -62,7 +62,8 @@ class Attribute extends Item
         $class = get_called_class();
         if (!isset(self::$cache[$class][$section_id])) {
             $attr_table = self::config()->table->name;
-            $link_table = AttributeSectionLink::config()->table->name;
+            $link_table = forward_static_call(array(Fn::cc('AttributeSectionLink',
+                Fn::ns(get_called_class())), 'config'))->table->name;
             $sql = 'SELECT `at`.*, `lt`.`sort_order`, `lt`.`tab_name`
                     FROM `' . $attr_table . '` AS `at`
                     INNER JOIN `' . $link_table . '` AS `lt`
@@ -81,7 +82,7 @@ class Attribute extends Item
      * @return array
      */
     public static function product(Product $product, $reload = false) {
-        return self::section($product->get('containerId'), $reload);
+        return static::section($product->get('containerId'), $reload);
     }
 
     /**

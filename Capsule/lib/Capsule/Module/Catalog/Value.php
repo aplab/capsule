@@ -21,6 +21,7 @@ namespace Capsule\Module\Catalog;
 use Capsule\Core\Singleton;
 use Capsule\DataModel\Inflector;
 use Capsule\Db\Db;
+use Capsule\Core\Fn;
 /**
  * Value.php
  *
@@ -91,7 +92,7 @@ class Value extends Singleton
         $product_id = ($product instanceof Product) ? $product->get('id') : intval($product, 10);
         if (!array_key_exists($product_id, $this->cache)) {
             $db = Db::getInstance();
-            $table_attr = Attribute::config()->table->name;
+            $table_attr = forward_static_call(array(Fn::cc('Attribute', $this), 'config'))->table->name;
             $sql = 'SELECT `val`.*, `attr`.`type`
                     FROM `' . $this->table . '` AS `val`
                     INNER JOIN `' . $table_attr . '` AS `attr`

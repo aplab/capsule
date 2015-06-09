@@ -26,6 +26,7 @@ use Capsule\Common\Filter;
 use Capsule\DataModel\DataModel;
 use Capsule\Module\Catalog\Value;
 use App\Cms\Controller\NestedItem;
+use Capsule\Core\Fn;
 /**
  * Product.php
  *
@@ -76,7 +77,8 @@ class Product extends NestedItem
         try {
             $item->store();
             $item->attrPush();
-            Value::getInstance()->store();
+            $value = forward_static_call(array(Fn::cc('Value', $item), 'getInstance'));
+            $value->store();
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;
@@ -130,7 +132,8 @@ class Product extends NestedItem
         try {
             $item->store();
             $item->attrPush();
-            Value::getInstance()->store();
+            $value = forward_static_call(array(Fn::cc('Value', $item), 'getInstance'));
+            $value->store();
         } catch (\Exception $e) {
             $this->ui->alert->append(I18n::_($e->getMessage()));
             $ret->status = 1;
