@@ -136,6 +136,7 @@ class Value extends Singleton
      * @return void
      */
     public function store() {
+        if (empty($this->unsaved)) return;
         $db = Db::getInstance();
         $sql = 'REPLACE INTO `' . $this->table . '` (
                     `product_id`,
@@ -160,5 +161,6 @@ class Value extends Singleton
         if (empty($lines)) return;
         $sql .= join(',', $lines);
         $db->query($sql);
+        $this->unsaved = array();
     }
 }
