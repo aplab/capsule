@@ -91,17 +91,17 @@ class Website extends App
     
     /**
      * Очищает все буферы вывода
-     * 
+     *
      * @param void
      * @return void
      */
     public function clearBuffer() {
         while (ob_get_level()) ob_end_clean();
-    } 
+    }
     
     /**
      * Separate function to display the page
-     * 
+     *
      * @param void
      * @return void
      */
@@ -112,7 +112,7 @@ class Website extends App
                 $units[] = $unit;
             }
         }
-        // Сортировка юнитов по параметру "buildOrder" Если таковой не задан, 
+        // Сортировка юнитов по параметру "buildOrder" Если таковой не задан,
         // то сортировка в произвольном порядке, т.к. сортировка не важна
         usort($units, function($a, $b) {
             $a = $a->buildOrder;
@@ -123,7 +123,7 @@ class Website extends App
             return ($a < $b) ? -1 : 1;
         });
         // Подготовка контента в юнитах
-        foreach ($units as $init) $unit->prepare();
+        foreach ($units as $unit) $unit->prepare();
         echo Seo::nofollow(Seo::absolutize($this->page->toString()));
     }
 }
