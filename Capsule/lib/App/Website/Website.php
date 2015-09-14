@@ -124,6 +124,7 @@ class Website extends App
         });
         // Подготовка контента в юнитах
         foreach ($units as $unit) $unit->prepare();
-        echo Seo::nofollow(Seo::absolutize($this->page->toString()));
+        $nofollow = new Nofollow;
+        echo $nofollow($this->page->toString());
     }
 }
