@@ -24,6 +24,7 @@ use Capsule\Capsule;
 use Capsule\Common\Path;
 use App\Website\Exception\Error404Exception;
 use App\Website\Structure\Page;
+use Capsule\Tools\Seo\Nofollow;
 use Capsule\Tools\Seo\Seo;
 /**
  * Website.php
