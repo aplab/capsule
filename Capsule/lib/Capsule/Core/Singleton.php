@@ -37,7 +37,7 @@ abstract class Singleton implements \Serializable
     
     /**
      * @param string $classname
-     * @return self
+     * @return $this
      */
     protected static function getInstanceOf($classname, $parameters) {
         if(!isset(self::$instances[$classname])) {
@@ -52,7 +52,7 @@ abstract class Singleton implements \Serializable
     
     /**
      * @param void
-     * @return self
+     * @return $this
      */
     public static function getInstance() {
         return self::getInstanceOf(get_called_class(), func_get_args());

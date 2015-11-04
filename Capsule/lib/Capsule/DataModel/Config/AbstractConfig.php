@@ -220,6 +220,7 @@ abstract class AbstractConfig implements Iterator, Countable
      *
      * @param void
      * @return array
+     * @throws Exception
      */
     public function toJson($options = null) {
         if (is_null($options)) {

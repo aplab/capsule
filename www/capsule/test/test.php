@@ -54,10 +54,39 @@ $(document).ready(function() {
 });
 </script>
 <?php
-\Capsule\Tools\Tools::dump(Punct::_configDataJson());
 
-\Capsule\Tools\Tools::dump($app->worktime);
-\Capsule\Tools\Tools::dump($app->memory);
+\Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_configLocation());
+
+$sql = '
+
+
+/*[22:04:25][0 ms]*/ SELECT SCHEMA();
+/*[22:04:25][0 ms]*/ EXPLAIN SELECT SCHEMA();
+/*[22:04:25][0 ms]*/ SELECT SCHEMA();
+/*[22:04:25][0 ms]*/ EXPLAIN SELECT SCHEMA();
+/*[22:04:25][0 ms]*/ SELECT SCHEMA();
+/*[22:04:25][0 ms]*/ EXPLAIN SELECT SCHEMA();
+/*[22:28:53][0 ms]*/ SHOW CREATE TABLE beta_energoboard_ru.`capsule_user`;
+/*[22:29:10][1 ms]*/ SHOW FULL FIELDS FROM `information_schema`.`TABLES`;
+/*[22:29:10][0 ms]*/ SHOW KEYS FROM `information_schema`.`TABLES`;
+/*[22:29:10][0 ms]*/ SHOW CREATE TABLE `information_schema`.`TABLES`;
+/*[22:29:34][1 ms]*/ SHOW FULL FIELDS FROM `information_schema`.`TABLES`;
+/*[22:29:42][0 ms]*/ SHOW CREATE TABLE beta_energoboard_ru.`capsule_user`;
+/*[22:30:03][1 ms]*/ SHOW FULL FIELDS FROM `beta_energoboard_ru`.`energoboard_module_user_user`;
+/*[22:30:03][3 ms]*/ SHOW KEYS FROM `beta_energoboard_ru`.`energoboard_module_user_user`;
+/*[22:30:03][0 ms]*/ SHOW CREATE TABLE `beta_energoboard_ru`.`energoboard_module_user_user`;
+/*[22:30:03][0 ms]*/ USE `beta_energoboard_ru`;
+
+
+SELECT * FROM `u6291_eb`.`cs_linear_comment` WHERE `comment` LIKE "%<a %";
+DELETE FROM `u6291_eb`.`cs_linear_comment` WHERE `comment` LIKE "%<a %";
+SELECT * FROM `u6291_ot`.`cs_linear_comment` WHERE `comment` LIKE "%<a %";
+DELETE FROM `u6291_ot`.`cs_linear_comment` WHERE `comment` LIKE "%<a %";
+
+';
+
+\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->splitMultiQuery($sql));
+
 ?>
 </body>
 </html>

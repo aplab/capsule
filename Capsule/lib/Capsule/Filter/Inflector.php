@@ -39,7 +39,8 @@ class Inflector extends Singleton
      * @param boolean $flip
      * @return array
      */
-    private function getSymbolConversionTable($flip = false) {
+    private function getSymbolConversionTable($flip = false)
+    {
         $key = 'symbol_conversion_table';
         if (!isset($this->data[$key])) {
             $keys = range('A', 'Z');
@@ -56,7 +57,8 @@ class Inflector extends Singleton
      * @param string|object $class
      * @return string
      */
-    public function getAssociatedTable($class) {
+    public function getAssociatedTable($class)
+    {
         if (is_object($class)) {
             $class = get_class($class);
         }
@@ -69,30 +71,32 @@ class Inflector extends Singleton
     }
 
     /**
-     * Возвращает имя класса включая пространство имен, удалив разделители 
+     * Возвращает имя класса включая пространство имен, удалив разделители
      *
      * @param string|object $class
      * @return string
      */
-    public function getClassKey($class) {
+    public function getClassKey($class)
+    {
         if (is_object($class)) {
             $class = get_class($class);
         }
         $key = __FUNCTION__;
         if (!isset($this->data[$key][$class])) {
             $this->data[$key][$class] = trim(
-                    preg_replace('/[^a-zA-Z0-9]+/', '', $class), '_');
+                preg_replace('/[^a-zA-Z0-9]+/', '', $class), '_');
         }
         return $this->data[$key][$class];
     }
-    
+
     /**
      * Возвращает имя свойства объекта
      *
      * @param string $field имя поля таблицы в базе данных
      * @return string
      */
-    protected function convertFieldToProperty($field) {
+    protected function convertFieldToProperty($field)
+    {
         return strtr($field, $this->getSymbolConversionTable(true));
     }
 
@@ -102,7 +106,8 @@ class Inflector extends Singleton
      * @param string $field имя поля таблицы в базе данных
      * @return string
      */
-    public function getAssociatedProperty($field) {
+    public function getAssociatedProperty($field)
+    {
         $key = 'field_to_property';
         if (!isset($this->data[$key][$field])) {
             $property = $this->convertFieldToProperty($field);
@@ -118,7 +123,8 @@ class Inflector extends Singleton
      * @param array $fields массив имен полей таблицы в базе данных
      * @return array
      */
-    public function getAssociatedProperties(array $fields) {
+    public function getAssociatedProperties(array $fields)
+    {
         $properties = array();
         foreach ($fields as $field) {
             $properties[] = $this->getAssociatedProperty($field);
@@ -132,7 +138,8 @@ class Inflector extends Singleton
      * @param string $property имя свойства объекта
      * @return string
      */
-    protected function convertPropertyToField($property) {
+    protected function convertPropertyToField($property)
+    {
         return strtr($property, $this->getSymbolConversionTable());
     }
 
@@ -142,7 +149,8 @@ class Inflector extends Singleton
      * @param string $property имя свойства объекта
      * @return string
      */
-    public function getAssociatedField($property) {
+    public function getAssociatedField($property)
+    {
         $key = 'property_to_field';
         if (!isset($this->data[$key][$property])) {
             $field = $this->convertPropertyToField($property);
@@ -158,7 +166,8 @@ class Inflector extends Singleton
      * @param array $properties массив имен соответствующих свойств
      * @return array
      */
-    public function getAssociatedFields(array $properties) {
+    public function getAssociatedFields(array $properties)
+    {
         $fields = array();
         foreach ($properties as $property) {
             $fields[] = $this->getAssociatedField($property);

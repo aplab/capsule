@@ -96,7 +96,7 @@ class DataStorage extends Singleton
      * getter
      *
      * @param string $name
-     * @return Ambigous <NULL, mixed>
+     * @return NULL|mixed
      */
     public function get($name) {
         $path = $this->buildPathByKey($name);
@@ -134,7 +134,8 @@ class DataStorage extends Singleton
      * unset
      *
      * @param string $name
-     * @return self
+     * @return $this
+     * @throws Exception
      */
     public function drop($name) {
         $path = $this->buildPathByKey($name);

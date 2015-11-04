@@ -47,8 +47,8 @@ class Property extends AbstractConfig
     const VALIDATOR_DEFAULT_NS = '\\Capsule\\Validator';
 
     /**
-     *  @param array $data
-     *  @return self
+     * @param array $data
+     * @throws Exception
      */
     public function __construct(array $data) {
         parent::__construct($data);
@@ -91,6 +91,7 @@ class Property extends AbstractConfig
      *
      * @param array $data
      * @return mixed
+     * @throws Exception
      */
     private static function initValidator($data) {
         if (!is_array($data)) {

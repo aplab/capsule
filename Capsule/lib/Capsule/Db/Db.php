@@ -75,10 +75,11 @@ class Db extends mysqli
      * Если никакого соединения нет, и конфиг не передан, то будет
      * возвращать соединение по умолчанию
      *
-     * @param object $config
+     * @param null $name
      * @return Db
      */
-    public static function getInstance($name = null) {
+    public static function getInstance($name = null)
+    {
         if (is_null($name)) {
             $name = self::DEFAULT_CONNECTION;
         }
@@ -89,17 +90,21 @@ class Db extends mysqli
     }
 
     /**
+     * Retrieve config
      *
-     * @param unknown $name
+     * @return mixed
+     * @throws \Capsule\DataStruct\Exception
      */
-    protected static function config() {
+    protected static function config()
+    {
         $name = __FUNCTION__;
         if (!self::$$name) {
             $class = get_called_class();
             $namespace = Fn::get_namespace($class);
             $storage = DataStorage::getInstance();
             if ($storage->exists($class)) {
-                self::$$name = $storage->get($class); $storage->get($class);
+                self::$$name = $storage->get($class);
+                $storage->get($class);
             } else {
                 $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $namespace, 'config.json');
                 $loader = new Loader();
@@ -115,12 +120,10 @@ class Db extends mysqli
     /**
      * Constructor
      *
-     * @param object|null $config
-     * @param boolean $default
-     * @throws Exception
-     * @return Db
+     * @param Config|null|object $config
      */
-    protected function __construct(Config $config) {
+    public function __construct(Config $config)
+    {
         $driver = new mysqli_driver();
         $driver->report_mode = MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT;
         $this->data['driver'] = $driver;
@@ -158,7 +161,8 @@ class Db extends mysqli
      * @param string $sql
      * @return Result
      */
-    public function query($sql) {
+    public function query($sql)
+    {
         if (self::$debug) {
             $trace = debug_backtrace(null, 2);
             $trace = array_pop($trace);
@@ -184,7 +188,8 @@ class Db extends mysqli
                     break;
                 }
                 if ($function === $data_item['function'] &&
-                    $class === $data_item['class']) {
+                    $class === $data_item['class']
+                ) {
                     $break = true;
                 }
             }
@@ -202,7 +207,8 @@ class Db extends mysqli
      * @param string $string
      * @return string|false
      */
-    public function es($string) {
+    public function es($string)
+    {
         return $this->real_escape_string($string);
     }
 
@@ -212,7 +218,8 @@ class Db extends mysqli
      * @param string $string
      * @return string|false
      */
-    public function qt($string, $quote = true, $double = true) {
+    public function qt($string, $quote = true, $double = true)
+    {
         if ($quote) {
             if ($double) {
                 return '"' . $this->real_escape_string($string) . '"';
@@ -227,12 +234,14 @@ class Db extends mysqli
      * Не обрабатывает многомерные массивы рекурсивно.
      *
      * @param string|array $value
+     * @return array|string
      */
-    public function bq($value) {
+    public function bq($value)
+    {
         if (!is_array($value)) {
             return '`' . $value . '`';
         }
-        array_walk($value, function(&$v, $k) {
+        array_walk($value, function (&$v, $k) {
             return '`' . $v . '`';
         });
         return $value;
@@ -241,10 +250,12 @@ class Db extends mysqli
     /**
      * returns property value
      *
-     * @param string
+     * @param $name
      * @return mixed
+     * @throws Exception
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             return $this->$getter();
@@ -252,7 +263,7 @@ class Db extends mysqli
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
-        $msg = 'Unknown property: '.get_class($this).'::$'.$name;
+        $msg = 'Unknown property: ' . get_class($this) . '::$' . $name;
         throw new Exception($msg);
     }
 
@@ -264,7 +275,8 @@ class Db extends mysqli
      * @return void
      * @throws Exception
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         if (array_key_exists($name, $this->data)) {
             $msg = get_class($this) . '::$' . $name . ' is read only';
         } else {
@@ -279,7 +291,8 @@ class Db extends mysqli
      * @param void
      * @return void
      */
-    private function __clone() {
+    private function __clone()
+    {
         trigger_error('Clone is not allowed.', E_USER_ERROR);
     }
 
@@ -287,9 +300,10 @@ class Db extends mysqli
      * Возвращает конфиг текущего соединения
      *
      * @param void
-     * @return DbConfigData`:
+     * @return DbConfigData
      */
-    protected function getConfig() {
+    protected function getConfig()
+    {
         return $this->data['config'];
     }
 
@@ -299,7 +313,8 @@ class Db extends mysqli
      * @param void
      * @return mysqli_driver`:
      */
-    protected function getDriver() {
+    protected function getDriver()
+    {
         return $this->data['driver'];
     }
 
@@ -310,23 +325,26 @@ class Db extends mysqli
      * @param boolean $reload
      * @return array
      */
-    protected function getListTables($reload = false) {
+    protected function getListTables($reload = false)
+    {
         if ($reload || (!isset($this->data['list_tables']))) {
             $this->data['list_tables'] = $this->query('SHOW TABLES')->fetch_col();
         }
         return $this->data['list_tables'];
     }
+
     /**
      * Возвращает список полей таблицы в текущей базе данных
      *
      * @param void
      * @return array
      */
-    public function listFields($table) {
+    public function listFields($table)
+    {
         if (!isset($this->data['list_fields'][$table])) {
             $this->data['list_fields'][$table] =
                 $this->query('SHOW COLUMNS FROM `'
-                        . $this->escape_string($table) . '`')->fetch_col();
+                    . $this->escape_string($table) . '`')->fetch_col();
         }
         return $this->data['list_fields'][$table];
     }
@@ -338,38 +356,50 @@ class Db extends mysqli
      * @param boolean $reload
      * @return boolean
      */
-    public function tableExists($table, $reload = false) {
+    public function tableExists($table, $reload = false)
+    {
         return in_array($table, $this->getListTables($reload));
     }
-    
+
     /**
      * Возвращает true если таблица пустая. В противном случае false.
      *
      * @param string $table
      * @return boolean
      */
-    public function isEmpty($table) {
+    public function isEmpty($table)
+    {
         $sql = 'SELECT 1 FROM `' . $this->es($table) . '` LIMIT 1';
         return !$this->query($sql)->num_rows;
     }
-    
-    public function drop($table, $post_check = false) {
+
+    public function drop($table, $post_check = false)
+    {
         $this->query('DROP TABLE `' . $this->es($table) . '`');
         if ($post_check && $this->tableExists($table, true)) {
             $msg = 'Unable to drop table';
             throw new Exception($msg);
         }
     }
-    
-    public function dropIfExists($table, $post_check = false) {
+
+    public function dropIfExists($table, $post_check = false)
+    {
         $this->query('DROP TABLE IF EXISTS `' . $this->es($table) . '`');
         if ($post_check && $this->tableExists($table, true)) {
             $msg = 'Unable to drop table';
             throw new Exception($msg);
         }
     }
-    
-    public function dropIfEmpty($table, $post_check = false) {
+
+    /**
+     * Удалить таблицу, если она пуста
+     *
+     * @param $table
+     * @param bool|false $post_check
+     * @throws Exception
+     */
+    public function dropIfEmpty($table, $post_check = false)
+    {
         if ($this->isEmpty($table)) {
             $this->query('DROP TABLE IF EXISTS `' . $this->es($table) . '`');
             if ($post_check && $this->tableExists($table, true)) {
@@ -377,5 +407,29 @@ class Db extends mysqli
                 throw new Exception($msg);
             }
         }
+    }
+
+    /**
+     * Разделить строку, которая представляет собой несколько запросов, разделенных разделителем ";"
+     *
+     * @param string $query
+     * @return array
+     */
+    public function splitMultiQuery($query)
+    {
+        $ret = array();
+        $token = my_strtok($query, ";");
+
+        while ($token) {
+            $prev = $token;
+            $ret[] = $prev;
+            $token = my_strtok();
+
+            if (!$token) {
+                return $ret;
+            }
+        }
+
+        return $ret;
     }
 }
