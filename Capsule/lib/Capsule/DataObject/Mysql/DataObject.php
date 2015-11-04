@@ -65,7 +65,9 @@ abstract class DataObject
 
     /**
      * Возвращает ReflectionClass для класса.
-     * @return ReflectionClass
+     *
+     * @param void
+     * @return \ReflectionClass
      */
     final protected static function _reflectionClass()
     {
@@ -78,6 +80,8 @@ abstract class DataObject
 
     /**
      * Returns path to module config
+     *
+     * @param void
      * @return string
      */
     public static function _configLocation()
@@ -88,5 +92,10 @@ abstract class DataObject
                 new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class);
         }
         return self::$common[$class][__FUNCTION__];
+    }
+
+    public static function _associatedTable()
+    {
+        
     }
 }

@@ -55,6 +55,8 @@ $(document).ready(function() {
 </script>
 <?php
 
+
+
 \Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_configLocation());
 
 $sql = '
@@ -85,7 +87,9 @@ DELETE FROM `u6291_ot`.`cs_linear_comment` WHERE `comment` LIKE "%<a %";
 
 ';
 
-\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->splitMultiQuery($sql));
+#\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->splitMultiQuery($sql));
+
+\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->selectSchema());
 
 ?>
 </body>

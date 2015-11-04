@@ -432,4 +432,15 @@ class Db extends mysqli
 
         return $ret;
     }
+
+    /**
+     * Returns current database name
+     *
+     * @param void
+     * @return string
+     */
+    public function selectSchema()
+    {
+        return $this->query('select schema()')->fetch_one();
+    }
 }
