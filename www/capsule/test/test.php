@@ -56,18 +56,11 @@ $(document).ready(function() {
 <?php
 
 
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_loadInformationSchema());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTable());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTableExists());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTableEmpty());
 
-\Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_createConfigFiles());
-
-\Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_createFileConfigDefault());
-
-\Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_loadInformationSchema());
-
-#\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->splitMultiQuery($sql));
-
-\Capsule\Tools\Tools::dump(\Capsule\DataObject\Mysql\DataObject::_associatedTable());
-
-\Capsule\Tools\Tools::dump(\Capsule\Db\Db::getInstance()->selectSchema());
 
 ?>
 </body>
