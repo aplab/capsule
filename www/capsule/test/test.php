@@ -55,7 +55,7 @@ $(document).ready(function() {
 </script>
 <?php
 
-
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_createTable());
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_loadInformationSchema());
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTable());
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTableExists());

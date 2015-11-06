@@ -52,6 +52,13 @@ abstract class DataObject
     const FILENAME_SQL_INIT_SCRIPT = 'init.sql';
 
     /**
+     * Table name placeholder
+     *
+     * @var string
+     */
+    const TABLE_NAME_PLACEHOLDER = '%TABLE_NAME%';
+
+    /**
      * Object internal data (properties)
      *
      * @var array
@@ -331,7 +338,35 @@ abstract class DataObject
 
         return array(
             'table' => $table_metadata,
-            'columns' => $columns_metadata
+            'columns' => $columns_metadata->fetch_object_all()
         );
+    }
+
+    /**
+     * Create associated table if not exists
+     *
+     * @param void
+     * @return bool
+     * @throws Exception
+     */
+    public static function _createTable()
+    {
+        if (self::_associatedTableExists()) {
+            return true;
+        }
+        $path = new Path(self::_configLocation(), self::FILENAME_SQL_CREATE_TABLE);
+        $data = file_get_contents($path);
+        $db = Db::getInstance();
+        $sql = $db->splitMultiQuery($data);
+        $sql = array_shift($sql);
+        $table = self::_associatedTable();
+        $reg = '/^(\\s?CREATE(?:\\s+TEMPORARY)?\\s+TABLE(?:\\s+IF\\s+NOT\\s+EXISTS)?\\s?)([\'"`]?' .
+            preg_quote(self::TABLE_NAME_PLACEHOLDER) . '[\'"`]?)(.*)/isu';
+        $sql = preg_replace($reg, '$1 `' . $table . '` $3', $sql);
+        $db->query($sql);
+        if (self::_associatedTableExists()) {
+            return true;
+        }
+        throw new Exception('Unable to create table ' . $table);
     }
 }
