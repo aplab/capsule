@@ -19,6 +19,7 @@
 namespace Capsule\Validator;
 
 use Capsule\Common\String;
+
 /**
  * ValidatorAbstract.php
  *
@@ -35,114 +36,120 @@ abstract class Validator implements ValidatorInterface
      * @var array
      */
     protected $data = array();
-    
+
     /**
      * Общие свойства класса
      *
      * @var array
      */
     protected static $common = array();
-    
+
     /**
      * Значение проверяемого параметра.
      *
      * @var mixed
      */
     protected $value;
-    
+
     /**
      * Сообщение об ошибке
      *
      * @var string
      */
     protected $message;
-    
+
     /**
      * Флаг: прошло значение проверку(валидно) или нет
      *
      * @var boolean
      */
     protected $isValid = false;
-    
+
     /**
      * Флаг: Валидация была проведена.
      *
      * @var boolean
      */
     protected $validationWasPerformed = false;
-    
+
     /**
      * Обозначение методов-обработчиков переменных в сообщениях об ошибке
      *
      * @var string
      */
     const PLACEHOLDER_SUFFIX = 'Placeholder';
-    
+
     /**
      * Constructor
      *
      * @param void
      * @return self
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->messageTemplates = array();
     }
-    
+
     /**
      * @param void
      * @return void
      * @throws Exception
      */
-    protected function setValidationWasPerformed() {
+    protected function setValidationWasPerformed()
+    {
         $msg = 'Cannot set it directly.';
         throw new Exception($msg);
     }
-    
+
     /**
      * Возвращает флаг: Валидация была проведена.
      *
      * @param void
      * @return boolean
      */
-    protected function getValidationWasPerformed() {
+    protected function getValidationWasPerformed()
+    {
         return $this->validationWasPerformed;
     }
-    
+
     /**
      * Задает шаблоны сообщений
      *
      * @param array $value
      * @param string $name
-     * @return \Capsule\ValidatorAbstract
+     * @return $this
      */
-    protected function setMessageTemplates(array $value, $name) {
+    protected function setMessageTemplates(array $value, $name)
+    {
         if (!array_key_exists($name, $this->data)) {
             $this->data[$name] = array();
         }
         $this->data[$name] = array_replace($this->data[$name], $value);
         return $this;
     }
-    
+
     /**
      * @param void
      * @return void
      * @throws Exception
      */
-    protected function getValue() {
+    protected function getValue()
+    {
         $msg = 'Cannot retrieve value directly. Use method getClean';
         throw new Exception($msg);
     }
-    
+
     /**
      * @param void
      * @return void
      * @throws Exception
      */
-    protected function setValue() {
+    protected function setValue()
+    {
         $msg = 'Cannot set value directly. Use method isValid';
         throw new Exception($msg);
     }
-    
+
     /**
      * Disable direct data modification
      *
@@ -150,11 +157,12 @@ abstract class Validator implements ValidatorInterface
      * @return void
      * @throws Exception
      */
-    protected function setData() {
+    protected function setData()
+    {
         $msg = 'Cannot directly data modification';
         throw new Exception($msg);
     }
-    
+
     /**
      * Возвращает значение свойства
      *
@@ -162,7 +170,8 @@ abstract class Validator implements ValidatorInterface
      * @throws Exception
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         $getter = self::_getter($name);
         if ($getter) {
             return $this->$getter($name);
@@ -173,15 +182,17 @@ abstract class Validator implements ValidatorInterface
         $msg = 'Unknown property: ' . get_class($this) . '::$' . $name;
         throw new Exception($msg);
     }
-    
+
     /**
      * Возвращает значение свойства или значение по умолчанию, если свойство
      * не определено
      *
+     * @param $name
      * @param  string
      * @return mixed
      */
-    public function get($name, $default = null) {
+    public function get($name, $default = null)
+    {
         $getter = self::_getter($name);
         if ($getter) {
             return $this->$getter($name);
@@ -191,7 +202,7 @@ abstract class Validator implements ValidatorInterface
         }
         return $default;
     }
-    
+
     /**
      * Обрабатывает изменение значения свойства.
      *
@@ -200,7 +211,8 @@ abstract class Validator implements ValidatorInterface
      * @throws Exception
      * @return self
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $setter = self::_setter($name);
         if (method_exists($this, $setter)) {
             return $this->$setter($value, $name);
@@ -208,24 +220,26 @@ abstract class Validator implements ValidatorInterface
         $this->data[$name] = $value;
         return $this;
     }
-    
+
     /**
      * isset() overloading
      *
      * @param  string $name
      * @return boolean
      */
-    public function __isset($name) {
+    public function __isset($name)
+    {
         return array_key_exists($name, $this->data);
     }
-    
+
     /**
      * Возвращает список методов класса с учетом регистра
      *
      * @param void
      * @return array
      */
-    protected function _listMethods() {
+    protected function _listMethods()
+    {
         $key = __FUNCTION__;
         $class = get_class($this);
         if (!isset(self::$common[$class][$key])) {
@@ -233,14 +247,15 @@ abstract class Validator implements ValidatorInterface
         }
         return self::$common[$class][$key];
     }
-    
+
     /**
      * Возвращает getter с учетом регистра
      *
      * @param void
      * @return string|false
      */
-    protected function _getter($name) {
+    protected function _getter($name)
+    {
         $key = __FUNCTION__;
         $class = get_class($this);
         if (!isset(self::$common[$class][$key][$name])) {
@@ -249,16 +264,17 @@ abstract class Validator implements ValidatorInterface
                 in_array($getter, $this->_listMethods()) ? $getter : false;
         }
         return self::$common[$class][__FUNCTION__][$name];
-    
+
     }
-    
+
     /**
      * Возвращает setter с учетом регистра
      *
      * @param string $name
      * @return string|false
      */
-    protected function _setter($name) {
+    protected function _setter($name)
+    {
         $key = __FUNCTION__;
         $class = get_class($this);
         if (!isset(self::$common[$class][$key][$name])) {
@@ -268,27 +284,29 @@ abstract class Validator implements ValidatorInterface
         }
         return self::$common[$class][$key][$name];
     }
-    
+
     /**
      * Валидация
      *
      * @param mixed $value
      * @return boolean
      */
-    public function isValid($value) {
+    public function isValid($value)
+    {
         $this->value = $value;
         $this->isValid = false;
         $this->validationWasPerformed = true;
         return $this->isValid;
     }
-    
+
     /**
      * Возвращает значение проверяемого параметра после валидации.
-     *
-     * @param void
      * @return mixed
+     * @throws Exception
+     * @param void
      */
-    public function getClean() {
+    public function getClean()
+    {
         if ($this->isValid) {
             return $this->value;
         }
@@ -299,7 +317,7 @@ abstract class Validator implements ValidatorInterface
         $msg = 'Clean value is not defined, because parameter is not valid.';
         throw new Exception($msg);
     }
-    
+
     /**
      * Возвращает сообщение.
      *
@@ -309,7 +327,8 @@ abstract class Validator implements ValidatorInterface
      * @return string
      * @throws Exception
      */
-    protected function getMessage() {
+    protected function getMessage()
+    {
         if (!$this->validationWasPerformed) {
             $msg = 'Message is not defined, because validation was not performed.';
             throw new Exception($msg);
@@ -320,7 +339,7 @@ abstract class Validator implements ValidatorInterface
         }
         return $this->message;
     }
-    
+
     /**
      * Запрещает прямую установку сообщения об ошибке.
      *
@@ -328,18 +347,20 @@ abstract class Validator implements ValidatorInterface
      * @return void
      * @throws Exception
      */
-    protected function setMessage() {
+    protected function setMessage()
+    {
         $msg = 'Cannot set message directly.';
         throw new Exception($msg);
     }
-    
+
     /**
      * Создает сообщение об ошибке
      *
      * @param string $key
      * @return string
      */
-    protected function message($key) {
+    protected function message($key)
+    {
         $this->message = $this->messageTemplate($key);
         $placeholders = array();
         $matches = array();
@@ -363,46 +384,50 @@ abstract class Validator implements ValidatorInterface
                 $replacement = 'Array';
             }
             $this->message = str_replace('%' . $key . '%',
-                    (string)$replacement, $this->message);
+                (string)$replacement, $this->message);
         }
         $this->message = String::replace('  ', ' ', $this->message);
     }
-    
+
     /**
      * Возвращает нужный шаблон сообщения.
      *
      * @param string $key
      * @return string
+     * @throws Exception
      */
-    protected function messageTemplate($key) {
+    protected function messageTemplate($key)
+    {
         if (isset($this->messageTemplates[$key])) {
             return $this->messageTemplates[$key];
         }
         $msg = 'Trying to create undefined message.';
         throw new Exception($msg);
     }
-    
+
     /**
      * Возвращает тип значения для использования в сообщениях об ошибке
      *
      * @param void
      * @return string
      */
-    protected function typePlaceholder() {
+    protected function typePlaceholder()
+    {
         return is_object($this->value) ?
-        'object of class "'.get_class($this->value) . '"' :
-        gettype($this->value);
+            'object of class "' . get_class($this->value) . '"' :
+            gettype($this->value);
     }
-    
+
     /**
      * Возвращает значение для использования в сообщениях об ошибке
      *
      * @param void
      * @return string
      */
-    protected function valuePlaceholder() {
+    protected function valuePlaceholder()
+    {
         if (is_object($this->value)) {
-            return 'object of class "'.get_class($this->value) . '"';
+            return 'object of class "' . get_class($this->value) . '"';
         }
         if (is_array($this->value)) {
             return 'Array';
@@ -412,14 +437,15 @@ abstract class Validator implements ValidatorInterface
         }
         return gettype($this->value);
     }
-    
+
     /**
      * Возвращает значение для использования в сообщениях об ошибке
      *
      * @param void
      * @return string
      */
-    protected function namePlaceholder() {
+    protected function namePlaceholder()
+    {
         if (isset($this->name)) {
             if (is_scalar($this->name) && $this->name) {
                 return '"' . strval($this->name) . '"';

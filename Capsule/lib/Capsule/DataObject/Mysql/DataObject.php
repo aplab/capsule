@@ -9,6 +9,7 @@ namespace Capsule\DataObject\Mysql;
 
 use Capsule\Capsule;
 use Capsule\Common\Path;
+use Capsule\Common\String;
 use Capsule\DataObject\Inflector;
 use Capsule\Db\Db;
 use Capsule\Exception;
@@ -120,7 +121,7 @@ abstract class DataObject
      * @param void
      * @return string
      */
-    public static function _associatedTable()
+    public static function _associatedTableName()
     {
         $class = get_called_class();
         $f = __FUNCTION__;
@@ -245,7 +246,7 @@ abstract class DataObject
     {
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
-        $table = self::_associatedTable();
+        $table = self::_associatedTableName();
         $sql = 'SHOW TABLES FROM `' . $default_schema . '` LIKE ' . $db->qt($table);
         return !!$db->query($sql)->num_rows;
     }
@@ -260,7 +261,7 @@ abstract class DataObject
     {
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
-        $table = self::_associatedTable();
+        $table = self::_associatedTableName();
         $sql = 'SELECT 1 FROM `' . $default_schema . '`.`' . $table . '`';
         return !$db->query($sql)->num_rows;
     }
@@ -276,7 +277,7 @@ abstract class DataObject
     {
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
-        $table_name = self::_associatedTable();
+        $table_name = self::_associatedTableName();
         $sql = 'SELECT
                     `TABLE_CATALOG`,
                     `TABLE_SCHEMA`,
@@ -330,7 +331,8 @@ abstract class DataObject
                     `COLUMN_COMMENT`
                 FROM `information_schema`.`COLUMNS`
                 WHERE `TABLE_SCHEMA` = ' . $db->qt($default_schema) . '
-                AND `TABLE_NAME` = ' . $db->qt($table_name);
+                AND `TABLE_NAME` = ' . $db->qt($table_name) . '
+                ORDER BY `ORDINAL_POSITION` ASC';
         $columns_metadata = $db->query($sql);
         if (!$columns_metadata->num_rows) {
             throw new Exception('Table metadata not found: ' . $default_schema . '.' . $table_name);
@@ -359,7 +361,7 @@ abstract class DataObject
         $db = Db::getInstance();
         $sql = $db->splitMultiQuery($data);
         $sql = array_shift($sql);
-        $table = self::_associatedTable();
+        $table = self::_associatedTableName();
         $reg = '/^(\\s?CREATE(?:\\s+TEMPORARY)?\\s+TABLE(?:\\s+IF\\s+NOT\\s+EXISTS)?\\s?)([\'"`]?' .
             preg_quote(self::TABLE_NAME_PLACEHOLDER) . '[\'"`]?)(.*)/isu';
         $sql = preg_replace($reg, '$1 `' . $table . '` $3', $sql);
@@ -368,5 +370,158 @@ abstract class DataObject
             return true;
         }
         throw new Exception('Unable to create table ' . $table);
+    }
+
+    /**
+     * Удаляет таблицу. Таблица должна быть пуста.
+     *
+     * @param void
+     * @return bool
+     * @throws Exception
+     */
+    public static function _dropTable()
+    {
+        if (!self::_associatedTableExists()) {
+            return true;
+        }
+        if (!self::_associatedTableEmpty()) {
+            throw new Exception('Trying to drop nonempty table: ' . self::_associatedTableName());
+        }
+        $db = Db::getInstance();
+        $default_schema = $db->config->dbname;
+        $sql = 'DROP TABLE IF EXISTS `' . $default_schema . '`.`' . self::_associatedTableName() . '`';
+        $db->query($sql);
+        if (self::_associatedTableExists()) {
+
+        }
+        return true;
+    }
+
+    /**
+     * Пересоздать заново таблицу. Невозможно пересоздать непустую таблицу.
+     *
+     * @param void
+     * @throws Exception
+     */
+    public static function _reCreateTable()
+    {
+        self::_dropTable();
+        self::_createTable();
+    }
+
+    /**
+     * Создание массива данных для конфига
+     *
+     * @param void
+     * @return array
+     * @throws Exception
+     */
+    public static function _buildConfig()
+    {
+        $inflector = Inflector::getInstance();
+        $data = self::_loadInformationSchema();
+        $config_data = array(
+            'name' => String::ucfirst(preg_replace('/[^a-z0-9]/isu', ' ', $data['table']->TABLE_NAME)),
+            'title' => $data['table']->TABLE_COMMENT,
+            'description' => null,
+            'help' => null,
+            'comment' => null,
+            'label' => null,
+            'properties' => array()
+        );
+
+        foreach ($data['columns'] as $column) {
+            $property_name = $inflector->getAssociatedProperty($column->COLUMN_NAME);
+            $tmp = array(
+                'name' => $property_name,
+                'title' => $column->COLUMN_COMMENT,
+                'description' => $column->COLUMN_COMMENT,
+                'help' => $column->COLUMN_COMMENT,
+                'comment' => $column->COLUMN_COMMENT,
+                'label' => $column->COLUMN_COMMENT,
+            );
+
+            foreach ($column as $k => $v) {
+                $tmp[$inflector->getAssociatedProperty(strtolower($k))] = $v;
+            }
+            $tmp['isNullable'] = ('YES' === strtolower($tmp['isNullable'])) ? true : false;
+
+
+            $tmp['validator'] = null;
+            $tmp['column'] = self::_buildConfigColumn($tmp);
+            $tmp['formElement'] = self::_buildConfigFormElement($tmp);
+
+            $config_data['properties'][$property_name] = $tmp;
+        }
+
+
+        return $config_data;
+    }
+
+    /**
+     * Создание массива данных для конфига столбца списка объектов
+     *
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumn(array $data)
+    {
+        if ('tinyint' === $data['dataType']) {
+            return array(
+                'c1' => array(
+                    'width' => 60,
+                    'order' => 1000 * $data['ordinalPosition'],
+                    'type' => 'Rtext'
+                )
+            );
+        }
+        if ('smallint' === $data['dataType']) {
+            return array(
+                'c1' => array(
+                    'width' => 80,
+                    'order' => 1000 * $data['ordinalPosition'],
+                    'type' => 'Rtext'
+                )
+            );
+        }
+        if ('mediumint' === $data['dataType']) {
+            return array(
+                'c1' => array(
+                    'width' => 80,
+                    'order' => 1000 * $data['ordinalPosition'],
+                    'type' => 'Rtext'
+                )
+            );
+        }
+        if ('int' === $data['dataType'] || 'integer' === $data['dataType']) {
+            return array(
+                'c1' => array(
+                    'width' => 100,
+                    'order' => 1000 * $data['ordinalPosition'],
+                    'type' => 'Rtext'
+                )
+            );
+        }
+        if ('bigint' === $data['dataType']) {
+            return array(
+                'c1' => array(
+                    'width' => 180,
+                    'order' => 1000 * $data['ordinalPosition'],
+                    'type' => 'Rtext'
+                )
+            );
+        }
+        return array();
+    }
+
+    /**
+     * Создание массива данных для конфига элементов формы
+     *
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigFormElement(array $data)
+    {
+        return array();
     }
 }

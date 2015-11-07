@@ -27,9 +27,10 @@ namespace Capsule\Validator;
 class String extends Validator
 {
     const   INVALID_TYPE = 'invalid_type',
-            INVALID_VALUE = 'invalid_value';
-    
-    public function __construct() {
+        INVALID_VALUE = 'invalid_value';
+
+    public function __construct()
+    {
         parent::__construct();
         $this->messageTemplates = array(
             self::INVALID_TYPE =>
@@ -37,14 +38,15 @@ class String extends Validator
             self::INVALID_VALUE =>
                 'The parameter %name% must be a string, %value% given.');
     }
-    
-    public function isValid($value) {
+
+    public function isValid($value)
+    {
         parent::isValid($value);
         if (!is_scalar($this->value)) {
             $this->message(self::INVALID_TYPE);
             return $this->isValid = false;
         }
-        $this->value = (string) $this->value;
+        $this->value = (string)$this->value;
         $this->isValid = true;
         return $this->isValid;
     }

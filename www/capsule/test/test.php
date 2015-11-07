@@ -54,12 +54,9 @@ $(document).ready(function() {
 });
 </script>
 <?php
-
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_createTable());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_loadInformationSchema());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTable());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTableExists());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_associatedTableEmpty());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_reCreateTable());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfig());
+\Capsule\Tools\Tools::dump(\Capsule\Reference\Named::_configDataJson());
 
 
 ?>

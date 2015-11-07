@@ -19,6 +19,7 @@
 namespace Capsule\Validator;
 
 use Capsule\Common\String;
+
 /**
  * StringLength.php
  *
@@ -30,10 +31,11 @@ use Capsule\Common\String;
 class StringLength extends Validator
 {
     const   INVALID_TYPE = 'invalid_type',
-            SHORTER_THAN = 'shorther_than',
-            LONGER_THAN = 'longer_than';
-    
-    public function __construct() {
+        SHORTER_THAN = 'shorther_than',
+        LONGER_THAN = 'longer_than';
+
+    public function __construct()
+    {
         parent::__construct();
         $this->min = 0;
         $this->max = null;
@@ -45,14 +47,15 @@ class StringLength extends Validator
             self::LONGER_THAN =>
                 'The length of the parameter %name% should be not more than %max% characters.');
     }
-    
-    public function isValid($value) {
+
+    public function isValid($value)
+    {
         parent::isValid($value);
         if (!is_scalar($this->value)) {
             $this->message(self::INVALID_TYPE);
             return $this->isValid = false;
         }
-        $this->value = (string) $this->value;
+        $this->value = (string)$this->value;
         $length = String::length($this->value);
         if (!is_null($this->min)) {
             if ($length < $this->min) {
@@ -69,8 +72,9 @@ class StringLength extends Validator
         $this->isValid = true;
         return $this->isValid;
     }
-    
-    protected function setMin($value, $name) {
+
+    protected function setMin($value, $name)
+    {
         if (is_null($value)) {
             $this->data[$name] = null;
             return $this;
@@ -82,8 +86,9 @@ class StringLength extends Validator
         $this->data[$name] = (int)$value;
         return $this;
     }
-    
-    protected function setMax($value, $name) {
+
+    protected function setMax($value, $name)
+    {
         if (is_null($value)) {
             $this->data[$name] = null;
             return $this;
