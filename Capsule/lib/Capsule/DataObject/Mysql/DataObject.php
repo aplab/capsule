@@ -466,52 +466,127 @@ abstract class DataObject
      */
     protected static function _buildConfigColumn(array $data)
     {
-        if ('tinyint' === $data['dataType']) {
-            return array(
-                'c1' => array(
-                    'width' => 60,
-                    'order' => 1000 * $data['ordinalPosition'],
-                    'type' => 'Rtext'
-                )
-            );
-        }
-        if ('smallint' === $data['dataType']) {
-            return array(
-                'c1' => array(
-                    'width' => 80,
-                    'order' => 1000 * $data['ordinalPosition'],
-                    'type' => 'Rtext'
-                )
-            );
-        }
-        if ('mediumint' === $data['dataType']) {
-            return array(
-                'c1' => array(
-                    'width' => 80,
-                    'order' => 1000 * $data['ordinalPosition'],
-                    'type' => 'Rtext'
-                )
-            );
-        }
-        if ('int' === $data['dataType'] || 'integer' === $data['dataType']) {
-            return array(
-                'c1' => array(
-                    'width' => 100,
-                    'order' => 1000 * $data['ordinalPosition'],
-                    'type' => 'Rtext'
-                )
-            );
-        }
-        if ('bigint' === $data['dataType']) {
-            return array(
-                'c1' => array(
-                    'width' => 180,
-                    'order' => 1000 * $data['ordinalPosition'],
-                    'type' => 'Rtext'
-                )
-            );
+        $type = $data['dataType'];
+        $class = get_called_class();
+        $method = __FUNCTION__ . ucfirst($type);
+        if (method_exists($class, $method)) {
+            return forward_static_call(array($class, $method), $data);
         }
         return array();
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnTinyint(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 60,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnSmallint(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 80,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnMediumint(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 100,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnInt(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 120,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnInteger(array $data)
+    {
+        return self::_buildConfigColumnInt($data);
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnBigint(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 180,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnChar(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 200,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Text'
+            )
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigColumnVarchar(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 200,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Text'
+            )
+        );
     }
 
     /**
@@ -522,6 +597,27 @@ abstract class DataObject
      */
     protected static function _buildConfigFormElement(array $data)
     {
+        $type = $data['dataType'];
+        $class = get_called_class();
+        $method = __FUNCTION__ . ucfirst($type);
+        if (method_exists($class, $method)) {
+            return forward_static_call(array($class, $method), $data);
+        }
         return array();
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected static function _buildConfigFormElementTinyint(array $data)
+    {
+        return array(
+            'c1' => array(
+                'width' => 60,
+                'order' => 1000 * $data['ordinalPosition'],
+                'type' => 'Rtext'
+            )
+        );
     }
 }
