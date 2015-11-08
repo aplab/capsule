@@ -16,11 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\DataModel\Config\Properties;
-
-use Capsule\DataModel\Config\AbstractConfig;
-use Capsule\DataModel\Exception;
+namespace Capsule\DataObject\Mysql\Config\Properties;
 use Capsule\Common\Filter;
+use Capsule\DataObject\Mysql\Config\AbstractConfig;
+use Capsule\Exception;
 use Capsule\Validator\Validator;
 
 /**
@@ -48,18 +47,21 @@ class Property extends AbstractConfig
 
     /**
      * @param array $data
-     * @throws Exception
+     * @throws \Exception
      */
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
         if (array_key_exists(self::VALIDATOR, $this->data)) {
             $tmp = $this->data[self::VALIDATOR];
-            $validator = self::initValidator($tmp);
-            if ($validator instanceof Validator) {
-                $this->data[self::VALIDATOR] = $validator;
-            } else {
-                $msg = 'Wrong validator definition';
-                throw new Exception($msg);
+            if (!is_null($tmp)) {
+                $validator = self::initValidator($tmp);
+                if ($validator instanceof Validator) {
+                    $this->data[self::VALIDATOR] = $validator;
+                } else {
+                    $msg = 'Wrong validator definition';
+                    throw new \Exception($msg);
+                }
             }
         }
         if (array_key_exists(self::COLUMN, $this->data)) {
@@ -69,19 +71,29 @@ class Property extends AbstractConfig
             $this->initFormElement($this->data[self::FORM_ELEMENT]);
         }
     }
-    
-    private function initColumn(array $data) {
-        foreach($data as $key => $data_item) {
+
+    private function initColumn(array $data)
+    {
+        foreach ($data as $key => $data_item) {
             if (is_array($data_item)) {
-                $this->data[self::COLUMN][$key] = new Column($data_item);
+                try {
+                    $this->data[self::COLUMN][$key] = new Column($data_item);
+                } catch (Exception $e) {
+
+                }
             }
         }
     }
-    
-    private function initFormElement(array $data) {
-        foreach($data as $key => $data_item) {
+
+    private function initFormElement(array $data)
+    {
+        foreach ($data as $key => $data_item) {
             if (is_array($data_item)) {
-                $this->data[self::FORM_ELEMENT][$key] = new FormElement($data_item);
+                try {
+                    $this->data[self::FORM_ELEMENT][$key] = new FormElement($data_item);
+                } catch (Exception $e) {
+
+                }
             }
         }
     }
@@ -91,20 +103,21 @@ class Property extends AbstractConfig
      *
      * @param array $data
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
-    private static function initValidator($data) {
+    private static function initValidator($data)
+    {
         if (!is_array($data)) {
             return false;
         }
-        if (!is_null(Filter::digit(join(array_keys($data)), null))) {
+        if (!is_null(Filter::digit(join('', array_keys($data)), null))) {
             // Несколько валидаторов в виде индексного массива
             $msg = 'not supported, maybe in next time';
             trigger_error($msg, E_USER_ERROR);
         }
         if (!isset($data['type'])) {
             $msg = 'Unknown validator type';
-            throw new Exception($msg);
+            throw new \Exception($msg);
         }
         $type = $data['type'];
         unset($data['type']);
@@ -124,7 +137,8 @@ class Property extends AbstractConfig
      * @param void
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return __CLASS__;
     }
 }

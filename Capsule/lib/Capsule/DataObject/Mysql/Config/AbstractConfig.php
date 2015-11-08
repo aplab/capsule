@@ -127,7 +127,7 @@ abstract class AbstractConfig implements Iterator, Countable
      * Возвращает значение свойства.
      *
      * @param string $name
-     * @throws Exception
+     * @throws \Exception
      * @return mixed
      */
     public function __get($name)
@@ -136,7 +136,7 @@ abstract class AbstractConfig implements Iterator, Countable
             return $this->data[$name];
         }
         $msg = 'Undefined property: ' . get_class($this) . '::$' . $name;
-        throw new Exception($msg);
+        throw new \Exception($msg);
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class AbstractConfig implements Iterator, Countable
      *
      * @param string $name
      * @param mixed $value
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function __set($name, $value)
@@ -154,7 +154,7 @@ abstract class AbstractConfig implements Iterator, Countable
         } else {
             $msg = 'Unknown property: ' . get_class($this) . '::$' . $name;
         }
-        throw new Exception($msg);
+        throw new \Exception($msg);
     }
 
     /**
@@ -234,7 +234,7 @@ abstract class AbstractConfig implements Iterator, Countable
      *
      * @param void
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function toJson($options = null)
     {
@@ -243,7 +243,7 @@ abstract class AbstractConfig implements Iterator, Countable
         }
         $json = json_encode($this->toArray(), $options);
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception(Error::getLastError());
+            throw new \Exception(Error::getLastError());
         }
         return $json;
     }

@@ -16,9 +16,10 @@
  * @package Capsule
  */
 
-namespace Capsule\DataModel\Config\Properties;
+namespace Capsule\DataObject\Mysql\Config\Properties;
 
-use Capsule\DataModel\Config\AbstractConfig;
+use Capsule\DataObject\Mysql\Config\AbstractConfig;
+
 
 /**
  * Properties.php
@@ -28,15 +29,28 @@ use Capsule\DataModel\Config\AbstractConfig;
  */
 class Properties extends AbstractConfig
 {
+    /**
+     * Special property
+     *
+     * @var string
+     */
     const PROPERTY_NAME = 'name';
 
-    public function __construct(array $data) {
+    /**
+     * Constructor
+     *
+     * @param array $data
+     * @throws \Exception
+     */
+    public function __construct(array $data)
+    {
         foreach ($data as $property_name => $property_data) {
             if (array_key_exists(self::PROPERTY_NAME, $property_data)) {
                 $msg = 'Cannot redeclare automatically generated property: property::' . self::PROPERTY_NAME
                     . '. Check configuration. Remove property::' . self::PROPERTY_NAME . ' definition from configuration.';
                 throw new \Exception($msg);
             }
+            // Автоматически устанавливаем объекту свойство name
             $property_data[self::PROPERTY_NAME] = $property_name;
             $this->data[$property_name] = new Property($property_data);
         }
@@ -48,7 +62,8 @@ class Properties extends AbstractConfig
      * @param void
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return __CLASS__;
     }
 
@@ -58,9 +73,12 @@ class Properties extends AbstractConfig
      * @param Property $property
      * @return boolean
      */
-    public function inject(Property $property) {
+    public function inject(Property $property)
+    {
         $name = $property->name;
-        if (array_key_exists($name, $this->data)) return false;
+        if (array_key_exists($name, $this->data)) {
+            return false;
+        }
         $this->data[$name] = $property;
         return true;
     }

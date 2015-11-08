@@ -16,13 +16,16 @@
  * @package Capsule
  */
 
-namespace Capsule\DataModel\Config;
+namespace Capsule\DataObject\Mysql\Config;
 
 use Capsule\DataStorage\DataStorage;
+
 /**
  * Storage.php
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
  */
-class Storage extends DataStorage {}
+class Storage extends DataStorage
+{
+}

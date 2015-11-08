@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\DataModel\Config;
+namespace Capsule\DataObject\Mysql\Config;
 
 /**
  * TabOrder.php
@@ -26,7 +26,13 @@ namespace Capsule\DataModel\Config;
  */
 class TabOrder extends AbstractConfig
 {
-    public function __construct(array $data = array()) {
+    /**
+     * Constructor
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = array())
+    {
         foreach ($data as $k => $v) {
             $v = is_scalar($v) ? $v : 0;
             $this->data[$k] = intval(preg_filter('/^-?\\d+$/', '$0', $v)) ?: null;
@@ -34,7 +40,13 @@ class TabOrder extends AbstractConfig
         asort($this->data);
     }
 
-    public function toString() {
+    /**
+     * Explicit conversion to string
+     *
+     * @return string
+     */
+    public function toString()
+    {
         return json_encode($this->data);
     }
 }

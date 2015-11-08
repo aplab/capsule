@@ -18,8 +18,7 @@
 
 namespace Capsule\DataObject\Mysql\Config;
 
-use Capsule\DataModel\Config\Properties\Properties;
-use Capsule\DataModel\Config\Table\Table;
+use Capsule\DataObject\Mysql\Config\Properties\Properties;
 
 /**
  * Config.php
@@ -35,22 +34,25 @@ class Config extends AbstractConfig
      *
      * @var string
      */
-    const PROPERTIES = 'properties',
-          TABLE = 'table',
-          TAB_ORDER = 'tabOrder';
+    const PROPERTIES = 'properties';
+
+    /**
+     * special properties
+     *
+     * @var string
+     */
+    const TAB_ORDER = 'tabOrder';
 
     /**
      * @param array $data
      * @return self
      */
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
         if (array_key_exists(self::PROPERTIES, $this->data)) {
             $this->data[self::PROPERTIES] =
                 new Properties($this->data[self::PROPERTIES]);
-        }
-        if (array_key_exists(self::TABLE, $this->data)) {
-            $this->data[self::TABLE] = new Table($this->data[self::TABLE]);
         }
         if (array_key_exists(self::TAB_ORDER, $this->data)) {
             $this->data[self::TAB_ORDER] = new TabOrder($this->data[self::TAB_ORDER]);
@@ -63,7 +65,8 @@ class Config extends AbstractConfig
      * @param void
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return '';
     }
 }

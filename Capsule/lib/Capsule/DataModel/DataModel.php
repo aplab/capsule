@@ -28,6 +28,7 @@ use Capsule\DataModel\Config\Config;
 use Capsule\Db\Db;
 use Capsule\Core\Fn;
 use PHP\Exceptionizer\Exceptionizer;
+
 /**
  * DataModel.php
  *
@@ -42,10 +43,10 @@ abstract class DataModel
      * @var string
      */
     const CONFIG_FILENAME = 'config.json';
-    
+
     /**
      * config
-     * 
+     *
      * @var string
      */
     const CONFIG = 'this';
@@ -61,7 +62,7 @@ abstract class DataModel
      * Общие свойства класса
      *
      * @var array
-    */
+     */
     protected static $common = array();
 
     /**
@@ -70,7 +71,7 @@ abstract class DataModel
      * первичному ключу, либо иначе, на усмотрение модуля
      *
      * @var array
-    */
+     */
     protected static $cache = array();
 
     /**
@@ -80,7 +81,9 @@ abstract class DataModel
      * @return self
      * @throws Exception
      */
-    protected function __construct() {}
+    protected function __construct()
+    {
+    }
 
     /**
      * Возвращает значение свойства. Если свойство не определено или
@@ -90,7 +93,8 @@ abstract class DataModel
      * @throws Exception
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         $getter = self::_getter($name);
         if ($getter) {
             return $this->$getter($name);
@@ -104,7 +108,7 @@ abstract class DataModel
         } else {
             $msg = 'Unknown property: ';
         }
-        $msg.= get_class($this) . '::$' . $name;
+        $msg .= get_class($this) . '::$' . $name;
         throw new Exception($msg);
     }
 
@@ -115,7 +119,8 @@ abstract class DataModel
      * @param  string
      * @return mixed
      */
-    public function get($name, $default = null) {
+    public function get($name, $default = null)
+    {
         $getter = self::_getter($name);
         if ($getter) {
             return $this->$getter($name);
@@ -134,7 +139,8 @@ abstract class DataModel
      * @throws Exception
      * @return self
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $properties = $this->config()->get('properties', new \stdClass);
         if (isset($properties->$name)) {
             $property = $this->config()->properties->$name;
@@ -162,7 +168,8 @@ abstract class DataModel
      * @param string|null $class
      * @return string
      */
-    final protected static function _classname($class = null) {
+    final protected static function _classname($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             $data = explode('\\', $class);
@@ -177,7 +184,8 @@ abstract class DataModel
      * @param void
      * @return Config
      */
-    final public static function config() {
+    final public static function config()
+    {
         $class = get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] =
@@ -185,14 +193,15 @@ abstract class DataModel
         }
         return self::$common[$class][__FUNCTION__];
     }
-    
+
     /**
      * Возвращает имя класса
      *
      * @param void
      * @return Config
      */
-    final public static function _class() {
+    final public static function _class()
+    {
         return get_called_class();
     }
 
@@ -202,12 +211,13 @@ abstract class DataModel
      * @param string|null $class
      * @return array
      */
-    protected static function _loadConfig($class = null) {
+    protected static function _loadConfig($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!Storage::getInstance()->exists($class)) {
             $data = self::_configData();
             // post processing values like "config.ololo.trololo"
-            array_walk_recursive($data, function(& $v, $k) use ($data, $class) {
+            array_walk_recursive($data, function (& $v, $k) use ($data, $class) {
                 $v = str_replace('__CLASS__', $class, $v);
                 if (!(strpos($v, '.'))) return;
                 $pcs = explode('.', $v);
@@ -232,21 +242,23 @@ abstract class DataModel
      * @param string $class
      * @return array
      */
-    public static function _configData($class = null) {
+    public static function _configData($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] = self::_buildConfigData($class);
         }
         return self::$common[$class][__FUNCTION__];
     }
-    
+
     /**
      * Собирает и возвращает данные конфига с учетом наследования.
      *
      * @param string|null $class
      * @return void
      */
-    protected static function _buildConfigData($class = null) {
+    protected static function _buildConfigData($class = null)
+    {
         $class = $class ?: get_called_class();
         $data = self::_configDataFragment($class);
         $parent_data = array();
@@ -268,13 +280,12 @@ abstract class DataModel
             if (!isset($diff['table']['name'])) {
                 // Если имя таблицы не задано вручную, то оно генерируется
                 // автоматически на основе полного имени класса.
-                $diff['table']['name'] =
-                    Inflector::getInstance()->getAssociatedTable($class);
+                $diff['table']['name'] = Inflector::getInstance()->getAssociatedTable($class);
             }
         }
         return array_replace_recursive($parent_data, $diff);
     }
-    
+
     /**
      * Возвращает только разницу в конфигурации по сравнению с прямым предком.
      * (Только то, что было переопределено)
@@ -282,7 +293,8 @@ abstract class DataModel
      * @param string|null $class
      * @return array
      */
-    public static function _configDataFragmentDiff($class = null) {
+    public static function _configDataFragmentDiff($class = null)
+    {
         $class = $class ?: get_called_class();
         $data = self::_configDataFragment($class);
         $parent_data = array();
@@ -293,7 +305,7 @@ abstract class DataModel
         // Получаем из фрагмента конфига только переопределенные параметры
         return Fn::array_diff_assoc_recursive($data, $parent_data);
     }
-    
+
     /**
      * Возвращает только разницу в конфигурации по сравнению с прямым предком.
      * (Только то, что было переопределено)
@@ -302,12 +314,13 @@ abstract class DataModel
      * @param string|null $class
      * @return string
      */
-    public static function _configDataFragmentDiffJson($class = null) {
+    public static function _configDataFragmentDiffJson($class = null)
+    {
         $class = $class ?: get_called_class();
-        $opt = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
+        $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         return json_encode(self::_configDataFragmentDiff($class), $opt);
     }
-    
+
     /**
      * Возвращает данные конфига с учетом наследования в формате json.
      *
@@ -315,10 +328,11 @@ abstract class DataModel
      * @throws Exception
      * @return string
      */
-    public static function _configDataJson($class = null) {
+    public static function _configDataJson($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
-            $opt = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
+            $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
             self::$common[$class][__FUNCTION__] = json_encode(self::_configData($class), $opt);
             if (JSON_ERROR_NONE !== json_last_error()) {
                 throw new Exception(Error::getLastError());
@@ -326,15 +340,16 @@ abstract class DataModel
         }
         return self::$common[$class][__FUNCTION__];
     }
-    
+
     /**
      * Сохраняет фрагмент конфигурационного файла
      *
      * @param array $data
      * @throws Exception
      */
-    protected static function _saveConfigFragment(array $data) {
-        $opt = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
+    protected static function _saveConfigFragment(array $data)
+    {
+        $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         $json = json_encode($data, $opt);
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new Exception(Error::getLastError());
@@ -355,8 +370,10 @@ abstract class DataModel
      *
      * @param string|null $class
      * @return array
+     * @throws \Capsule\DataModel\Exception
      */
-    protected static function _loadConfigDataFragment($class = null) {
+    protected static function _loadConfigDataFragment($class = null)
+    {
         $class = $class ?: get_called_class();
         $path = self::_configLocation($class);
         if (!file_exists($path)) {
@@ -389,21 +406,23 @@ abstract class DataModel
      * @param string|null $class
      * @return array
      */
-    public static function _configDataFragment($class = null) {
+    public static function _configDataFragment($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] = self::_loadConfigDataFragment($class);
         }
         return self::$common[$class][__FUNCTION__];
     }
-    
+
     /**
      * Returns path to module config
      *
      * @param string|null $class
      * @return string
      */
-    public static function _configLocation($class = null) {
+    public static function _configLocation($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] =
@@ -419,7 +438,8 @@ abstract class DataModel
      * @return boolean
      * @throws \Capsule\DataModel\Exception
      */
-    public static function _createConfigFile() {
+    public static function _createConfigFile()
+    {
         $path = self::_configLocation();
         if (file_exists($path)) {
             return true;
@@ -432,7 +452,7 @@ abstract class DataModel
                 throw new Exception($msg);
             }
         }
-        $opt = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
+        $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         $json = json_encode(array(), $opt);
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new Exception(Error::getLastError());
@@ -450,7 +470,8 @@ abstract class DataModel
      * @param  string $name
      * @return boolean
      */
-    public function __isset($name) {
+    public function __isset($name)
+    {
         $method = 'isset' . ucfirst($name);
         if (in_array($method, self::_listMethods())) {
             return $this->$method($name);
@@ -465,7 +486,8 @@ abstract class DataModel
      * @return void
      * @throws Exception
      */
-    public function __unset($name) {
+    public function __unset($name)
+    {
         unset($this->data[$name]);
     }
 
@@ -475,7 +497,8 @@ abstract class DataModel
      * @param string|null $class
      * @return ReflectionClass
      */
-    final protected static function _reflectionClass($class = null) {
+    final protected static function _reflectionClass($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] = new ReflectionClass($class);
@@ -489,11 +512,12 @@ abstract class DataModel
      * @param string|null $class
      * @return string
      */
-    final protected static function _rootDir($class = null) {
+    final protected static function _rootDir($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] = str_replace('\\', '/',
-                    dirname(static::_reflectionClass($class)->getFileName()));
+                dirname(static::_reflectionClass($class)->getFileName()));
         }
         return self::$common[$class][__FUNCTION__];
     }
@@ -504,7 +528,8 @@ abstract class DataModel
      * @param string $class
      * @return array
      */
-    protected static function _listMethods($class = null) {
+    protected static function _listMethods($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             self::$common[$class][__FUNCTION__] = get_class_methods($class);
@@ -518,12 +543,13 @@ abstract class DataModel
      * @param string $name
      * @return string|false
      */
-    protected static function _getter($name) {
+    protected static function _getter($name)
+    {
         $class = get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__][$name])) {
             $getter = 'get' . ucfirst($name);
             self::$common[$class][__FUNCTION__][$name] =
-            in_array($getter, self::_listMethods()) ? $getter : false;
+                in_array($getter, self::_listMethods()) ? $getter : false;
         }
         return self::$common[$class][__FUNCTION__][$name];
     }
@@ -534,12 +560,13 @@ abstract class DataModel
      * @param string $name
      * @return string|false
      */
-    protected static function _setter($name) {
+    protected static function _setter($name)
+    {
         $class = get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__][$name])) {
             $setter = 'set' . ucfirst($name);
             self::$common[$class][__FUNCTION__][$name] =
-            in_array($setter, self::_listMethods()) ? $setter : false;
+                in_array($setter, self::_listMethods()) ? $setter : false;
         }
         return self::$common[$class][__FUNCTION__][$name];
     }
@@ -550,7 +577,8 @@ abstract class DataModel
      * @param string $class
      * @return array
      */
-    protected static function _supertypeHierarchy($class = null) {
+    protected static function _supertypeHierarchy($class = null)
+    {
         $class = $class ?: get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             $tmp = array();
@@ -577,7 +605,8 @@ abstract class DataModel
      * @param void
      * @return self
      */
-    public static function all() {
+    public static function all()
+    {
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`';
         return static::populate(Db::getInstance()->query($sql));
     }
@@ -588,40 +617,44 @@ abstract class DataModel
      * @param void
      * @return int
      */
-    public static function number() {
+    public static function number()
+    {
         $sql = 'SELECT COUNT(*) FROM `' . self::config()->table->name . '`';
         return Db::getInstance()->query($sql)->fetch_one();
     }
-    
+
     /**
      * Returns pages number
      *
-     * @param number $items_per_page
+     * @param int|number $items_per_page
      * @return array
      */
-    public static function pages($items_per_page = 10) {
+    public static function pages($items_per_page = 10)
+    {
         $c = self::number();
         if (!$c) {
             return array();
         }
         return range(1, ceil($c / $items_per_page));
     }
-    
+
     /**
      * @param void
      * @return string
      */
-    public static function get_called_class() {
+    public static function get_called_class()
+    {
         return get_called_class();
     }
-    
+
     /**
      * common key generator
-     * 
+     *
      * @param string $__FUNCTION__
      * @return string
      */
-    protected static function ck($__FUNCTION__ = null) {
+    protected static function ck($__FUNCTION__ = null)
+    {
         $c = get_called_class();
         $e = new Exceptionizer;
         if (is_null($__FUNCTION__)) {

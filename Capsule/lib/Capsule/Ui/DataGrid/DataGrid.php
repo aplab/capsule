@@ -24,6 +24,7 @@ use Capsule\Capsule;
 use Capsule\DataModel\Config\Properties\Column;
 use Capsule\I18n\I18n;
 use Capsule\Ui\DataGrid\Cell\Checkbox;
+
 /**
  * DataGrid.php
  *
@@ -44,21 +45,22 @@ class DataGrid
      * @var array
      */
     private $data = array(
-    	'defaultWidth' => 60,
+        'defaultWidth' => 60,
         'items' => array(),
         'columns' => array()
     );
-    
+
     /**
      * Getter
      *
      * @param string $name
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
     }
-    
+
     /**
      * Setter
      *
@@ -66,7 +68,8 @@ class DataGrid
      * @param mixed $value
      * @return self
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $setter = 'set' . ucfirst($name);
         if (in_array($setter, get_class_methods($this))) {
             $this->$setter($value, $name);
@@ -75,47 +78,51 @@ class DataGrid
         }
         return $this;
     }
-    
+
     /**
      * Disable set config directly
      *
      * @param mixed $value
      * @param string $name
      */
-    protected function setConfig($value, $name) {
+    protected function setConfig($value, $name)
+    {
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set columns directly
      *
      * @param mixed $value
      * @param string $name
      */
-    protected function setColumns($value, $name) {
+    protected function setColumns($value, $name)
+    {
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set items directly
      *
      * @param mixed $value
      * @param string $name
      */
-    protected function setItems($value, $name) {
+    protected function setItems($value, $name)
+    {
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
-    
+
     /**
      * Disable set instance name directly
      *
      * @param mixed $value
      * @param string $name
      */
-    protected function setInstanceName($value, $name) {
+    protected function setInstanceName($value, $name)
+    {
         $msg = I18n::t('Readonly property: ') . get_class($this) . '::$' . $name;
         throw new \RuntimeException($msg);
     }
@@ -126,10 +133,9 @@ class DataGrid
      *
      * @param string $instance_name
      * @param array $items
-     * @param Config $config
-     * @return self
      */
-    public function __construct($instance_name, array $items = array()) {
+    public function __construct($instance_name, array $items = array())
+    {
         $this->data['instanceName'] = $instance_name;
         if (empty($items)) {
             return;
@@ -137,7 +143,7 @@ class DataGrid
         $item = current($items);
         $this->data['class'] = get_class($item);
         $this->data['config'] = $item::config();
-        $this->data['items'] = array_filter($items, function($o) {
+        $this->data['items'] = array_filter($items, function ($o) {
             return $o instanceof DataModel;
         });
         $this->configure();
@@ -149,7 +155,8 @@ class DataGrid
      * @param void
      * @return void
      */
-    protected function configure() {
+    protected function configure()
+    {
         $properties = $this->config->properties;
         $tmp = array();
         $has_checkbox = false;
@@ -178,7 +185,7 @@ class DataGrid
                 }
             }
         }
-        usort ($tmp, function($a, $b) {
+        usort($tmp, function ($a, $b) {
             if ($a->order == $b->order) {
                 return 0;
             }

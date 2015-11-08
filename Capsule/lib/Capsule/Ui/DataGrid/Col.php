@@ -21,6 +21,7 @@ namespace Capsule\Ui\DataGrid;
 use Capsule\DataModel\Config\Config;
 use Capsule\DataModel\Config\Properties\Column;
 use Capsule\Core\Fn;
+
 /**
  * Col.php
  *
@@ -35,14 +36,14 @@ class Col
      * @var string
      */
     const DEFAULT_CELL_TYPE = 'Text';
-    
+
     /**
      * Internal data
      *
      * @var unknown
      */
     private $data = array();
-    
+
     /**
      * Constructor set up required properties
      *
@@ -50,7 +51,8 @@ class Col
      * @param Config $config
      * @param c $column
      */
-    public function __construct($property_name, Config $config, Column $column) {
+    public function __construct($property_name, Config $config, Column $column)
+    {
         if (!isset($config->properties)) {
             $msg = 'Config has no properties';
             throw new \InvalidArgumentException($msg);
@@ -73,12 +75,14 @@ class Col
         $cell_class = Fn::create_classname($this->type, $cell_ns);
         $this->data['cell'] = new $cell_class($this);
     }
-    
-    public function __get($name) {
+
+    public function __get($name)
+    {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
     }
-    
-    public function __set($name, $value) {
+
+    public function __set($name, $value)
+    {
         if (array_key_exists($name, $this->data)) {
             $msg = 'Readonly property';
             throw new \RuntimeException($msg);

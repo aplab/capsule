@@ -11,12 +11,22 @@ use Capsule\Capsule;
 use Capsule\Common\Path;
 use Capsule\Common\String;
 use Capsule\DataObject\Inflector;
+use Capsule\DataObject\Mysql\Config\Config;
+use Capsule\DataObject\Mysql\Config\Storage;
 use Capsule\Db\Db;
 use Capsule\Exception;
 use Capsule\Tools\Tools;
 
 abstract class DataObject
 {
+    /**
+     * config
+     * Внутри конфига можно ссылаться на его-же данные. Ссылка на ссылку не поддерживается.
+     *
+     * @var string
+     */
+    const CONFIG = 'this';
+
     /**
      * Filename config default (automatically generated)
      *
@@ -90,12 +100,12 @@ abstract class DataObject
      */
     final protected static function _reflectionClass()
     {
-        $class = get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
-        if (!isset(self::$common[$class][$f])) {
-            self::$common[$class][$f] = new \ReflectionClass($class);
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = new \ReflectionClass($c);
         }
-        return self::$common[$class][$f];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -106,13 +116,12 @@ abstract class DataObject
      */
     public static function _configLocation()
     {
-        $class = get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
-        if (!isset(self::$common[$class][$f])) {
-            self::$common[$class][$f] =
-                new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class);
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $c);
         }
-        return self::$common[$class][$f];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -123,12 +132,12 @@ abstract class DataObject
      */
     public static function _associatedTableName()
     {
-        $class = get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
-        if (!isset(self::$common[$class][$f])) {
-            self::$common[$class][$f] = Inflector::getInstance()->getAssociatedTable($class);
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = Inflector::getInstance()->getAssociatedTable($c);
         }
-        return self::$common[$class][$f];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -433,7 +442,6 @@ abstract class DataObject
         foreach ($data['columns'] as $column) {
             $property_name = $inflector->getAssociatedProperty($column->COLUMN_NAME);
             $tmp = array(
-                'name' => $property_name,
                 'title' => $column->COLUMN_COMMENT,
                 'description' => $column->COLUMN_COMMENT,
                 'help' => $column->COLUMN_COMMENT,
@@ -448,176 +456,150 @@ abstract class DataObject
 
 
             $tmp['validator'] = null;
-            $tmp['column'] = self::_buildConfigColumn($tmp);
-            $tmp['formElement'] = self::_buildConfigFormElement($tmp);
+            $tmp['column'] = array(
+                'c1' => array(
+                    'dataType' => $tmp['dataType'],
+                    'order' => 1000 * $tmp['ordinalPosition']
+                )
+            );
+            $tmp['formElement'] = array(
+                'c1' => array(
+                    'dataType' => $tmp['dataType'],
+                    'order' => 1000 * $tmp['ordinalPosition']
+                )
+            );
 
             $config_data['properties'][$property_name] = $tmp;
         }
 
-
-        return $config_data;
+        $config = new Config($config_data);
+        Tools::dump($config);
     }
 
     /**
-     * Создание массива данных для конфига столбца списка объектов
+     * Возвращает конфиг модуля
      *
-     * @param array $data
-     * @return array
+     * @param void
+     * @return Config
      */
-    protected static function _buildConfigColumn(array $data)
+    final public static function config()
     {
-        $type = $data['dataType'];
-        $class = get_called_class();
-        $method = __FUNCTION__ . ucfirst($type);
-        if (method_exists($class, $method)) {
-            return forward_static_call(array($class, $method), $data);
+        $c = get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = self::_loadConfig();
         }
-        return array();
+        return self::$common[$c][$f];
     }
 
     /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnTinyint(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 60,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnSmallint(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 80,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnMediumint(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 100,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnInt(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 120,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnInteger(array $data)
-    {
-        return self::_buildConfigColumnInt($data);
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnBigint(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 180,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnChar(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 200,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Text'
-            )
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected static function _buildConfigColumnVarchar(array $data)
-    {
-        return array(
-            'c1' => array(
-                'width' => 200,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Text'
-            )
-        );
-    }
-
-    /**
-     * Создание массива данных для конфига элементов формы
+     * Загружает файл конфигурации
      *
-     * @param array $data
+     * @param void
      * @return array
      */
-    protected static function _buildConfigFormElement(array $data)
+    protected static function _loadConfig()
     {
-        $type = $data['dataType'];
         $class = get_called_class();
-        $method = __FUNCTION__ . ucfirst($type);
-        if (method_exists($class, $method)) {
-            return forward_static_call(array($class, $method), $data);
+        if (!Storage::getInstance()->exists($class)) {
+            $data = self::_loadConfigData();
+            // post processing values like "config.ololo.trololo"
+            array_walk_recursive($data, function (& $v, $k) use ($data, $class) {
+                $v = str_replace('__CLASS__', $class, $v);
+                if (!(strpos($v, '.'))) {
+                    return;
+                }
+                $pcs = explode('.', $v);
+                $pcs = array_filter($pcs, 'trim');
+                if (sizeof($pcs) < 2) {
+                    return;
+                }
+                if (self::CONFIG !== array_shift($pcs)) {
+                    return;
+                }
+                $tmp = $data;
+                foreach ($pcs as $i) {
+                    if (!array_key_exists($i, $tmp)) {
+                        return;
+                    }
+                    $tmp = $tmp[$i];
+                }
+                $v = $tmp;
+            });
+            Storage::getInstance()->set($class, new Config($data));
         }
-        return array();
+        return Storage::getInstance()->get($class);
     }
 
     /**
-     * @param array $data
+     * Загружает файл конфигурации
+     *
+     * @param void
      * @return array
+     * @throws Exception
      */
-    protected static function _buildConfigFormElementTinyint(array $data)
+    protected static function _loadConfigData()
     {
-        return array(
-            'c1' => array(
-                'width' => 60,
-                'order' => 1000 * $data['ordinalPosition'],
-                'type' => 'Rtext'
-            )
-        );
+        $path = new Path(self::_configLocation(), self::FILENAME_CONFIG_USER);
+        Tools::dump($path);die;
+        if (!file_exists($path)) {
+            self::_createConfigFile();
+            return array();
+        }
+        $content = file_get_contents($path);
+        if (false === $content) {
+            $msg = 'Unable to read configuration file';
+            throw new Exception($msg);
+        }
+        $json = trim($content);
+        if (!strlen($json)) {
+            return array();
+        }
+        $data = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception(Error::getLastError() . ' ' . $path);
+        }
+        if (!is_array($data)) {
+            return array();
+        }
+        return $data;
+    }
+
+    /**
+     * Загружает конфигурационный файл модуля (фрагмент).
+     * Возвращает прочтенные данные или пустой массив, если файл отсутствует.
+     * WARNING! Файл никуда не кешируется и читается заново при каждом вызове.
+     * Используйте _configDataFragment вместо _loadConfigDataFragment везде, где
+     * это возможно.
+     *
+     * @param void
+     * @return array
+     * @throws Exception
+     */
+    protected static function _loadConfigDefaultData()
+    {
+        $class = get_called_class();
+        $path = new Path(self::_configLocation(), self::FILENAME_CONFIG_DEFAULT);
+        if (!file_exists($path)) {
+            self::_createConfigFile();
+            return array();
+        }
+        $content = file_get_contents($path);
+        if (false === $content) {
+            $msg = 'Unable to read configuration file';
+            throw new Exception($msg);
+        }
+        $json = trim($content);
+        if (!strlen($json)) {
+            return array();
+        }
+        $data = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception(Error::getLastError() . ' ' . $path);
+        }
+        if (!is_array($data)) {
+            return array();
+        }
+        return $data;
     }
 }

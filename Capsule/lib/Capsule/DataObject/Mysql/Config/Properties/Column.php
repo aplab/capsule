@@ -16,9 +16,12 @@
  * @package Capsule
  */
 
-namespace Capsule\DataModel\Config\Properties;
+namespace Capsule\DataObject\Mysql\Config\Properties;
 
-use Capsule\DataModel\Config\AbstractConfig;
+use Capsule\DataObject\Mysql\Config\AbstractConfig;
+use Capsule\Exception;
+use Capsule\Tools\Tools;
+
 
 /**
  * Column.php
@@ -27,16 +30,39 @@ use Capsule\DataModel\Config\AbstractConfig;
  * @author Alexander Polyanin <polyanin@gmail.com>
  * @property int $width Ширина колонки
  * @property int $order Порядок колонки
+ * @property string $type Тип колонки необязательное значение, ставится по умолчанию значение Text
  */
 class Column extends AbstractConfig
 {
+    /**
+     * Special property
+     *
+     * @param string
+     */
+    const DATA_TYPE = 'dataType';
+
+    /**
+     * @param array $data
+     * @throws \Exception
+     */
+    public function __construct(array $data)
+    {
+        parent::__construct($data);
+        // Если передано свойство dataType, то ищем готовый набор для этого типа данных
+        if (array_key_exists(self::DATA_TYPE, $this->data)) {
+            $this->data = array_replace($this->initDataType($this->data[self::DATA_TYPE]), $this->data);
+            unset($this->data[self::DATA_TYPE]);
+        }
+    }
+
     /**
      * explicit conversion to string
      *
      * @param void
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return $this->width;
     }
 
@@ -46,10 +72,11 @@ class Column extends AbstractConfig
      * @param string $name
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
     }
-    
+
     /**
      * Setter
      *
@@ -57,7 +84,8 @@ class Column extends AbstractConfig
      * @param mixed $value
      * @return self
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $setter = 'set' . ucfirst($name);
         if (in_array($setter, get_class_methods($this))) {
             $this->$setter($value, $name);
@@ -66,7 +94,7 @@ class Column extends AbstractConfig
         }
         return $this;
     }
-    
+
     /**
      * Set width
      *
@@ -75,7 +103,8 @@ class Column extends AbstractConfig
      * @throws \InvalidArgumentException
      * @return \Capsule\DataModel\Config\Properties\Column
      */
-    protected function setWidth($value, $name) {
+    protected function setWidth($value, $name)
+    {
         if (!$value) {
             $this->data[$name] = 0;
             return $this;
@@ -86,5 +115,58 @@ class Column extends AbstractConfig
         }
         $msg = 'Wrong width value';
         throw new \InvalidArgumentException($msg);
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     * @throws Exception
+     */
+    protected function initDataType($type)
+    {
+        switch ($type) {
+            case 'tinyint' :
+                return array(
+                    'width' => 60,
+                    'type' => 'Rtext'
+                );
+            case 'smallint' :
+                return array(
+                    'width' => 80,
+                    'type' => 'Rtext'
+                );
+            case 'mediumint' :
+                return array(
+                    'width' => 100,
+                    'type' => 'Rtext'
+                );
+            case 'int' :
+                return array(
+                    'width' => 120,
+                    'type' => 'Rtext'
+                );
+            case 'integer' :
+                return array(
+                    'width' => 120,
+                    'type' => 'Rtext'
+                );
+            case 'bigint' :
+                return array(
+                    'width' => 180,
+                    'type' => 'Rtext'
+                );
+            case 'char' :
+                return array(
+                    'width' => 200,
+                    'type' => 'Text'
+                );
+            case 'varchar' :
+                return array(
+                    'width' => 200,
+                    'type' => 'Text'
+                );
+            default :
+                throw new Exception('Unsupported data type');
+        }
     }
 }
