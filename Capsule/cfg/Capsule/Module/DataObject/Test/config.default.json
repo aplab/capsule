@@ -1,0 +1,139 @@
+{
+    "name": "Capsule module data object test",
+    "title": "Тестовый объект!",
+    "description": null,
+    "help": null,
+    "comment": null,
+    "label": null,
+    "properties": {
+        "id": {
+            "title": "Уникальный идентификатор",
+            "description": "Уникальный идентификатор",
+            "help": "Уникальный идентификатор",
+            "comment": "Уникальный идентификатор",
+            "label": "Уникальный идентификатор",
+            "tableCatalog": "def",
+            "tableSchema": "capsule1",
+            "tableName": "capsule_module_data_object_test",
+            "columnName": "id",
+            "ordinalPosition": "1",
+            "columnDefault": null,
+            "isNullable": false,
+            "dataType": "smallint",
+            "characterMaximumLength": null,
+            "characterOctetLength": null,
+            "numericPrecision": "5",
+            "numericScale": "0",
+            "datetimePrecision": null,
+            "characterSetName": null,
+            "collationName": null,
+            "columnType": "smallint(5) unsigned",
+            "columnKey": "PRI",
+            "extra": "auto_increment",
+            "privileges": "select,insert,update,references",
+            "columnComment": "Уникальный идентификатор",
+            "validator": null,
+            "column": {
+                "c1": {
+                    "width": 80,
+                    "type": "Rtext",
+                    "order": 1000
+                }
+            },
+            "formElement": {
+                "c1": {
+                    "type": "Rtext",
+                    "tab": "General",
+                    "order": 1000
+                }
+            },
+            "name": "id"
+        },
+        "name": {
+            "title": "Наименование",
+            "description": "Наименование",
+            "help": "Наименование",
+            "comment": "Наименование",
+            "label": "Наименование",
+            "tableCatalog": "def",
+            "tableSchema": "capsule1",
+            "tableName": "capsule_module_data_object_test",
+            "columnName": "name",
+            "ordinalPosition": "2",
+            "columnDefault": null,
+            "isNullable": false,
+            "dataType": "varchar",
+            "characterMaximumLength": "255",
+            "characterOctetLength": "765",
+            "numericPrecision": null,
+            "numericScale": null,
+            "datetimePrecision": null,
+            "characterSetName": "utf8",
+            "collationName": "utf8_general_ci",
+            "columnType": "varchar(255)",
+            "columnKey": "",
+            "extra": "",
+            "privileges": "select,insert,update,references",
+            "columnComment": "Наименование",
+            "validator": null,
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "type": "Text",
+                    "order": 2000
+                }
+            },
+            "formElement": {
+                "c1": {
+                    "type": "Text",
+                    "tab": "General",
+                    "order": 2000
+                }
+            },
+            "name": "name"
+        },
+        "sectionId": {
+            "title": "Рубрика",
+            "description": "Рубрика",
+            "help": "Рубрика",
+            "comment": "Рубрика",
+            "label": "Рубрика",
+            "tableCatalog": "def",
+            "tableSchema": "capsule1",
+            "tableName": "capsule_module_data_object_test",
+            "columnName": "section_id",
+            "ordinalPosition": "3",
+            "columnDefault": null,
+            "isNullable": false,
+            "dataType": "varchar",
+            "characterMaximumLength": "255",
+            "characterOctetLength": "765",
+            "numericPrecision": null,
+            "numericScale": null,
+            "datetimePrecision": null,
+            "characterSetName": "utf8",
+            "collationName": "utf8_general_ci",
+            "columnType": "varchar(255)",
+            "columnKey": "",
+            "extra": "",
+            "privileges": "select,insert,update,references",
+            "columnComment": "Рубрика",
+            "validator": null,
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "type": "Text",
+                    "order": 3000
+                }
+            },
+            "formElement": {
+                "c1": {
+                    "type": "Text",
+                    "tab": "General",
+                    "order": 3000
+                }
+            },
+            "name": "sectionId"
+        }
+    }
+}

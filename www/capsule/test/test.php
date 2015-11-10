@@ -1,7 +1,6 @@
 <?php include '../../../Capsule/lib/Capsule/Capsule.php';
 use Capsule\Capsule;
 use Capsule\User\Auth;
-use Capsule\Module\TreeMenu\Punct;
 header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', true);
@@ -54,10 +53,15 @@ $(document).ready(function() {
 });
 </script>
 <?php
+
+
+
+
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_installTable());
 \Capsule\DataObject\Mysql\Config\Storage::getInstance()->destroy();
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config());
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_reCreateTable());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfig());
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfigDefault());
 \Capsule\Tools\Tools::dump(\Capsule\Reference\Named::_configDataJson());
 
 

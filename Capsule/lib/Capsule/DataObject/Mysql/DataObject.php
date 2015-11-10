@@ -419,64 +419,6 @@ abstract class DataObject
     }
 
     /**
-     * Создание массива данных для конфига
-     *
-     * @param void
-     * @return array
-     * @throws Exception
-     */
-    public static function _buildConfig()
-    {
-        $inflector = Inflector::getInstance();
-        $data = self::_loadInformationSchema();
-        $config_data = array(
-            'name' => String::ucfirst(preg_replace('/[^a-z0-9]/isu', ' ', $data['table']->TABLE_NAME)),
-            'title' => $data['table']->TABLE_COMMENT,
-            'description' => null,
-            'help' => null,
-            'comment' => null,
-            'label' => null,
-            'properties' => array()
-        );
-
-        foreach ($data['columns'] as $column) {
-            $property_name = $inflector->getAssociatedProperty($column->COLUMN_NAME);
-            $tmp = array(
-                'title' => $column->COLUMN_COMMENT,
-                'description' => $column->COLUMN_COMMENT,
-                'help' => $column->COLUMN_COMMENT,
-                'comment' => $column->COLUMN_COMMENT,
-                'label' => $column->COLUMN_COMMENT,
-            );
-
-            foreach ($column as $k => $v) {
-                $tmp[$inflector->getAssociatedProperty(strtolower($k))] = $v;
-            }
-            $tmp['isNullable'] = ('YES' === strtolower($tmp['isNullable'])) ? true : false;
-
-
-            $tmp['validator'] = null;
-            $tmp['column'] = array(
-                'c1' => array(
-                    'dataType' => $tmp['dataType'],
-                    'order' => 1000 * $tmp['ordinalPosition']
-                )
-            );
-            $tmp['formElement'] = array(
-                'c1' => array(
-                    'dataType' => $tmp['dataType'],
-                    'order' => 1000 * $tmp['ordinalPosition']
-                )
-            );
-
-            $config_data['properties'][$property_name] = $tmp;
-        }
-
-        $config = new Config($config_data);
-        Tools::dump($config);
-    }
-
-    /**
      * Возвращает конфиг модуля
      *
      * @param void
@@ -493,7 +435,7 @@ abstract class DataObject
     }
 
     /**
-     * Загружает файл конфигурации
+     * Загружает файл конфигурации из кэша
      *
      * @param void
      * @return array
@@ -503,7 +445,7 @@ abstract class DataObject
         $class = get_called_class();
         if (!Storage::getInstance()->exists($class)) {
             $data = self::_loadConfigData();
-            // post processing values like "config.ololo.trololo"
+            // post processing values like "config.some_value.another_value"
             array_walk_recursive($data, function (& $v, $k) use ($data, $class) {
                 $v = str_replace('__CLASS__', $class, $v);
                 if (!(strpos($v, '.'))) {
@@ -541,7 +483,6 @@ abstract class DataObject
     protected static function _loadConfigData()
     {
         $path = new Path(self::_configLocation(), self::FILENAME_CONFIG_USER);
-        Tools::dump($path);die;
         if (!file_exists($path)) {
             self::_createConfigFile();
             return array();
@@ -601,5 +542,126 @@ abstract class DataObject
             return array();
         }
         return $data;
+    }
+
+    /**
+     * Создание массива данных для конфига
+     *
+     * @param void
+     * @return array
+     * @throws Exception
+     */
+    public static function _buildConfigDefault()
+    {
+        $inflector = Inflector::getInstance();
+        $data = self::_loadInformationSchema();
+        $config_data = array(
+            'name' => String::ucfirst(preg_replace('/[^a-z0-9]/isu', ' ', $data['table']->TABLE_NAME)),
+            'title' => $data['table']->TABLE_COMMENT,
+            'description' => null,
+            'help' => null,
+            'comment' => null,
+            'label' => null,
+            'properties' => array()
+        );
+        foreach ($data['columns'] as $column) {
+            $property_name = $inflector->getAssociatedProperty($column->COLUMN_NAME);
+            $tmp = array(
+                'title' => $column->COLUMN_COMMENT,
+                'description' => $column->COLUMN_COMMENT,
+                'help' => $column->COLUMN_COMMENT,
+                'comment' => $column->COLUMN_COMMENT,
+                'label' => $column->COLUMN_COMMENT,
+            );
+            foreach ($column as $k => $v) {
+                $tmp[$inflector->getAssociatedProperty(strtolower($k))] = $v;
+            }
+            $tmp['isNullable'] = ('YES' === strtolower($tmp['isNullable'])) ? true : false;
+            $tmp['validator'] = null;
+            $tmp['column'] = array(
+                'c1' => array(
+                    'dataType' => $tmp['dataType'],
+                    'order' => 1000 * $tmp['ordinalPosition']
+                )
+            );
+            $tmp['formElement'] = array(
+                'c1' => array(
+                    'dataType' => $tmp['dataType'],
+                    'order' => 1000 * $tmp['ordinalPosition']
+                )
+            );
+
+            $config_data['properties'][$property_name] = $tmp;
+        }
+        $config = new Config($config_data);
+        $json = $config->toJson();
+        $path = self::_createFileConfigDefault();
+        $bytes_written = file_put_contents($path, $json, LOCK_EX);
+        if (false === $bytes_written) {
+            throw new Exception('Unable to write file config default: ' . $path);
+        }
+        return $json;
+    }
+
+    /**
+     * Установка таблицы
+     *
+     * @throws Exception
+     * @param void
+     */
+    public static function _installTable()
+    {
+        self::_reCreateTable();
+        $db = Db::getInstance();
+        $default_schema = $db->config->dbname;
+        $table_name = self::_associatedTableName();
+        $sql = 'SHOW CREATE TABLE `' . $default_schema . '`.`' . $table_name . '`';
+        $data = $db->query($sql)->fetch_assoc();
+        if (!$data) {
+            throw new Exception('Unable to retrieve create table script');
+        }
+        $script = array_pop($data);
+        $reg = '/^(\\s?CREATE(?:\\s+TEMPORARY)?\\s+TABLE(?:\\s+IF\\s+NOT\\s+EXISTS)?\\s?)([\'"`]?' .
+            preg_quote($table_name) . '[\'"`]?)(.*)/isu';
+        $script = preg_replace($reg, '$1`' . self::TABLE_NAME_PLACEHOLDER . '`$3', $script);
+        $path = self::_createFileSqlCreateTableDefault();
+        $bytes_written = file_put_contents($path, $script, LOCK_EX);
+        if (false === $bytes_written) {
+            throw new Exception('Unable to write file sql create table default: ' . $path);
+        }
+        if (self::_associatedTableEmpty()) {
+            self::_initSql();
+        }
+    }
+
+    /**
+     * Выполнить init.sql если таблица пуста
+     *
+     * @param void
+     * @return bool
+     * @throws Exception
+     */
+    public static function _initSql()
+    {
+        $db = Db::getInstance();
+        $default_schema = $db->config->dbname;
+        $current_schema = $db->selectSchema();
+        if ($default_schema !== $current_schema) {
+            throw new Exception('Current schema is not equal default schema');
+        }
+        $table_name = self::_associatedTableName();
+        if (!self::_associatedTableExists()) {
+            throw new Exception('Associated table not found: ' . $default_schema . '.' . $table_name);
+        }
+        if (!self::_associatedTableEmpty()) {
+            return false;
+        }
+        $path = self::_createFileSqlInitScript();
+        $sql_code = file_get_contents($path);
+        $sql_list = $db->splitMultiQuery($sql_code);
+        foreach ($sql_list as $sql) {
+            $sql = preg_replace('/[\'"`]?' . preg_quote(self::TABLE_NAME_PLACEHOLDER) . '[\'"`]?/', '`' . $table_name . '`', $sql);
+            $db->query($sql);
+        }
     }
 }
