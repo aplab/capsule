@@ -214,12 +214,22 @@ class Db extends mysqli
 
     /**
      * mysql_real_escape_string wrapper advanced
+     * It handles multi-dimensional arrays recursively.
      *
-     * @param string $string
-     * @return string|false
+     * @param string|array $string
+     * @param bool $quote
+     * @param bool $double
+     * @return false|string
      */
     public function qt($string, $quote = true, $double = true)
     {
+        if (is_array($string)) {
+            $db = $this;
+            array_walk($string, function (&$v) use ($db) {
+                $v = $db->qt($v);
+            });
+            return $string;
+        }
         if ($quote) {
             if ($double) {
                 return '"' . $this->real_escape_string($string) . '"';
@@ -231,20 +241,21 @@ class Db extends mysqli
 
     /**
      * Помещает значение в обратные кавычки (backquotes)
-     * Не обрабатывает многомерные массивы рекурсивно.
+     * Обрабатывает многомерные массивы рекурсивно.
      *
      * @param string|array $value
      * @return array|string
      */
     public function bq($value)
     {
-        if (!is_array($value)) {
-            return '`' . $value . '`';
+        if (is_array($value)) {
+            $db = $this;
+            array_walk($value, function (&$v) use ($db) {
+                $v = $db->bq($v);
+            });
+            return $value;
         }
-        array_walk($value, function (&$v, $k) {
-            return '`' . $v . '`';
-        });
-        return $value;
+        return '`' . $value . '`';
     }
 
     /**
