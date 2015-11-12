@@ -166,7 +166,8 @@ class Param implements Iterator, Countable
      * unset() overloading
      *
      * @param  string $name
-     * @return boolean
+     * @return bool
+     * @throws Exception
      */
     public function __unset($name) {
         if ($this->lock && array_key_exists($name, $this->data)) {

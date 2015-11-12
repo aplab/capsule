@@ -435,7 +435,7 @@ abstract class DataObject
     }
 
     /**
-     * Загружает файл конфигурации из кэша
+     * Загружает объект конфигурации из файлового кэша
      *
      * @param void
      * @return array
@@ -507,11 +507,8 @@ abstract class DataObject
     }
 
     /**
-     * Загружает конфигурационный файл модуля (фрагмент).
+     * Загружает конфигурационный файл модуля.
      * Возвращает прочтенные данные или пустой массив, если файл отсутствует.
-     * WARNING! Файл никуда не кешируется и читается заново при каждом вызове.
-     * Используйте _configDataFragment вместо _loadConfigDataFragment везде, где
-     * это возможно.
      *
      * @param void
      * @return array
@@ -611,7 +608,9 @@ abstract class DataObject
      */
     public static function _installTable()
     {
-        self::_reCreateTable();
+        if (self::_associatedTableEmpty()) {
+            self::_reCreateTable();
+        }
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
         $table_name = self::_associatedTableName();

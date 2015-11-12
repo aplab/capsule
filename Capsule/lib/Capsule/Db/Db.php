@@ -24,7 +24,6 @@ use Capsule\Core\Fn;
 use Capsule\DataStorage\DataStorage;
 use Capsule\Common\Path;
 use Capsule\DataStruct\Loader;
-use Capsule\DataStruct\Config;
 use Capsule\Capsule;
 use Capsule\Exception;
 use Capsule\Loader\GeSHi;
@@ -34,6 +33,7 @@ use Capsule\Loader\GeSHi;
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
+ * @property Config $config
  */
 class Db extends mysqli
 {
@@ -76,7 +76,7 @@ class Db extends mysqli
      * возвращать соединение по умолчанию
      *
      * @param null $name
-     * @return Db
+     * @return $this
      */
     public static function getInstance($name = null)
     {
@@ -311,7 +311,7 @@ class Db extends mysqli
      * Возвращает конфиг текущего соединения
      *
      * @param void
-     * @return DbConfigData
+     * @return Config
      */
     protected function getConfig()
     {
@@ -384,6 +384,11 @@ class Db extends mysqli
         return !$this->query($sql)->num_rows;
     }
 
+    /**
+     * @param $table
+     * @param bool|false $post_check
+     * @throws Exception
+     */
     public function drop($table, $post_check = false)
     {
         $this->query('DROP TABLE `' . $this->es($table) . '`');
@@ -393,6 +398,11 @@ class Db extends mysqli
         }
     }
 
+    /**
+     * @param $table
+     * @param bool|false $post_check
+     * @throws Exception
+     */
     public function dropIfExists($table, $post_check = false)
     {
         $this->query('DROP TABLE IF EXISTS `' . $this->es($table) . '`');

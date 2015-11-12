@@ -40,10 +40,9 @@ abstract class SingleImmutable extends Singleton
 
     /**
      * Read data from file
-     *
-     * @param string $datasource
-     * @throws Exception
      * @return array
+     * @throws Exception
+     * @param void
      */
     protected function loadData() {
         $class = get_class($this);
@@ -112,8 +111,7 @@ abstract class SingleImmutable extends Singleton
      *
      * @param string $name
      * @param mixed $value
-     * @throws ConfigException
-     * @return void
+     * @throws Exception
      */
     public function __set($name, $value) {
         if (array_key_exists($name, $this->data)) {

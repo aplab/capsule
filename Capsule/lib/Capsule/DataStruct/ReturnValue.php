@@ -167,7 +167,8 @@ class ReturnValue implements Iterator, Countable
      * unset() overloading
      *
      * @param  string $name
-     * @return boolean
+     * @return bool
+     * @throws Exception
      */
     public function __unset($name) {
         if ($this->lock && array_key_exists($name, $this->data)) {
@@ -187,12 +188,13 @@ class ReturnValue implements Iterator, Countable
     public function toArray() {
         return $this->data;
     }
-    
+
     /**
      * Return an json of the stored data.
      *
      * @param void
      * @return array
+     * @throws Exception
      */
     public function toJson($options = null) {
         if (is_null($options)) {

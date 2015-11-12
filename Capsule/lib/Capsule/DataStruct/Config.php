@@ -42,7 +42,8 @@ class Config implements Iterator, Countable
      * @see    Countable::count()
      * @return integer
      */
-    public function count() {
+    public function count()
+    {
         return sizeof($this->data);
     }
 
@@ -52,7 +53,8 @@ class Config implements Iterator, Countable
      * @see    Iterator::current()
      * @return mixed
      */
-    public function current() {
+    public function current()
+    {
         return current($this->data);
     }
 
@@ -62,7 +64,8 @@ class Config implements Iterator, Countable
      * @see    Iterator::key()
      * @return mixed
      */
-    public function key() {
+    public function key()
+    {
         return key($this->data);
     }
 
@@ -72,7 +75,8 @@ class Config implements Iterator, Countable
      * @see    Iterator::next()
      * @return void
      */
-    public function next() {
+    public function next()
+    {
         next($this->data);
     }
 
@@ -82,7 +86,8 @@ class Config implements Iterator, Countable
      * @see    Iterator::rewind()
      * @return void
      */
-    public function rewind() {
+    public function rewind()
+    {
         reset($this->data);
     }
 
@@ -92,7 +97,8 @@ class Config implements Iterator, Countable
      * @see    Iterator::valid()
      * @return boolean
      */
-    public function valid() {
+    public function valid()
+    {
         return ($this->key() !== null);
     }
 
@@ -100,10 +106,11 @@ class Config implements Iterator, Countable
      * @param array $data
      * @return self
      */
-    public function __construct(array $data = array()) {
+    public function __construct(array $data = array())
+    {
         foreach ($data as $property_name => $property_value) {
             if (is_array($property_value)) {
-                $this->data[$property_name] = new self($property_value);
+                $this->data[$property_name] = new static($property_value);
             } else {
                 $this->data[$property_name] = $property_value;
             }
@@ -117,7 +124,8 @@ class Config implements Iterator, Countable
      * @param mixed $default
      * @return mixed
      */
-    public function get($name, $default = null) {
+    public function get($name, $default = null)
+    {
         return array_key_exists($name, $this->data) ? $this->data[$name] : $default;
     }
 
@@ -128,7 +136,8 @@ class Config implements Iterator, Countable
      * @throws Exception
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
@@ -144,7 +153,8 @@ class Config implements Iterator, Countable
      * @throws Exception
      * @return void
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         if (array_key_exists($name, $this->data)) {
             $msg = 'Readonly property: ' . get_class($this) . '::$' . $name;
         } else {
@@ -159,7 +169,8 @@ class Config implements Iterator, Countable
      * @param  string $name
      * @return boolean
      */
-    public function __isset($name) {
+    public function __isset($name)
+    {
         return array_key_exists($name, $this->data) || property_exists($this, $name);
     }
 
@@ -169,7 +180,8 @@ class Config implements Iterator, Countable
      * @param void
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toString();
     }
 
@@ -179,7 +191,8 @@ class Config implements Iterator, Countable
      * @param void
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $ret = array();
         foreach ($this->data as $key => $value) {
             if ($value instanceof self) {

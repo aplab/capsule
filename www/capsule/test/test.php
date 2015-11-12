@@ -53,16 +53,12 @@ $(document).ready(function() {
 });
 </script>
 <?php
-$db = \Capsule\Db\Db::getInstance();
-$a = array('olo%lo','tr"ol\'olo', array('ja\\ja','sana'));
-\Capsule\Tools\Tools::dump($db->bq($a));
-\Capsule\Tools\Tools::dump($db->qt($a));
+
 
 
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_installTable());
 \Capsule\DataObject\Mysql\Config\Storage::getInstance()->destroy();
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_reCreateTable());
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfigDefault());
 \Capsule\Tools\Tools::dump(\Capsule\Reference\Named::_configDataJson());
 
