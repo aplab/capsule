@@ -46,8 +46,7 @@
                     "tab": "General",
                     "order": 1000
                 }
-            },
-            "name": "id"
+            }
         },
         "name": {
             "title": "Наименование",
@@ -89,8 +88,7 @@
                     "tab": "General",
                     "order": 2000
                 }
-            },
-            "name": "name"
+            }
         },
         "sectionId": {
             "title": "Рубрика",
@@ -132,8 +130,7 @@
                     "tab": "General",
                     "order": 3000
                 }
-            },
-            "name": "sectionId"
+            }
         }
     }
 }

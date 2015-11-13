@@ -20,6 +20,7 @@ namespace Capsule\DataObject\Mysql\Config\Properties;
 use Capsule\Common\Filter;
 use Capsule\DataObject\Mysql\Config\AbstractConfig;
 use Capsule\Exception;
+use Capsule\Tools\Tools;
 use Capsule\Validator\Validator;
 
 /**
@@ -46,6 +47,8 @@ class Property extends AbstractConfig
     const VALIDATOR_DEFAULT_NS = '\\Capsule\\Validator';
 
     /**
+     * Constructor
+     *
      * @param array $data
      * @throws \Exception
      */
@@ -72,6 +75,12 @@ class Property extends AbstractConfig
         }
     }
 
+    /**
+     * Init column
+     *
+     * @param array $data
+     * @return void
+     */
     private function initColumn(array $data)
     {
         foreach ($data as $key => $data_item) {
@@ -85,6 +94,12 @@ class Property extends AbstractConfig
         }
     }
 
+    /**
+     * Init form element
+     *
+     * @param array $data
+     * @return void
+     */
     private function initFormElement(array $data)
     {
         foreach ($data as $key => $data_item) {
@@ -108,7 +123,7 @@ class Property extends AbstractConfig
     private static function initValidator($data)
     {
         if (!is_array($data)) {
-            return false;
+            return null;
         }
         if (!is_null(Filter::digit(join('', array_keys($data)), null))) {
             // Несколько валидаторов в виде индексного массива
@@ -140,5 +155,29 @@ class Property extends AbstractConfig
     public function toString()
     {
         return __CLASS__;
+    }
+
+    /**
+     * Return an associative array of the stored data.
+     *
+     * @param void
+     * @return array
+     */
+    public function toArray()
+    {
+        $ret = array();
+        $data = $this->data;
+        // Remove the dynamically generated field
+        unset($data['name']);
+        foreach ($data as $key => $value) {
+            if ($value instanceof self) {
+                $ret[$key] = $value->toArray();
+            } elseif (is_array($value)) {
+                $ret[$key] = $this->_extractArray($value);
+            } else {
+                $ret[$key] = $value;
+            }
+        }
+        return $ret;
     }
 }

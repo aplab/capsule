@@ -51,7 +51,7 @@ class Properties extends AbstractConfig
                 throw new \Exception($msg);
             }
             // Автоматически устанавливаем объекту свойство name
-            $property_data[self::PROPERTY_NAME] = $property_name;
+            $property_data = array_replace(array(self::PROPERTY_NAME => $property_name), $property_data);
             $this->data[$property_name] = new Property($property_data);
         }
     }

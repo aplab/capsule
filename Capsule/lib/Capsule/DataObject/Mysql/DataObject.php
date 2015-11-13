@@ -444,87 +444,66 @@ abstract class DataObject
     {
         $class = get_called_class();
         if (!Storage::getInstance()->exists($class)) {
-            $data = self::_loadConfigData();
-            // post processing values like "config.some_value.another_value"
-            array_walk_recursive($data, function (& $v, $k) use ($data, $class) {
-                $v = str_replace('__CLASS__', $class, $v);
-                if (!(strpos($v, '.'))) {
-                    return;
-                }
-                $pcs = explode('.', $v);
-                $pcs = array_filter($pcs, 'trim');
-                if (sizeof($pcs) < 2) {
-                    return;
-                }
-                if (self::CONFIG !== array_shift($pcs)) {
-                    return;
-                }
-                $tmp = $data;
-                foreach ($pcs as $i) {
-                    if (!array_key_exists($i, $tmp)) {
-                        return;
-                    }
-                    $tmp = $tmp[$i];
-                }
-                $v = $tmp;
-            });
-            Storage::getInstance()->set($class, new Config($data));
+            $config_default_data = self::_preprocessConfigData(self::_loadConfigData(self::FILENAME_CONFIG_DEFAULT));
+            $config_user_data = self::_preprocessConfigData(self::_loadConfigData(self::FILENAME_CONFIG_USER));
+            $config_data = array_replace_recursive($config_default_data, $config_user_data);
+            Storage::getInstance()->set($class, new Config($config_data));
         }
         return Storage::getInstance()->get($class);
     }
 
     /**
-     * Загружает файл конфигурации
+     * Post-processing values like __CLASS__, "config.some_value.another_value"
      *
-     * @param void
+     * @param array $data
      * @return array
-     * @throws Exception
      */
-    protected static function _loadConfigData()
+    protected static function _preprocessConfigData(array $data)
     {
-        $path = new Path(self::_configLocation(), self::FILENAME_CONFIG_USER);
-        if (!file_exists($path)) {
-            self::_createConfigFile();
-            return array();
-        }
-        $content = file_get_contents($path);
-        if (false === $content) {
-            $msg = 'Unable to read configuration file';
-            throw new Exception($msg);
-        }
-        $json = trim($content);
-        if (!strlen($json)) {
-            return array();
-        }
-        $data = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception(Error::getLastError() . ' ' . $path);
-        }
-        if (!is_array($data)) {
-            return array();
-        }
+        $class = get_called_class();
+        array_walk_recursive($data, function (& $v) use ($data, $class) {
+            if (false !== strpos($v, '__CLASS__')) {
+                $v = str_replace('__CLASS__', $class, $v);
+            }
+            if (!(strpos($v, '.'))) {
+                return;
+            }
+            $pcs = explode('.', $v);
+            $pcs = array_filter($pcs, 'trim');
+            if (sizeof($pcs) < 2) {
+                return;
+            }
+            if (self::CONFIG !== array_shift($pcs)) {
+                return;
+            }
+            $tmp = $data;
+            foreach ($pcs as $i) {
+                if (!array_key_exists($i, $tmp)) {
+                    return;
+                }
+                $tmp = $tmp[$i];
+            }
+            $v = $tmp;
+        });
         return $data;
     }
 
     /**
-     * Загружает конфигурационный файл модуля.
-     * Возвращает прочтенные данные или пустой массив, если файл отсутствует.
+     * Load config user|default data
      *
-     * @param void
+     * @param string $file
      * @return array
      * @throws Exception
      */
-    protected static function _loadConfigDefaultData()
+    protected static function _loadConfigData($file)
     {
-        $class = get_called_class();
-        $path = new Path(self::_configLocation(), self::FILENAME_CONFIG_DEFAULT);
+        $path = new Path(self::_configLocation(), $file);
         if (!file_exists($path)) {
-            self::_createConfigFile();
-            return array();
+            throw new Exception('File not found: Config user: ' . $path);
         }
         $content = file_get_contents($path);
         if (false === $content) {
-            $msg = 'Unable to read configuration file';
+            $msg = 'Unable to read configuration file: ' . $path;
             throw new Exception($msg);
         }
         $json = trim($content);
@@ -659,8 +638,20 @@ abstract class DataObject
         $sql_code = file_get_contents($path);
         $sql_list = $db->splitMultiQuery($sql_code);
         foreach ($sql_list as $sql) {
-            $sql = preg_replace('/[\'"`]?' . preg_quote(self::TABLE_NAME_PLACEHOLDER) . '[\'"`]?/', '`' . $table_name . '`', $sql);
+            $sql = preg_replace('/[\'"`]?' .
+                preg_quote(self::TABLE_NAME_PLACEHOLDER) . '[\'"`]?/', '`' . $table_name . '`', $sql);
             $db->query($sql);
         }
+    }
+
+    /**
+     * Install script
+     *
+     * @param void
+     * @return void
+     */
+    public static function _install()
+    {
+
     }
 }

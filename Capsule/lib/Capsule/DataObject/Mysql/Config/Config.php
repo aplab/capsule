@@ -51,8 +51,7 @@ class Config extends AbstractConfig
     {
         parent::__construct($data);
         if (array_key_exists(self::PROPERTIES, $this->data)) {
-            $this->data[self::PROPERTIES] =
-                new Properties($this->data[self::PROPERTIES]);
+            $this->data[self::PROPERTIES] = new Properties($this->data[self::PROPERTIES]);
         }
         if (array_key_exists(self::TAB_ORDER, $this->data)) {
             $this->data[self::TAB_ORDER] = new TabOrder($this->data[self::TAB_ORDER]);

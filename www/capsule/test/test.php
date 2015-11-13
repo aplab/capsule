@@ -55,13 +55,11 @@ $(document).ready(function() {
 <?php
 
 
-
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_installTable());
 \Capsule\DataObject\Mysql\Config\Storage::getInstance()->destroy();
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config());
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfigDefault());
-\Capsule\Tools\Tools::dump(\Capsule\Reference\Named::_configDataJson());
-
+\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config()->properties->id->name);
+//\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::_buildConfigDefault());
+//\Capsule\Tools\Tools::dump(\Capsule\Reference\Named::_configDataJson());
+\Capsule\Tools\Tools::dump($app->worktime);
 
 ?>
 </body>

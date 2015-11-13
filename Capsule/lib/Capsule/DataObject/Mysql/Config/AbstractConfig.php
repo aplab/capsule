@@ -196,7 +196,8 @@ abstract class AbstractConfig implements Iterator, Countable
     public function toArray()
     {
         $ret = array();
-        foreach ($this->data as $key => $value) {
+        $data = $this->data;
+        foreach ($data as $key => $value) {
             if ($value instanceof self) {
                 $ret[$key] = $value->toArray();
             } elseif (is_array($value)) {
