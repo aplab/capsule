@@ -20,6 +20,7 @@ namespace Capsule\Model;
 
 use Capsule\Common\Filter;
 use Capsule\Db\Db;
+
 /**
  * IdBased.php
  *
@@ -34,14 +35,15 @@ class IdBased extends SingleKey
      * @var string
      */
     protected static $key = 'id';
-    
+
     /**
      * Is key
      *
      * @param string $key
      * @return boolean
      */
-    public static function isKey($key) {
+    public static function isKey($key)
+    {
         return static::$key === $key;
     }
 
@@ -51,17 +53,19 @@ class IdBased extends SingleKey
      * @param int $id
      * @return self
      */
-    public static function getElementById($id) {
+    public static function getElementById($id)
+    {
         return self::id($id);
     }
-    
+
     /**
      * Возвращает объект по его идентификатору, если такой есть в кэше
      *
      * @param int $id
      * @return self
      */
-    public static function id($id) {
+    public static function id($id)
+    {
         $id = Filter::id($id);
         if (!$id) {
             return null;
@@ -72,22 +76,26 @@ class IdBased extends SingleKey
     /**
      * Обрабатывает (запрещает) изменение свойства id
      *
-     * @param string
-     * @return self
+     * @param $value
+     * @return IdBased
+     * @throws Exception
+     * @internal param $string
      */
-    final protected function setId($value) {
+    final protected function setId($value)
+    {
         $msg = 'Cannot set readonly property: ' . get_class($this) . '::$id';
         throw new Exception($msg);
     }
-    
+
     /**
      * Удаляет данные объекта из таблицы.
      * Возвращает количество затронутых строк.
-     * 
+     *
      * @param int $id
      * @return int
      */
-    public static function del($id) {
+    public static function del($id)
+    {
         $tmp = $id;
         if (!is_array($tmp)) {
             $tmp = array($tmp);

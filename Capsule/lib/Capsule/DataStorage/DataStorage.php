@@ -36,16 +36,17 @@ class DataStorage extends Singleton
      * @var array
      */
     protected static $registry = array();
-    
+
     /**
      * Возвращает массив производных объектов для групповых операций
      *
      * @return array
      */
-    public static function getInstances() {
+    public static function getInstances()
+    {
         return self::$registry;
     }
-    
+
     /**
      * Current class name
      *
@@ -73,7 +74,8 @@ class DataStorage extends Singleton
      * @param void
      * @return self
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         self::$registry[] = $this;
         $this->initPath();
         if (Capsule::$dev) {
@@ -85,7 +87,8 @@ class DataStorage extends Singleton
      * @param void
      * @return void
      */
-    protected function initPath() {
+    protected function initPath()
+    {
         $class = get_class($this);
         $path = Capsule::getInstance()->var;
         $path = new Path($path, 'lib', $class);
@@ -98,7 +101,8 @@ class DataStorage extends Singleton
      * @param string $name
      * @return NULL|mixed
      */
-    public function get($name) {
+    public function get($name)
+    {
         $path = $this->buildPathByKey($name);
         return file_exists($path) ? unserialize(file_get_contents($path)) : null;
     }
@@ -111,7 +115,8 @@ class DataStorage extends Singleton
      * @throws Exception
      * @return self
      */
-    public function set($name, $value) {
+    public function set($name, $value)
+    {
         $path = $this->buildPathByKey($name);
         if (!file_exists($path)) {
             $dir = dirname($path);
@@ -137,7 +142,8 @@ class DataStorage extends Singleton
      * @return $this
      * @throws Exception
      */
-    public function drop($name) {
+    public function drop($name)
+    {
         $path = $this->buildPathByKey($name);
         if (false === unlink($path)) {
             $msg = 'Unable to delete file';
@@ -150,7 +156,8 @@ class DataStorage extends Singleton
      * @param string $name
      * @return boolean
      */
-    public function exists($name) {
+    public function exists($name)
+    {
         $path = $this->buildPathByKey($name);
         return file_exists($path) ? true : false;
     }
@@ -159,7 +166,8 @@ class DataStorage extends Singleton
      * @param string $key
      * @return string
      */
-    protected function buildPathByKey($key) {
+    protected function buildPathByKey($key)
+    {
         if (!isset($this->keyCache[$key])) {
             $hash = md5($key);
             $this->keyCache[$key] = $this->path . '/' .
@@ -174,7 +182,8 @@ class DataStorage extends Singleton
      * @param void
      * @return boolean
      */
-    public function flush() {
+    public function flush()
+    {
         if (!Capsule::$silent) {
             $msg = __METHOD__ . ' called';
             trigger_error($msg, E_USER_WARNING);
@@ -188,7 +197,8 @@ class DataStorage extends Singleton
      * @param void
      * @return boolean
      */
-    public function destroy() {
+    public function destroy()
+    {
         return $this->emptyDir($this->path, false);
     }
 
@@ -200,8 +210,9 @@ class DataStorage extends Singleton
      * @throws Exception
      * @return boolean
      */
-    protected function emptyDir($dir, $preserve_dirs = true) {
-        $list = glob($dir.'/*');
+    protected function emptyDir($dir, $preserve_dirs = true)
+    {
+        $list = glob($dir . '/*');
         foreach ($list as $item) {
             if (is_dir($item)) {
                 $this->emptyDir($item, $preserve_dirs);

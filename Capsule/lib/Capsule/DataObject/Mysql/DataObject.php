@@ -347,9 +347,19 @@ abstract class DataObject
             throw new Exception('Table metadata not found: ' . $default_schema . '.' . $table_name);
         }
 
+        $sql = 'SELECT `COLUMN_NAME`
+                FROM `information_schema`.`KEY_COLUMN_USAGE`
+                WHERE `TABLE_SCHEMA` = ' . $db->qt($default_schema) . '
+                AND `TABLE_NAME` = ' . $db->qt($table_name) . '
+                AND `CONSTRAINT_NAME` = \'PRIMARY\'
+                ORDER BY `ORDINAL_POSITION` ASC;';
+
+        $pk_metadata = $db->query($sql);
+
         return array(
             'table' => $table_metadata,
-            'columns' => $columns_metadata->fetch_object_all()
+            'columns' => $columns_metadata->fetch_object_all(),
+            'pk' => $pk_metadata->fetch_col()
         );
     }
 
@@ -365,7 +375,10 @@ abstract class DataObject
         if (self::_associatedTableExists()) {
             return true;
         }
-        $path = new Path(self::_configLocation(), self::FILENAME_SQL_CREATE_TABLE);
+        $path = new Path(
+            self::_configLocation(),
+            self::FILENAME_SQL_CREATE_TABLE
+        );
         $data = file_get_contents($path);
         $db = Db::getInstance();
         $sql = $db->splitMultiQuery($data);
@@ -388,20 +401,20 @@ abstract class DataObject
      * @return bool
      * @throws Exception
      */
-    public static function _dropTable()
+    public static function _dropEmptyTable()
     {
         if (!self::_associatedTableExists()) {
             return true;
         }
         if (!self::_associatedTableEmpty()) {
-            throw new Exception('Trying to drop nonempty table: ' . self::_associatedTableName());
+            throw new Exception('Table is not empty: ' . self::_associatedTableName());
         }
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
         $sql = 'DROP TABLE IF EXISTS `' . $default_schema . '`.`' . self::_associatedTableName() . '`';
         $db->query($sql);
         if (self::_associatedTableExists()) {
-
+            throw new Exception('Failed to drop a table: ' . self::_associatedTableName());
         }
         return true;
     }
@@ -414,8 +427,10 @@ abstract class DataObject
      */
     public static function _reCreateTable()
     {
-        self::_dropTable();
-        self::_createTable();
+        if (self::_associatedTableEmpty()) {
+            self::_dropEmptyTable();
+            self::_createTable();
+        }
     }
 
     /**
@@ -444,10 +459,26 @@ abstract class DataObject
     {
         $class = get_called_class();
         if (!Storage::getInstance()->exists($class)) {
-            $config_default_data = self::_preprocessConfigData(self::_loadConfigData(self::FILENAME_CONFIG_DEFAULT));
-            $config_user_data = self::_preprocessConfigData(self::_loadConfigData(self::FILENAME_CONFIG_USER));
-            $config_data = array_replace_recursive($config_default_data, $config_user_data);
-            Storage::getInstance()->set($class, new Config($config_data));
+            self::_install();
+            echo ' instl ';
+            $config_default_data = self::_preprocessConfigData(
+                self::_loadConfigData(
+                    self::FILENAME_CONFIG_DEFAULT
+                )
+            );
+            $config_user_data = self::_preprocessConfigData(
+                self::_loadConfigData(
+                    self::FILENAME_CONFIG_USER
+                )
+            );
+            $config_data = array_replace_recursive(
+                $config_default_data,
+                $config_user_data
+            );
+            Storage::getInstance()->set(
+                $class,
+                new Config($config_data)
+            );
         }
         return Storage::getInstance()->get($class);
     }
@@ -527,17 +558,18 @@ abstract class DataObject
      * @return array
      * @throws Exception
      */
-    public static function _buildConfigDefault()
+    public static function _buildConfig()
     {
         $inflector = Inflector::getInstance();
         $data = self::_loadInformationSchema();
-        $config_data = array(
+        $config_default_data = array(
             'name' => String::ucfirst(preg_replace('/[^a-z0-9]/isu', ' ', $data['table']->TABLE_NAME)),
             'title' => $data['table']->TABLE_COMMENT,
             'description' => null,
             'help' => null,
             'comment' => null,
             'label' => null,
+            'pk' => $data['pk'],
             'properties' => array()
         );
         foreach ($data['columns'] as $column) {
@@ -567,16 +599,33 @@ abstract class DataObject
                 )
             );
 
-            $config_data['properties'][$property_name] = $tmp;
+            $config_default_data['properties'][$property_name] = $tmp;
         }
-        $config = new Config($config_data);
+        // default config
+        $config = new Config($config_default_data);
         $json = $config->toJson();
         $path = self::_createFileConfigDefault();
         $bytes_written = file_put_contents($path, $json, LOCK_EX);
         if (false === $bytes_written) {
             throw new Exception('Unable to write file config default: ' . $path);
         }
-        return $json;
+        // user config
+        $config_user_data = $config->toArray();
+        foreach ($config_user_data['properties'] as & $property) {
+            foreach ($column as $k => $v) {
+                unset($property[$inflector->getAssociatedProperty(strtolower($k))]);
+            }
+        }
+        $config = new Config($config_user_data);
+        $json = $config->toJson();
+        $path = self::_createFileConfigUser();
+        $content = trim(file_get_contents($path));
+        if (!preg_match('/[a-z0-9]+/isu', $content)) {
+            $bytes_written = file_put_contents($path, $json, LOCK_EX);
+            if (false === $bytes_written) {
+                throw new Exception('Unable to write file config user: ' . $path);
+            }
+        }
     }
 
     /**
@@ -587,9 +636,7 @@ abstract class DataObject
      */
     public static function _installTable()
     {
-        if (self::_associatedTableEmpty()) {
-            self::_reCreateTable();
-        }
+        self::_reCreateTable();
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
         $table_name = self::_associatedTableName();
@@ -652,6 +699,8 @@ abstract class DataObject
      */
     public static function _install()
     {
-
+        self::_createConfigFiles();
+        self::_installTable();
+        self::_buildConfig();
     }
 }

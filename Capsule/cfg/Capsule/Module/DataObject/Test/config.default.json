@@ -5,6 +5,9 @@
     "help": null,
     "comment": null,
     "label": null,
+    "pk": [
+        "id"
+    ],
     "properties": {
         "id": {
             "title": "Уникальный идентификатор",
