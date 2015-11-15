@@ -23,6 +23,7 @@ use Capsule\DataModel\Inflector;
 use Capsule\Db\Db;
 use Capsule\Core\Fn as f;
 use Capsule\DataModel\DataModel;
+
 /**
  * SingleKey.php
  *
@@ -41,17 +42,16 @@ abstract class SingleKey extends DataModel
     /**
      * Возвращает данные в виде объектов
      *
-     * @param DBResult $result
+     * @param Result $result
      * @return array
      */
-    protected static function populate(Result $result) {
+    protected static function populate(Result $result)
+    {
         $class = get_called_class();
         $data = $result->fetch_assoc();
         $ret = array();
         if ($data) {
-            $fields = array_keys($data);
-            $properties = Inflector::getInstance()
-                ->getAssociatedProperties(array_keys($data));
+            $properties = Inflector::getInstance()->getAssociatedProperties(array_keys($data));
             $has_key = array_key_exists(static::$key, $data);
         } else {
             return $ret;
@@ -84,7 +84,8 @@ abstract class SingleKey extends DataModel
      *
      * @return boolean|number
      */
-    public function store() {
+    public function store()
+    {
         if (isset($this->data[static::$key])) {
             return $this->update();
         } else {
@@ -95,16 +96,16 @@ abstract class SingleKey extends DataModel
     /**
      * Сохраняет объект в связанную таблицу базы данных.
      * Возвращает присвоенный идентификатор.
-     *
-     *  @param void
-     *  @return int
+     * @return int
+     * @throws Exception
+     * @param void
      */
-    protected function insert() {
+    protected function insert()
+    {
         $db = Db::getInstance();
         $table = self::config()->table->name;
         $fields = $db->listFields($table);
-        $properties = Inflector::getInstance()
-            ->getAssociatedProperties($fields);
+        $properties = Inflector::getInstance()->getAssociatedProperties($fields);
         $map = array_combine($properties, $fields);
         $values = array();
         foreach ($this->data as $property => $value) {
@@ -122,7 +123,7 @@ abstract class SingleKey extends DataModel
             $sql = 'INSERT INTO ' . $db->bq($table) . ' VALUES()';
         } else {
             $sql = 'INSERT INTO ' . $db->bq($table) . ' (' .
-                    join(', ', $db->bq(array_keys($values))) . ')
+                join(', ', $db->bq(array_keys($values))) . ')
                     VALUES (' . join(', ', $values) . ')';
         }
         $db->query($sql);
@@ -137,11 +138,12 @@ abstract class SingleKey extends DataModel
     /**
      * Обновляет объект в связанной таблице базы данных.
      * Возвращает
-     *
-     *  @param void
-     *  @return boolean
+     * @return bool
+     * @throws Exception
+     * @param void
      */
-    protected function update() {
+    protected function update()
+    {
         $db = Db::getInstance();
         $table = self::config()->table->name;
         $fields = $db->listFields($table);
@@ -182,7 +184,8 @@ abstract class SingleKey extends DataModel
      * @param void
      * @return self
      */
-    public function __clone() {
+    public function __clone()
+    {
         unset($this->data[static::$key]);
     }
 
@@ -192,7 +195,8 @@ abstract class SingleKey extends DataModel
      * @param mixed $key
      * @return self
      */
-    public static function getElementByKey($key) {
+    public static function getElementByKey($key)
+    {
         return static::k($key);
     }
 
@@ -202,7 +206,8 @@ abstract class SingleKey extends DataModel
      * @param mixed $key
      * @return self
      */
-    public static function k($key) {
+    public static function k($key)
+    {
         $o = self::getElementByKeyFromCache($key);
         if ($o) {
             return $o;
@@ -223,7 +228,8 @@ abstract class SingleKey extends DataModel
      * @param void
      * @return array
      */
-    public static function keys() {
+    public static function keys()
+    {
         $class = get_called_class();
         if (!isset(self::$common[$class][__FUNCTION__])) {
             $db = Db::getInstance();
@@ -242,7 +248,8 @@ abstract class SingleKey extends DataModel
      * @param mixed $key
      * @return self
      */
-    public static function kfc($key) {
+    public static function kfc($key)
+    {
         $class = get_called_class();
         if (isset(self::$cache[$class][static::$key])) {
             return self::$cache[$class][static::$key];
@@ -256,7 +263,8 @@ abstract class SingleKey extends DataModel
      * @param mixed $key
      * @return self
      */
-    public static function getElementByKeyFromCache($key) {
+    public static function getElementByKeyFromCache($key)
+    {
         return static::kfc($key);
     }
 
@@ -265,8 +273,10 @@ abstract class SingleKey extends DataModel
      *
      * @param int $page_number
      * @param int $items_per_page
+     * @return array
      */
-    public static function page($page_number = 1, $items_per_page = 10) {
+    public static function page($page_number = 1, $items_per_page = 10)
+    {
         $db = Db::getInstance();
         $from = $items_per_page * ($page_number - 1);
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
