@@ -186,12 +186,12 @@ abstract class DataModel
      */
     final public static function config()
     {
-        $class = get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] =
-                self::_loadConfig($class);
+        $c = get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = self::_loadConfig($c);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -435,12 +435,12 @@ abstract class DataModel
      */
     public static function _configLocation($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] =
-                new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class, self::CONFIG_FILENAME);
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $c, self::CONFIG_FILENAME);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -511,11 +511,12 @@ abstract class DataModel
      */
     final protected static function _reflectionClass($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] = new ReflectionClass($class);
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = new ReflectionClass($c);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -526,12 +527,12 @@ abstract class DataModel
      */
     final protected static function _rootDir($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] = str_replace('\\', '/',
-                dirname(static::_reflectionClass($class)->getFileName()));
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = str_replace('\\', '/', dirname(static::_reflectionClass($c)->getFileName()));
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -542,11 +543,12 @@ abstract class DataModel
      */
     protected static function _listMethods($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] = get_class_methods($class);
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = get_class_methods($c);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**

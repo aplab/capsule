@@ -20,6 +20,7 @@ namespace Capsule\Core;
 
 use Capsule\I18n\I18n;
 use PHP\Exceptionizer\Exceptionizer;
+
 /**
  * public static functions.php
  *
@@ -34,7 +35,8 @@ class Fn
      * ...
      * @param string $piece_n
      */
-    public static function concat() {
+    public static function concat()
+    {
         return join(func_get_args());
     }
 
@@ -45,7 +47,8 @@ class Fn
      * ...
      * @param string $piece_n
      */
-    public static function concat_ws() {
+    public static function concat_ws()
+    {
         $args = func_get_args();
         return join(array_shift($args), $args);
     }
@@ -57,7 +60,8 @@ class Fn
      * ...
      * @param string $piece_n
      */
-    public static function concat_ws_ne() {
+    public static function concat_ws_ne()
+    {
         $args = func_get_args();
         $se = array_shift($args);
         return join($se, array_filter($args));
@@ -68,7 +72,8 @@ class Fn
      * @param number $level
      * @return string
      */
-    public static function updir($path, $level = 1) {
+    public static function updir($path, $level = 1)
+    {
         for ($i = 0; $i < $level; $i++) {
             $path = dirname($path);
         }
@@ -81,7 +86,8 @@ class Fn
      * @param string
      * @return string
      */
-    public static function stpath($path) {
+    public static function stpath($path)
+    {
         return preg_replace('|/{2,}|', '/', str_replace('\\', '/', $path));
     }
 
@@ -91,7 +97,8 @@ class Fn
      * @param string $glue
      * @param array $pieces
      */
-    public static function join_ne($glue, array $pieces) {
+    public static function join_ne($glue, array $pieces)
+    {
         return join($glue, array_filter($pieces));
     }
 
@@ -101,7 +108,8 @@ class Fn
      * @param string|object $class
      * @return string
      */
-    public static function get_namespace($class) {
+    public static function get_namespace($class)
+    {
         if (is_object($class)) {
             $class = get_class($class);
         }
@@ -116,7 +124,8 @@ class Fn
      * @param string|object $class
      * @return string
      */
-    public static function ns($class) {
+    public static function ns($class)
+    {
         return self::get_namespace($class);
     }
 
@@ -126,7 +135,8 @@ class Fn
      * @param string|object $class
      * @return string
      */
-    public static function get_classname($class) {
+    public static function get_classname($class)
+    {
         if (is_object($class)) {
             $class = get_class($class);
         }
@@ -140,7 +150,8 @@ class Fn
      * @param string|object $class
      * @return string
      */
-    public static function get_controller_class($class) {
+    public static function get_controller_class($class)
+    {
         if (is_object($class)) {
             $class = self::get_namespace($class);
         }
@@ -157,7 +168,8 @@ class Fn
      * @param
      * @param string|object $context
      */
-    public static function cc($name, $context = null) {
+    public static function cc($name, $context = null)
+    {
         $name = preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/u', '\\', $name);
         $name = preg_replace('/\\\\{2,}/', '\\', $name);
         if (is_null($context)) {
@@ -175,7 +187,7 @@ class Fn
             return $name;
         }
         return preg_replace('/\\\\{2,}/', '\\', '\\' .
-                self::concat_ws('\\', $context, $name));
+            self::concat_ws('\\', $context, $name));
     }
 
     /**
@@ -184,7 +196,8 @@ class Fn
      * @param
      * @param string|object $context
      */
-    public static function create_classname($name, $context = null) {
+    public static function create_classname($name, $context = null)
+    {
         return static::cc($name, $context);
     }
 
@@ -192,7 +205,8 @@ class Fn
      * @param string $str
      * @return string
      */
-    public static function strip_spaces($str) {
+    public static function strip_spaces($str)
+    {
         $matches = array();
         preg_match_all('/[^\\r\\n]+/', $str, $matches);
         return join(array_map('trim', array_shift($matches)));
@@ -207,7 +221,8 @@ class Fn
      * @param array
      * @return boolean
      */
-    public static function is_list(array $array, $n0 = true) {
+    public static function is_list(array $array, $n0 = true)
+    {
         if (empty($array)) {
             return true;
         }
@@ -218,7 +233,7 @@ class Fn
         if (!$n0) {
             return true;
         }
-        return $keys === join(range(0,sizeof($array) - 1));
+        return $keys === join(range(0, sizeof($array) - 1));
     }
 
     /**
@@ -226,11 +241,11 @@ class Fn
      * В противном случае возвращает false.
      *
      * @param unknown $key
-     * @param string $throw_exception
-     * @throws \InvalidArgumentException
-     * @return boolean
+     * @param bool|string $throw_exception
+     * @return bool
      */
-    public static function is_key($key, $throw_exception = true) {
+    public static function is_key($key, $throw_exception = true)
+    {
         // Подавление ошибок при использовании @ работает очень медленно.
         $valid = @array($key => null);
         if (empty($valid)) {
@@ -250,8 +265,9 @@ class Fn
      * @param array $array2
      * @return array
      */
-    public static function array_diff_assoc_recursive(array $array1, array $array2) {
-        $difference=array();
+    public static function array_diff_assoc_recursive(array $array1, array $array2)
+    {
+        $difference = array();
         foreach ($array1 as $key => $value) {
             if (is_array($value)) {
                 if (!isset($array2[$key]) || !is_array($array2[$key])) {
@@ -262,7 +278,7 @@ class Fn
                         $difference[$key] = $new_diff;
                     }
                 }
-            } else if (!array_key_exists($key,$array2) || $array2[$key] !== $value) {
+            } else if (!array_key_exists($key, $array2) || $array2[$key] !== $value) {
                 $difference[$key] = $value;
             }
         }
@@ -275,8 +291,10 @@ class Fn
      *
      * @param string $start_microtime
      * @param string $end_microtime
+     * @return string
      */
-    public static function worktime($start_microtime, $end_microtime) {
+    public static function worktime($start_microtime, $end_microtime)
+    {
         list($m, $t) = explode(' ', $start_microtime);
         $start = bcadd($m, $t, 6);
         list($m, $t) = explode(' ', $end_microtime);
@@ -288,15 +306,16 @@ class Fn
      * Возвращает массив элементов если $val является значением с точечной нотацией,
      * Или null если не является
      *
-     * @param unknown $val
-     * @return NULL|multitype:
+     * @param string $val
+     * @return NULL|array:
      */
-    public static function split_dot($val) {
+    public static function split_dot($val)
+    {
         $e = new Exceptionizer();
         settype($val, 'string');
         $tmp = explode('.', $val);
-        array_walk($tmp, function(&$v, $k) {
-        	$v = trim($v);
+        array_walk($tmp, function (&$v, $k) {
+            $v = trim($v);
         });
         $tmp = array_filter($tmp);
         if (sizeof($tmp) < 2) {
