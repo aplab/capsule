@@ -216,17 +216,29 @@ abstract class DataModel
         $class = $class ?: get_called_class();
         if (!Storage::getInstance()->exists($class)) {
             $data = self::_configData();
-            // post processing values like "config.ololo.trololo"
-            array_walk_recursive($data, function (& $v, $k) use ($data, $class) {
-                $v = str_replace('__CLASS__', $class, $v);
-                if (!(strpos($v, '.'))) return;
+            /**
+             * Post-processing values like __CLASS__, "config.some_value.another_value"
+             */
+            array_walk_recursive($data, function (& $v) use ($data, $class) {
+                if (false !== strpos($v, '__CLASS__')) {
+                    $v = str_replace('__CLASS__', $class, $v);
+                }
+                if (!(strpos($v, '.'))) {
+                    return;
+                }
                 $pcs = explode('.', $v);
                 $pcs = array_filter($pcs, 'trim');
-                if (sizeof($pcs) < 2) return;
-                if (self::CONFIG !== array_shift($pcs)) return;
+                if (sizeof($pcs) < 2) {
+                    return;
+                }
+                if (self::CONFIG !== array_shift($pcs)) {
+                    return;
+                }
                 $tmp = $data;
                 foreach ($pcs as $i) {
-                    if (!array_key_exists($i, $tmp)) return;
+                    if (!array_key_exists($i, $tmp)) {
+                        return;
+                    }
                     $tmp = $tmp[$i];
                 }
                 $v = $tmp;
