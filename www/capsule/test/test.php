@@ -54,8 +54,8 @@ $(document).ready(function() {
 </script>
 <?php
 
-\Capsule\DataObject\Config\Storage::getInstance()->destroy();
-\Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config());
+
+\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
 
 
 \Capsule\Tools\Tools::dump($app->worktime);

@@ -18,6 +18,7 @@
 
 namespace Capsule\DataModel;
 
+use Capsule\Tools\Tools;
 use ReflectionClass;
 use Capsule\Common\Path;
 use Capsule\DataModel\Exception;
@@ -296,6 +297,30 @@ abstract class DataModel
             }
         }
         return array_replace_recursive($parent_data, $diff);
+    }
+
+    /**
+     * Make full config file for developer
+     *
+     * @return bool
+     * @throws \Capsule\DataModel\Exception
+     * @param void
+     */
+    public static function makeConfig()
+    {
+        $path = self::_configLocation();
+        $data = self::_buildConfigData();
+        $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+        $json = json_encode($data, $opt);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception(Error::getLastError());
+        }
+        self::_createConfigFile();
+        if (false === file_put_contents($path, $json, LOCK_EX)) {
+            $msg = 'Unable to make configuration file: ' . $path;
+            throw new Exception($msg);
+        }
+        return true;
     }
 
     /**
