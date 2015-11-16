@@ -54,7 +54,7 @@ $(document).ready(function() {
 </script>
 <?php
 
-\Capsule\DataObject\Mysql\Config\Storage::getInstance()->destroy();
+\Capsule\DataObject\Config\Storage::getInstance()->destroy();
 \Capsule\Tools\Tools::dump(\Capsule\Module\DataObject\Test::config());
 
 

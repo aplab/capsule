@@ -6,10 +6,9 @@
  * Time: 2:27
  */
 
-namespace Capsule\DataObject\Mysql;
+namespace Capsule\DataObject;
 
-
-abstract class KeyBased extends DataObject
+abstract class AutoIncrementIdBased extends DataObject
 {
 
 }

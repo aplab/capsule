@@ -16,10 +16,9 @@
  * @package Capsule
  */
 
-namespace Capsule\DataObject\Mysql\Config\Properties;
+namespace Capsule\DataObject\Config\Properties;
 
-use Capsule\DataObject\Mysql\Config\AbstractConfig;
-
+use Capsule\DataObject\Config\AbstractConfig;
 
 /**
  * Properties.php

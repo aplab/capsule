@@ -5,14 +5,13 @@
  * Date: 03.11.2015
  * Time: 1:10
  */
-namespace Capsule\DataObject\Mysql;
+namespace Capsule\DataObject;
 
 use Capsule\Capsule;
 use Capsule\Common\Path;
 use Capsule\Common\String;
-use Capsule\DataObject\Inflector;
-use Capsule\DataObject\Mysql\Config\Config;
-use Capsule\DataObject\Mysql\Config\Storage;
+use Capsule\DataObject\Config\Config;
+use Capsule\DataObject\Config\Storage;
 use Capsule\Db\Db;
 use Capsule\Exception;
 use Capsule\Tools\Tools;
@@ -475,16 +474,15 @@ abstract class DataObject
                 $config_default_data,
                 $config_user_data
             );
-            Storage::getInstance()->set(
-                $class,
-                new Config($config_data)
-            );
+            $config = new Config($config_data);
+            self::_checkConfig($config);
+            Storage::getInstance()->set($class, $config);
         }
         return Storage::getInstance()->get($class);
     }
 
     /**
-     * Post-processing values like __CLASS__, "config.some_value.another_value"
+     * Pre-processing values like __CLASS__, "config.some_value.another_value"
      *
      * @param array $data
      * @return array
@@ -517,6 +515,16 @@ abstract class DataObject
             $v = $tmp;
         });
         return $data;
+    }
+
+    /**
+     * Post-processing config data
+     *
+     * @param Config $config
+     */
+    protected static function _checkConfig(Config $config)
+    {
+
     }
 
     /**

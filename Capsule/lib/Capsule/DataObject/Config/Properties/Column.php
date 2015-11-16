@@ -16,10 +16,11 @@
  * @package Capsule
  */
 
-namespace Capsule\DataObject\Mysql\Config\Properties;
+namespace Capsule\DataObject\Config\Properties;
 
-use Capsule\DataObject\Mysql\Config\AbstractConfig;
+use Capsule\DataObject\Config\AbstractConfig;
 use Capsule\Exception;
+use Capsule\Tools\Tools;
 
 
 /**
@@ -27,11 +28,11 @@ use Capsule\Exception;
  *
  * @package Capsule
  * @author Alexander Polyanin <polyanin@gmail.com>
- * @property int $type Тип элемента
- * @property int $order Порядок элемента в форме
- * @property string $tab Название вкладки
+ * @property int $width Ширина колонки
+ * @property int $order Порядок колонки
+ * @property string $type Тип колонки необязательное значение, ставится по умолчанию значение Text
  */
-class FormElement extends AbstractConfig
+class Column extends AbstractConfig
 {
     /**
      * Special property
@@ -55,34 +56,18 @@ class FormElement extends AbstractConfig
     }
 
     /**
-     * Explicit conversion to string
+     * explicit conversion to string
+     *
+     * @param void
      * @return string
-     * @throws Exception
-     * @internal param $void
      */
     public function toString()
     {
-        throw new Exception('Cannot be convert to string');
+        return $this->width;
     }
 
     /**
-     * Обработка установки значения свойства.
-     *
-     * @param string $name
-     * @param mixed $value
-     * @throws Exception
-     * @return void
-     */
-    public function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-        return $this;
-    }
-
-    /**
-     * getter
-     * (non-PHPdoc)
-     * @see \Capsule\DataModel\Config\AbstractConfig::__get()
+     * Getter
      *
      * @param string $name
      * @return mixed
@@ -90,6 +75,46 @@ class FormElement extends AbstractConfig
     public function __get($name)
     {
         return array_key_exists($name, $this->data) ? $this->data[$name] : null;
+    }
+
+    /**
+     * Setter
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return self
+     */
+    public function __set($name, $value)
+    {
+        $setter = 'set' . ucfirst($name);
+        if (in_array($setter, get_class_methods($this))) {
+            $this->$setter($value, $name);
+        } else {
+            $this->data[$name] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * Set width
+     *
+     * @param int $value
+     * @param string $name
+     * @throws \InvalidArgumentException
+     * @return \Capsule\DataModel\Config\Properties\Column
+     */
+    protected function setWidth($value, $name)
+    {
+        if (!$value) {
+            $this->data[$name] = 0;
+            return $this;
+        }
+        if (ctype_digit((string)$value)) {
+            $this->data[$name] = $value;
+            return $this;
+        }
+        $msg = 'Wrong width value';
+        throw new \InvalidArgumentException($msg);
     }
 
     /**
@@ -102,63 +127,43 @@ class FormElement extends AbstractConfig
         switch ($type) {
             case 'tinyint' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 60,
+                    'type' => 'Rtext'
                 );
             case 'smallint' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 80,
+                    'type' => 'Rtext'
                 );
             case 'mediumint' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 100,
+                    'type' => 'Rtext'
                 );
             case 'int' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 120,
+                    'type' => 'Rtext'
                 );
             case 'integer' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 120,
+                    'type' => 'Rtext'
                 );
             case 'bigint' :
                 return array(
-                    'type' => 'Rtext',
-                    'tab' => 'General'
+                    'width' => 180,
+                    'type' => 'Rtext'
                 );
             case 'char' :
                 return array(
-                    'type' => 'Text',
-                    'tab' => 'General'
+                    'width' => 200,
+                    'type' => 'Text'
                 );
             case 'varchar' :
                 return array(
-                    'type' => 'Text',
-                    'tab' => 'General'
-                );
-            case 'tinytext' :
-                return array(
-                    'type' => 'Textarea',
-                    'tab' => 'General'
-                );
-            case 'text' :
-                return array(
-                    'type' => 'Textarea',
-                    'tab' => 'General'
-                );
-            case 'mediumtext' :
-                return array(
-                    'type' => 'Textarea',
-                    'tab' => 'General'
-                );
-            case 'longtext' :
-                return array(
-                    'type' => 'Textarea',
-                    'tab' => 'General'
+                    'width' => 200,
+                    'type' => 'Text'
                 );
             default :
                 throw new Exception('Unsupported data type');

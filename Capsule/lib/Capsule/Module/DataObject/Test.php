@@ -9,9 +9,12 @@
 namespace Capsule\Module\DataObject;
 
 
-use Capsule\DataObject\Mysql\DataObject;
+
+use Capsule\DataObject\Config\Config;
+use Capsule\DataObject\DataObject;
 
 class Test extends DataObject
 {
+
 
 }

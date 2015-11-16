@@ -16,9 +16,9 @@
  * @package Capsule
  */
 
-namespace Capsule\DataObject\Mysql\Config\Properties;
+namespace Capsule\DataObject\Config\Properties;
 use Capsule\Common\Filter;
-use Capsule\DataObject\Mysql\Config\AbstractConfig;
+use Capsule\DataObject\Config\AbstractConfig;
 use Capsule\Exception;
 use Capsule\Tools\Tools;
 use Capsule\Validator\Validator;

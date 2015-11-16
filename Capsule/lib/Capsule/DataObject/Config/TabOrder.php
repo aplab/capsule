@@ -16,7 +16,7 @@
  * @package Capsule
  */
 
-namespace Capsule\DataObject\Mysql\Config;
+namespace Capsule\DataObject\Config;
 
 /**
  * TabOrder.php
