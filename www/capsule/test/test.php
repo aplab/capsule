@@ -56,6 +56,7 @@ $(document).ready(function() {
 
 
 \Capsule\Tools\Tools::dump(\Capsule\User\User::_indexConfigData());
+\Capsule\Tools\Tools::dump(\App\Cms\Model\HistoryUploadImage::_indexConfigData());
 //\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
 
 

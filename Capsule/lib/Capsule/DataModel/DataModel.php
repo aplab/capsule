@@ -711,9 +711,6 @@ abstract class DataModel
         $db = Db::getInstance();
         $default_schema = $db->config->dbname;
         $table_name = self::config()->table->name;
-        Tools::dump($class);
-        Tools::dump($table_name);
-        Tools::dump($default_schema);
         $sql = 'SELECT
                     `TABLE_CATALOG`,
                     `TABLE_SCHEMA`,
@@ -730,11 +727,12 @@ abstract class DataModel
                     `NULLABLE`,
                     `INDEX_TYPE`,
                     `COMMENT`,
-                    `INDEX_COMMENT`
+                    `INDEX_COMMENT`,
+                    if ("PRIMARY" = `INDEX_NAME`, 0, 1 + `NON_UNIQUE`) AS `PREORDER_CUSTOM`
                 FROM `information_schema`.`STATISTICS`
                 WHERE `TABLE_SCHEMA` = ' . $db->qt($default_schema) . '
                 AND `TABLE_NAME` = ' . $db->qt($table_name) . '
-                ORDER BY `TABLE_SCHEMA`, `TABLE_NAME`, `INDEX_NAME`, `SEQ_IN_INDEX`';
+                ORDER BY `TABLE_SCHEMA`, `TABLE_NAME`, `PREORDER_CUSTOM`, `INDEX_NAME`, `SEQ_IN_INDEX`';
 
         $data = $db->query($sql)->fetch_object_all();
         $tmp = array();
@@ -746,7 +744,26 @@ abstract class DataModel
             if (!isset($tmp[$index_name])) {
                 $tmp[$index_name] = array();
             }
+            if (preg_match('/^primary/i', $index_name)) {
+                $tmp[$index_name]['type'] = 'primaryKey';
+            } elseif ('0' === $data_item->NON_UNIQUE) {
+                $tmp[$index_name]['type'] = 'uniqueKey';
+            } elseif ('FULLTEXT' === $data_item->INDEX_TYPE) {
+                $tmp[$index_name]['type'] = 'fulltextKey';
+            }
+            if (!isset($tmp[$index_name]['fields'])) {
+                $tmp[$index_name]['fields'] = array();
+            }
+            $tmp[$index_name]['fields'][$data_item->COLUMN_NAME] = array();
+            if (preg_match('/\\d+/', $data_item->SUB_PART, $m)) {
+                $tmp[$index_name]['fields'][$data_item->COLUMN_NAME][length] = $m[0];
+            }
         }
-        Tools::dump($tmp);
+        $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+        $json = json_encode($tmp, $opt);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new Exception(Error::getLastError());
+        }
+        return $json;
     }
 }
