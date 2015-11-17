@@ -704,4 +704,49 @@ abstract class DataModel
         }
         return Fn::concat_ws_ne('::', $c, $f);
     }
+
+    public static function _indexConfigData($class = null)
+    {
+        $class = is_null($class) ? get_called_class() : $class;
+        $db = Db::getInstance();
+        $default_schema = $db->config->dbname;
+        $table_name = self::config()->table->name;
+        Tools::dump($class);
+        Tools::dump($table_name);
+        Tools::dump($default_schema);
+        $sql = 'SELECT
+                    `TABLE_CATALOG`,
+                    `TABLE_SCHEMA`,
+                    `TABLE_NAME`,
+                    `NON_UNIQUE`,
+                    `INDEX_SCHEMA`,
+                    `INDEX_NAME`,
+                    `SEQ_IN_INDEX`,
+                    `COLUMN_NAME`,
+                    `COLLATION`,
+                    `CARDINALITY`,
+                    `SUB_PART`,
+                    `PACKED`,
+                    `NULLABLE`,
+                    `INDEX_TYPE`,
+                    `COMMENT`,
+                    `INDEX_COMMENT`
+                FROM `information_schema`.`STATISTICS`
+                WHERE `TABLE_SCHEMA` = ' . $db->qt($default_schema) . '
+                AND `TABLE_NAME` = ' . $db->qt($table_name) . '
+                ORDER BY `TABLE_SCHEMA`, `TABLE_NAME`, `INDEX_NAME`, `SEQ_IN_INDEX`';
+
+        $data = $db->query($sql)->fetch_object_all();
+        $tmp = array();
+        foreach ($data as $data_item) {
+            $index_name = $data_item->INDEX_NAME;
+            if ('PRIMARY' === $index_name) {
+                $index_name = 'primaryKey';
+            }
+            if (!isset($tmp[$index_name])) {
+                $tmp[$index_name] = array();
+            }
+        }
+        Tools::dump($tmp);
+    }
 }

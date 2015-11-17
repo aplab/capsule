@@ -55,10 +55,11 @@ $(document).ready(function() {
 <?php
 
 
-\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
+\Capsule\Tools\Tools::dump(\Capsule\User\User::_indexConfigData());
+//\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
 
 
-\Capsule\Tools\Tools::dump($app->worktime);
+//\Capsule\Tools\Tools::dump($app->worktime);
 
 
 ?>
