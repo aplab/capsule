@@ -46,11 +46,40 @@ abstract class DataModel
     const CONFIG_FILENAME = 'config.json';
 
     /**
+     * DO NOT CHANGE!
      * config
+     * used in the configuration files to refer to himself
+     * используется в конфигах для ссылки на сам конфиг
      *
      * @var string
      */
-    const CONFIG = 'this';
+    const REF_CONFIG = 'config';
+
+    /**
+     * DO NOT CHANGE!
+     * config
+     * used in the configuration files to refer to current section
+     * используется в конфигах для ссылки на ту же секцию, в которой находится
+     *
+     * @var string
+     */
+    const REF_THIS = 'this';
+
+    /**
+     * used in the configuration files
+     * Автоматически создавать имя таблицы
+     *
+     * @var string
+     */
+    const TABLE_NAME_AUTO = 'AUTO';
+
+    /**
+     * used in the configuration files
+     * Использовать имя таблицы родительского класса
+     *
+     * @var string
+     */
+    const TABLE_NAME_INHERIT = 'INHERIT';
 
     /**
      * Свойства объекта
@@ -180,7 +209,7 @@ abstract class DataModel
     }
 
     /**
-     * Возвращает конфиг модуля
+     * Returns module configuration object
      *
      * @param void
      * @return Config
@@ -188,15 +217,14 @@ abstract class DataModel
     final public static function config()
     {
         $c = get_called_class();
-        $f = __FUNCTION__;
-        if (!isset(self::$common[$c][$f])) {
-            self::$common[$c][$f] = self::_loadConfig($c);
+        if (!isset(self::$common[$c][self::REF_CONFIG])) {
+            self::$common[$c][self::REF_CONFIG] = self::_loadConfig($c);
         }
-        return self::$common[$c][$f];
+        return self::$common[$c][self::REF_CONFIG];
     }
 
     /**
-     * Возвращает имя класса
+     * Returns the name of the class
      *
      * @param void
      * @return Config
@@ -207,7 +235,7 @@ abstract class DataModel
     }
 
     /**
-     * Загружает файл конфигурации
+     * Load module configuration object
      *
      * @param string|null $class
      * @return array
@@ -232,7 +260,7 @@ abstract class DataModel
                 if (sizeof($pcs) < 2) {
                     return;
                 }
-                if (self::CONFIG !== array_shift($pcs)) {
+                if (self::REF_CONFIG !== array_shift($pcs)) {
                     return;
                 }
                 $tmp = $data;
@@ -250,18 +278,19 @@ abstract class DataModel
     }
 
     /**
-     * Возвращает массив данных для создания объекта конфигурации
+     * Returns an array of data to create a configuration object
      *
      * @param string $class
      * @return array
      */
     public static function _configData($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] = self::_buildConfigData($class);
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = self::_buildConfigData($c);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -300,13 +329,13 @@ abstract class DataModel
     }
 
     /**
-     * Make full config file for developer
+     * Prepare full config file for developer
      *
      * @return bool
      * @throws \Capsule\DataModel\Exception
      * @param void
      */
-    public static function makeConfig()
+    public static function _configSetEditMode()
     {
         $path = self::_configLocation();
         $data = self::_buildConfigData();
@@ -321,6 +350,38 @@ abstract class DataModel
             throw new Exception($msg);
         }
         return true;
+    }
+
+    /**
+     * Применить измененный конфиг (удаляет старый кэш и перечитывает)
+     *
+     * @param void
+     * @return mixed|NULL
+     * @throws \Capsule\DataStorage\Exception
+     */
+    public static function _configApply()
+    {
+        $c = get_called_class();
+        self::_configClearCache();
+        unset(self::$common[$c]);
+        self::config();
+    }
+
+    /**
+     * Очищает кэш конфига
+     *
+     * @param void
+     * @return void
+     * @throws \Capsule\DataStorage\Exception
+     */
+    public static function _configClearCache()
+    {
+        $class = get_called_class();
+        $storage = Storage::getInstance();
+        if ($storage->exists($class)) {
+            echo'drop';
+            $storage->drop($class);
+        }
     }
 
     /**
@@ -445,11 +506,12 @@ abstract class DataModel
      */
     public static function _configDataFragment($class = null)
     {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            self::$common[$class][__FUNCTION__] = self::_loadConfigDataFragment($class);
+        $c = $class ?: get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f])) {
+            self::$common[$c][$f] = self::_loadConfigDataFragment($c);
         }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f];
     }
 
     /**
@@ -705,12 +767,26 @@ abstract class DataModel
         return Fn::concat_ws_ne('::', $c, $f);
     }
 
-    public static function _indexConfigData($class = null)
+    /**
+     * Возвращает фрагмент конфига с конфигурацией индексов, которые фактически определены в таблице базы данных.
+     * По умолчанию возвращает данные для связанной с модулем таблицы.
+     * Можно переопределить имя базы данных или таблицы для получения конфигурации любой таблицы.
+     *
+     * @param null|string $table_name
+     * @param null|string $table_schema
+     * @return string
+     * @throws \Capsule\DataModel\Exception
+     */
+    public static function _realIndexConfigData($table_name = null, $table_schema = null)
     {
-        $class = is_null($class) ? get_called_class() : $class;
+        $class = get_called_class();
         $db = Db::getInstance();
-        $default_schema = $db->config->dbname;
-        $table_name = self::config()->table->name;
+        if (is_null($table_schema)) {
+            $table_schema = $db->config->dbname;
+        }
+        if (is_null($table_name)) {
+            $table_name = $class::config()->table->name;
+        }
         $sql = 'SELECT
                     `TABLE_CATALOG`,
                     `TABLE_SCHEMA`,
@@ -730,7 +806,7 @@ abstract class DataModel
                     `INDEX_COMMENT`,
                     if ("PRIMARY" = `INDEX_NAME`, 0, 1 + `NON_UNIQUE`) AS `PREORDER_CUSTOM`
                 FROM `information_schema`.`STATISTICS`
-                WHERE `TABLE_SCHEMA` = ' . $db->qt($default_schema) . '
+                WHERE `TABLE_SCHEMA` = ' . $db->qt($table_schema) . '
                 AND `TABLE_NAME` = ' . $db->qt($table_name) . '
                 ORDER BY `TABLE_SCHEMA`, `TABLE_NAME`, `PREORDER_CUSTOM`, `INDEX_NAME`, `SEQ_IN_INDEX`';
 
@@ -756,7 +832,9 @@ abstract class DataModel
             }
             $tmp[$index_name]['fields'][$data_item->COLUMN_NAME] = array();
             if (preg_match('/\\d+/', $data_item->SUB_PART, $m)) {
-                $tmp[$index_name]['fields'][$data_item->COLUMN_NAME][length] = $m[0];
+                $length = $m[0];
+                settype($length, 'integer');
+                $tmp[$index_name]['fields'][$data_item->COLUMN_NAME]['length'] = $length;
             }
         }
         $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;

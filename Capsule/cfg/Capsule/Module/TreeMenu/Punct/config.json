@@ -103,17 +103,17 @@
             "title": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.title.title"
+                "comment": "config.properties.title.title"
             },
             "url": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.url.title"
+                "comment": "config.properties.url.title"
             },
             "target": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.target.title"
+                "comment": "config.properties.target.title"
             },
             "active": {
                 "type": "tinyint",
@@ -131,7 +131,7 @@
                 }
             }
         },
-        "comment": "this.title"
+        "comment": "config.title"
     },
     "container": "/Capsule/Module/TreeMenu/Menu"
 }

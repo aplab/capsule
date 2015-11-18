@@ -1,6 +1,6 @@
 {
     "title": "Usr catalog unit",
     "table": {
-        "comment": "this.title"
+        "comment": "config.title"
     }
 }

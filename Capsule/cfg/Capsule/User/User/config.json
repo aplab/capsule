@@ -65,11 +65,10 @@
             "login": {
                 "type": "unique",
                 "fields": {
-                    "login": [
-                        
-                    ]
+                    "login": []
                 }
             }
-        }
+        },
+        "name": "capsule_user_user"
     }
 }

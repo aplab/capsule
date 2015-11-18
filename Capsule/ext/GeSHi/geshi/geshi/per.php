@@ -65,7 +65,7 @@ $language_data = array (
             "COMMENTS",
             "COMPACT",
             "COMPRESS",
-            "CONFIG",
+            "REF_CONFIG",
             "CONTROL",
             "CURRENT",
             "DATABASE",

@@ -41,7 +41,7 @@
                 "f1": {
                     "type": "Ckeditor",
                     "order": 5000,
-                    "tab": "this.properties.text.title"
+                    "tab": "config.properties.text.title"
                 }
             }
         },
@@ -175,7 +175,7 @@
             "article": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.article.title"
+                "comment": "config.properties.article.title"
             },
             "text": {
                 "type": "mediumtext",
@@ -184,21 +184,21 @@
             "html_title": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.htmlTitle.title",
+                "comment": "config.properties.htmlTitle.title",
                 "default": ""
             },
             "meta_description": {
                 "type": "text",
-                "comment": "this.properties.metaDescription.title"
+                "comment": "config.properties.metaDescription.title"
             },
             "meta_keywords": {
                 "type": "text",
-                "comment": "this.properties.metaKeywords.title"
+                "comment": "config.properties.metaKeywords.title"
             },
             "image1": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.image1.title",
+                "comment": "config.properties.image1.title",
                 "default": ""
             },
             "special": {

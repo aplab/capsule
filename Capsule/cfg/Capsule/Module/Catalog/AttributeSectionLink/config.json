@@ -55,13 +55,13 @@
             "attribute_id": {
                 "type": "bigint",
                 "unsigned": true,
-                "comment": "this.properties.attributeId.title",
+                "comment": "config.properties.attributeId.title",
                 "default": 0
             },
             "tab_name": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.tab.title"
+                "comment": "config.properties.tab.title"
             }
         }
     },

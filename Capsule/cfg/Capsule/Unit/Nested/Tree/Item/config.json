@@ -15,8 +15,8 @@
                 "f1": {
                     "type": "Nested",
                     "#": "depend property name",
-                    "bind": "this.container",
-                    "depend": "this.properties.containerId.depend"
+                    "bind": "config.container",
+                    "depend": "config.properties.containerId.depend"
                 }
             }
         },

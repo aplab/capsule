@@ -62,7 +62,7 @@
                 "f1": {
                     "type": "Ckeditor",
                     "order": 11000,
-                    "tab": "this.properties.preview.title"
+                    "tab": "config.properties.preview.title"
                 }
             }
         },
@@ -80,7 +80,7 @@
                 "f1": {
                     "type": "Ckeditor",
                     "order": 12000,
-                    "tab": "this.properties.fully.title"
+                    "tab": "config.properties.fully.title"
                 }
             }
         }

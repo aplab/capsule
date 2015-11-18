@@ -2,6 +2,6 @@
     "title": "Attribute group",
     "name": "Attribute group",
     "table": {
-        "comment": "this.title"
+        "comment": "config.title"
     }
 }

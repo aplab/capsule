@@ -189,31 +189,31 @@
             "type": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.type.title",
+                "comment": "config.properties.type.title",
                 "default": ""
             },
             "unit_id": {
                 "type": "bigint",
                 "unsigned": true,
-                "comment": "this.properties.unitId.title",
+                "comment": "config.properties.unitId.title",
                 "default": 0
             },
             "description": {
                 "type": "text",
-                "comment": "this.properties.description.title"
+                "comment": "config.properties.description.title"
             },
             "help": {
                 "type": "text",
-                "comment": "this.properties.help.title"
+                "comment": "config.properties.help.title"
             },
             "comment": {
                 "type": "text",
-                "comment": "this.properties.comment.title"
+                "comment": "config.properties.comment.title"
             },
             "label": {
                 "type": "VARCHAR",
                 "length": 255,
-                "comment": "this.properties.label.title"
+                "comment": "config.properties.label.title"
             }
         },
         "indexes": {

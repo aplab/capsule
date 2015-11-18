@@ -21,6 +21,7 @@ namespace Capsule\DataStorage;
 use Capsule\Core\Singleton;
 use Capsule\Common\Path;
 use Capsule\Capsule;
+use Capsule\Tools\Tools;
 
 /**
  * DataStorage.php

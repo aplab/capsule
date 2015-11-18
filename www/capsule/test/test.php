@@ -54,9 +54,12 @@ $(document).ready(function() {
 </script>
 <?php
 
+\Capsule\Tools\Tools::dump(\Capsule\User\User::_configSetEditMode());
+\Capsule\Tools\Tools::dump(\Capsule\User\User::_configApply());
 
-\Capsule\Tools\Tools::dump(\Capsule\User\User::_indexConfigData());
-\Capsule\Tools\Tools::dump(\App\Cms\Model\HistoryUploadImage::_indexConfigData());
+//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_comments_tree', 'u6291_eb'));
+//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_dated_information_unit_eb', 'u6291_eb'));
+//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_generic_content_source', 'u6291_eb'));
 //\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
 
 

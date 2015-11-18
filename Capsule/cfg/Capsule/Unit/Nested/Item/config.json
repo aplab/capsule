@@ -8,7 +8,7 @@
             "help": "",
             "comment": "",
             "label": "",
-            "bind": "this.container",
+            "bind": "config.container",
             "column": {
                 "c1": {
                     "width": 200,
