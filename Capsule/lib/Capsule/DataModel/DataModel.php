@@ -74,14 +74,6 @@ abstract class DataModel
     const TABLE_NAME_AUTO = 'AUTO';
 
     /**
-     * used in the configuration files
-     * Использовать имя таблицы родительского класса
-     *
-     * @var string
-     */
-    const TABLE_NAME_INHERIT = 'INHERIT';
-
-    /**
      * Свойства объекта
      *
      * @var array
@@ -283,7 +275,7 @@ abstract class DataModel
      * @param string $class
      * @return array
      */
-    public static function _configData($class = null)
+    protected static function _configData($class = null)
     {
         $c = $class ?: get_called_class();
         $f = __FUNCTION__;
@@ -379,7 +371,6 @@ abstract class DataModel
         $class = get_called_class();
         $storage = Storage::getInstance();
         if ($storage->exists($class)) {
-            echo'drop';
             $storage->drop($class);
         }
     }

@@ -54,7 +54,7 @@ $(document).ready(function() {
 </script>
 <?php
 
-\Capsule\Tools\Tools::dump(\Capsule\User\User::_configSetEditMode());
+#\Capsule\Tools\Tools::dump(\Capsule\User\User::_configSetEditMode());
 \Capsule\Tools\Tools::dump(\Capsule\User\User::_configApply());
 
 //\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_comments_tree', 'u6291_eb'));
