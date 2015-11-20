@@ -22,6 +22,7 @@ use Capsule\Db\Db;
 use Capsule\DataModel\Inflector;
 use Capsule\Core\Fn;
 use Capsule\Model\Exception;
+
 /**
  * UnitTs.php
  * С меткой времени создания и последнего изменения.
@@ -37,15 +38,17 @@ class UnitTs extends Unit
      * @var string
      */
     const CREATED = 'created', LAST_MODIFIED = 'last_modified';
-    
+
     /**
      * Сохраняет объект в связанную таблицу базы данных.
      * Возвращает присвоенный идентификатор.
      *
-     *  @param void
-     *  @return int
+     * @return int
+     * @throws Exception
+     * @param void
      */
-    protected function insert() {
+    protected function insert()
+    {
         $db = Db::getInstance();
         $table = self::config()->table->name;
         $fields = $db->listFields($table);
@@ -71,7 +74,7 @@ class UnitTs extends Unit
             $sql = 'INSERT INTO ' . $db->bq($table) . '(`' . self::CREATED . '`) VALUES(NOW())';
         } else {
             $sql = 'INSERT INTO ' . $db->bq($table) . ' (' .
-                    join(', ', $db->bq(array_keys($values))) . ', `' . self::CREATED . '`)
+                join(', ', $db->bq(array_keys($values))) . ', `' . self::CREATED . '`)
                     VALUES (' . join(', ', $values) . ', NOW())';
         }
         $db->query($sql);
@@ -82,15 +85,17 @@ class UnitTs extends Unit
         $this->data[static::$key] = $key;
         return $key;
     }
-    
+
     /**
      * Обновляет объект в связанной таблице базы данных.
      * Возвращает
      *
-     *  @param void
-     *  @return boolean
+     * @return bool
+     * @throws Exception
+     * @param void
      */
-    protected function update() {
+    protected function update()
+    {
         $db = Db::getInstance();
         $table = self::config()->table->name;
         $fields = $db->listFields($table);
@@ -130,7 +135,7 @@ class UnitTs extends Unit
         }
         return $db->affected_rows;
     }
-    
+
     /**
      * Disable set special property "created" directly
      *
@@ -138,8 +143,10 @@ class UnitTs extends Unit
      * @param string $name
      * @return void
      */
-    final protected function setCreated($value, $name) {}
-    
+    final protected function setCreated($value, $name)
+    {
+    }
+
     /**
      * Disable set special property "last modified" directly
      *
@@ -147,5 +154,7 @@ class UnitTs extends Unit
      * @param string $name
      * @return void
      */
-    final protected function setLastModified($value, $name) {}
+    final protected function setLastModified($value, $name)
+    {
+    }
 }

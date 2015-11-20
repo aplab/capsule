@@ -19,6 +19,7 @@
 namespace Capsule\Unit;
 
 use Capsule\Model\IdBased;
+
 /**
  * Unit.php
  *
@@ -27,7 +28,8 @@ use Capsule\Model\IdBased;
  */
 abstract class Unit extends IdBased
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 }

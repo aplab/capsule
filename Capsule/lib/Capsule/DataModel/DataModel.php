@@ -338,31 +338,19 @@ abstract class DataModel
         }
         // Получаем из фрагмента конфига только переопределенные параметры
         $diff = Fn::array_diff_assoc_recursive($data, $parent_data);
-        if (Fn::array_diff_assoc_recursive($data, $diff)) {
-            self::_saveConfigfragment($diff);
+
+        $data = array_replace_recursive($parent_data, $diff);
+        if (!isset($diff['table']['name'])) {
+            unset($data['table']['name']);
         }
-        if (isset($diff['table'])) {
-            // Неочевидное поведение:
-            // Если в конфиге есть секция table, значит у модуля должна быть
-            // своя таблица. Если такой секции нет, то модуль работает с
-            // таблицей модуля-предка, если такой есть; Или не может работать с
-            // таблицей вообще.
-            if (!isset($diff['table']['name'])) {
-                // Если имя таблицы не задано вручную, то оно генерируется
-                // автоматически на основе полного имени класса.
-                $diff['table']['name'] = Inflector::getInstance()->getAssociatedTable($class);
-            }
-        }
-        ret продолжать ДУМАТЬ!!! urn array_replace_recursive($parent_data, $diff);
 
-
-
-        $path = self::_configLocation();
         $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         $json = json_encode($data, $opt);
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new Exception(Error::getLastError());
         }
+
+        $path = self::_configLocation();
         self::_createConfigFile();
         if (false === file_put_contents($path, $json, LOCK_EX)) {
             $msg = 'Unable to make configuration file: ' . $path;
