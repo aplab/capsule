@@ -329,8 +329,35 @@ abstract class DataModel
      */
     public static function _configSetEditMode()
     {
+        $class = get_called_class();
+        $data = self::_configDataFragment($class);
+        $parent_data = array();
+        $parent_class = get_parent_class($class);
+        if ($parent_class) {
+            $parent_data = self::_configData($parent_class);
+        }
+        // Получаем из фрагмента конфига только переопределенные параметры
+        $diff = Fn::array_diff_assoc_recursive($data, $parent_data);
+        if (Fn::array_diff_assoc_recursive($data, $diff)) {
+            self::_saveConfigfragment($diff);
+        }
+        if (isset($diff['table'])) {
+            // Неочевидное поведение:
+            // Если в конфиге есть секция table, значит у модуля должна быть
+            // своя таблица. Если такой секции нет, то модуль работает с
+            // таблицей модуля-предка, если такой есть; Или не может работать с
+            // таблицей вообще.
+            if (!isset($diff['table']['name'])) {
+                // Если имя таблицы не задано вручную, то оно генерируется
+                // автоматически на основе полного имени класса.
+                $diff['table']['name'] = Inflector::getInstance()->getAssociatedTable($class);
+            }
+        }
+        ret продолжать ДУМАТЬ!!! urn array_replace_recursive($parent_data, $diff);
+
+
+
         $path = self::_configLocation();
-        $data = self::_buildConfigData();
         $opt = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         $json = json_encode($data, $opt);
         if (JSON_ERROR_NONE !== json_last_error()) {
