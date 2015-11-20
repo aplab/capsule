@@ -43,7 +43,7 @@ class Nested extends Controller
             print json_encode(array());
             return;
         }
-        if (!is_subclass_of($class, IdBased::_class())) {
+        if (!is_subclass_of($class, IdBased::class)) {
             print json_encode(array());
             return;
         }

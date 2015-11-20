@@ -185,22 +185,6 @@ abstract class DataModel
     }
 
     /**
-     * Возвращает имя класса без namespace
-     *
-     * @param string|null $class
-     * @return string
-     */
-    final protected static function _classname($class = null)
-    {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            $data = explode('\\', $class);
-            self::$common[$class][__FUNCTION__] = array_pop($data);
-        }
-        return self::$common[$class][__FUNCTION__];
-    }
-
-    /**
      * Returns module configuration object
      *
      * @param void
@@ -213,17 +197,6 @@ abstract class DataModel
             self::$common[$c][self::REF_CONFIG] = self::_loadConfig($c);
         }
         return self::$common[$c][self::REF_CONFIG];
-    }
-
-    /**
-     * Returns the name of the class
-     *
-     * @param void
-     * @return Config
-     */
-    final public static function _class()
-    {
-        return get_called_class();
     }
 
     /**
@@ -652,13 +625,14 @@ abstract class DataModel
      */
     protected static function _getter($name)
     {
-        $class = get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__][$name])) {
+        $c = get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f][$name])) {
             $getter = 'get' . ucfirst($name);
-            self::$common[$class][__FUNCTION__][$name] =
+            self::$common[$c][$f][$name] =
                 in_array($getter, self::_listMethods()) ? $getter : false;
         }
-        return self::$common[$class][__FUNCTION__][$name];
+        return self::$common[$c][$f][$name];
     }
 
     /**
@@ -669,41 +643,13 @@ abstract class DataModel
      */
     protected static function _setter($name)
     {
-        $class = get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__][$name])) {
+        $c = get_called_class();
+        $f = __FUNCTION__;
+        if (!isset(self::$common[$c][$f][$name])) {
             $setter = 'set' . ucfirst($name);
-            self::$common[$class][__FUNCTION__][$name] =
-                in_array($setter, self::_listMethods()) ? $setter : false;
+            self::$common[$c][$f][$name] = in_array($setter, self::_listMethods()) ? $setter : false;
         }
-        return self::$common[$class][__FUNCTION__][$name];
-    }
-
-    /**
-     * Возвращает иерархию родительских классов.
-     *
-     * @param string $class
-     * @return array
-     */
-    protected static function _supertypeHierarchy($class = null)
-    {
-        $class = $class ?: get_called_class();
-        if (!isset(self::$common[$class][__FUNCTION__])) {
-            $tmp = array();
-            $tmp[] = $class;
-            $parent = get_parent_class($class);
-            while ($parent) {
-                $tmp[] = $parent;
-                $parent = get_parent_class($parent);
-            }
-            $list = array_reverse($tmp);
-            $size = sizeof($list);
-            for ($i = 0; $i < $size; $i++) {
-                $tmp = $list;
-                $next_class = array_pop($list);
-                self::$common[$next_class][__FUNCTION__] = $tmp;
-            }
-        }
-        return self::$common[$class][__FUNCTION__];
+        return self::$common[$c][$f][$name];
     }
 
     /**

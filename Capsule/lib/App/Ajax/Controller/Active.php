@@ -37,7 +37,7 @@ class Active extends Controller
         $id = $r->gets('id');
         if (!$class) return;
         if (!$id) return;
-        if (!is_subclass_of($class, IdBased::_class())) return;
+        if (!is_subclass_of($class, IdBased::class)) return;
         $o = $class::getElementById($id);
         if (!$o) return;
         if (!isset($o->active)) return;

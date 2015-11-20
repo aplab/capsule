@@ -54,14 +54,15 @@ $(document).ready(function() {
 </script>
 <?php
 
-\Capsule\Tools\Tools::dump(\Capsule\Unit\Unit::_configSetEditMode());
-\Capsule\Tools\Tools::dump(\Capsule\Unit\Unit::_configApply());
+class SomeTest extends \Capsule\Unit\UnitTs
+{
 
-//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_comments_tree', 'u6291_eb'));
-//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_dated_information_unit_eb', 'u6291_eb'));
-//\Capsule\Tools\Tools::dump(\Capsule\DataModel\DataModel::_realIndexConfigData('cs_generic_content_source', 'u6291_eb'));
-//\Capsule\Tools\Tools::dump(\Capsule\Module\Catalog\Unit::makeConfig());
+}
 
+\Capsule\Tools\Tools::dump(SomeTest::_configDataJson());
+
+#\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::_configSetEditMode());
+#\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::_configApply());
 
 //\Capsule\Tools\Tools::dump($app->worktime);
 
