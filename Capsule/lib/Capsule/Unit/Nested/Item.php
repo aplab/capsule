@@ -46,7 +46,7 @@ class Item extends UnitTsUsr
         if (!ctype_digit($container_id)) return array();
         $db = Db::getInstance();
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` = ' . $db->qt($container_id) . '
+                WHERE `container_id` = ' . $db->qt($container_id) . '
                 ORDER BY ' . $db->bq(static::$key);
         return static::populate($db->query($sql));
     }
@@ -64,13 +64,14 @@ class Item extends UnitTsUsr
         if (!ctype_digit($container_id)) return 0;
         $db = Db::getInstance();
         $sql = 'SELECT COUNT(*) FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` = ' . $db->qt($container_id);
+                WHERE `container_id` = ' . $db->qt($container_id);
         return $db->query($sql)->fetch_one();
     }
 
     /**
      * Возвращает страницу ообъектов из связанной таблицы
      *
+     * @param $container_id
      * @param int $page_number
      * @param int $items_per_page
      * @return array
@@ -83,7 +84,7 @@ class Item extends UnitTsUsr
         $db = Db::getInstance();
         $from = $items_per_page * ($page_number - 1);
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` = ' . $db->qt($container_id) . '
+                WHERE `container_id` = ' . $db->qt($container_id) . '
                 ORDER BY ' . $db->bq(static::$key) . '
                 LIMIT ' . $db->es($from) . ', ' . $db->es($items_per_page);
         return static::populate($db->query($sql));
@@ -124,7 +125,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` IN(' . join(', ', $in) . ')
+                WHERE `container_id` IN(' . join(', ', $in) . ')
                 ORDER BY ' . $db->bq(static::$key);
         return static::populate($db->query($sql));
     }
@@ -145,7 +146,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` NOT IN(' . join(', ', $in) . ')
+                WHERE `container_id` NOT IN(' . join(', ', $in) . ')
                 ORDER BY ' . $db->bq(static::$key);
         return static::populate($db->query($sql));
     }
@@ -167,7 +168,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT COUNT(*) FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` IN(' . join(', ', $in) . ')';
+                WHERE `container_id` IN(' . join(', ', $in) . ')';
         return $db->query($sql)->fetch_one();
     }
 
@@ -188,7 +189,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT COUNT(*) FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` NOT IN(' . join(', ', $in) . ')';
+                WHERE `container_id` NOT IN(' . join(', ', $in) . ')';
         return $db->query($sql)->fetch_one();
     }
 
@@ -237,7 +238,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` IN(' . join(', ', $in) . ')
+                WHERE `container_id` IN(' . join(', ', $in) . ')
                 ORDER BY ' . $db->bq(static::$key) . '
                 LIMIT ' . $db->es($from) . ', ' . $db->es($items_per_page);
         return static::populate($db->query($sql));
@@ -262,7 +263,7 @@ class Item extends UnitTsUsr
             $in[$v] = $db->qt($v);
         });
         $sql = 'SELECT * FROM `' . self::config()->table->name . '`
-	            WHERE `container_id` NOT IN(' . join(', ', $in) . ')
+                WHERE `container_id` NOT IN(' . join(', ', $in) . ')
                 ORDER BY ' . $db->bq(static::$key) . '
                 LIMIT ' . $db->es($from) . ', ' . $db->es($items_per_page);
         return static::populate($db->query($sql));

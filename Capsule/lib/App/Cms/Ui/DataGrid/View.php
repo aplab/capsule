@@ -24,6 +24,7 @@ use App\Cms\Ui\Script;
 use App\Cms\Ui\Stylesheet;
 use App\Cms\Cms;
 use App\Cms\Ui\Ui;
+
 /**
  * View.php
  *
@@ -37,7 +38,8 @@ class View
      */
     protected $dataGrid;
 
-    public function __construct(DataGrid $data_grid) {
+    public function __construct(DataGrid $data_grid)
+    {
         $this->dataGrid = $data_grid;
         $ui = Ui::getInstance();
         $ui->builtinCss->append($this->getWidthDefinition());
@@ -56,7 +58,8 @@ class View
      * @param void
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         try {
             TplVar::getInstance()->dataGrid = $this->dataGrid;
             ob_start();
@@ -76,7 +79,8 @@ class View
      * @param void
      * @return string|NULL
      */
-    protected function getWidthDefinition() {
+    protected function getWidthDefinition()
+    {
         $tmp = array();
         $sum = 0;
         foreach ($this->dataGrid->columns as $column) {

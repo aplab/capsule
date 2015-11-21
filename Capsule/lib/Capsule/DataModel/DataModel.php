@@ -66,14 +66,6 @@ abstract class DataModel
     const REF_THIS = 'this';
 
     /**
-     * used in the configuration files
-     * Автоматически создавать имя таблицы
-     *
-     * @var string
-     */
-    const TABLE_NAME_AUTO = 'AUTO';
-
-    /**
      * Свойства объекта
      *
      * @var array
@@ -276,6 +268,7 @@ abstract class DataModel
         // Получаем из фрагмента конфига только переопределенные параметры
         $diff = Fn::array_diff_assoc_recursive($data, $parent_data);
         if (Fn::array_diff_assoc_recursive($data, $diff)) {
+            // Если получившийся конфиг изменился по сравнению с исходным, сохранить его
             self::_saveConfigfragment($diff);
         }
         if (isset($diff['table'])) {

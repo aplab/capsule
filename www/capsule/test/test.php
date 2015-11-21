@@ -61,8 +61,8 @@ class SomeTest extends \Capsule\Unit\UnitTs
 
 \Capsule\Tools\Tools::dump(SomeTest::_configDataJson());
 
-#\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::_configSetEditMode());
-#\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::_configApply());
+\Capsule\Tools\Tools::dump(SomeTest::_configSetEditMode());
+\Capsule\Tools\Tools::dump(SomeTest::_configApply());
 
 //\Capsule\Tools\Tools::dump($app->worktime);
 
