@@ -47,7 +47,7 @@ $language_data = array (
         1 => array(
             // Navy Blue Bold Keywords
             '1WRESET' , '1WREAD' , '1WWRITE' , '1WSEARCHFIRST' , '1WSEARCHNEXT' ,'1WVERIFY' , '1WIRECOUNT',
-            'REF_CONFIG' , 'ACI' , 'ADC' , 'BCCARD' , 'CLOCK' , 'COM1' ,
+            'CONFIG' , 'ACI' , 'ADC' , 'BCCARD' , 'CLOCK' , 'COM1' ,
             'COM2' , 'PS2EMU' , 'ATEMU' , 'I2CSLAVE' ,
             'INPUT', 'OUTPUT', 'GRAPHLCD' , 'KEYBOARD' , 'TIMER0' , 'TIMER1' ,
             'LCDBUS' , 'LCDMODE' , '1WIRE' , 'LCD' , 'SERIALOUT' ,

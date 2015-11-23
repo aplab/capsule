@@ -259,30 +259,49 @@ abstract class DataModel
     protected static function _buildConfigData($class = null)
     {
         $class = $class ?: get_called_class();
-        $data = self::_configDataFragment($class);
+
+        $default_associated_table = Inflector::getInstance()->getAssociatedTable($class);
+        $fragment = self::_configDataFragment($class);
+        if (isset($fragment['table'])) {// есть секция table
+            if (!isset($fragment['table']['name'])) {// имя не задано, ставим по умолчанию
+                $fragment['table']['name'] = $default_associated_table;
+            }
+        }
+
         $parent_data = array();
         $parent_class = get_parent_class($class);
         if ($parent_class) {
             $parent_data = self::_configData($parent_class);
         }
+
         // Получаем из фрагмента конфига только переопределенные параметры
-        $diff = Fn::array_diff_assoc_recursive($data, $parent_data);
-        if (Fn::array_diff_assoc_recursive($data, $diff)) {
+        $diff = Fn::array_diff_assoc_recursive($fragment, $parent_data);
+        if (isset($diff['table']['name']) && $diff['table']['name'] === $default_associated_table) {
+            unset($diff['table']['name']);
+        }
+
+        if (Fn::array_diff_assoc_recursive($fragment, $diff)) {
             // Если получившийся конфиг изменился по сравнению с исходным, сохранить его
             self::_saveConfigfragment($diff);
         }
+
         if (isset($diff['table'])) {
-            // Неочевидное поведение:
-            // Если в конфиге есть секция table, значит у модуля должна быть
-            // своя таблица. Если такой секции нет, то модуль работает с
-            // таблицей модуля-предка, если такой есть; Или не может работать с
-            // таблицей вообще.
+            /**
+             * Неочевидное поведение:
+             * Если в конфиге есть секция table, значит у модуля должна быть
+             * своя таблица. Если такой секции нет, то модуль работает с
+             * таблицей модуля-предка, если такой есть; Или не может работать с
+             * таблицей вообще.
+             */
             if (!isset($diff['table']['name'])) {
-                // Если имя таблицы не задано вручную, то оно генерируется
-                // автоматически на основе полного имени класса.
+                /**
+                 * Если имя таблицы не задано вручную, то оно генерируется
+                 * автоматически на основе полного имени класса.
+                 */
                 $diff['table']['name'] = Inflector::getInstance()->getAssociatedTable($class);
             }
         }
+
         return array_replace_recursive($parent_data, $diff);
     }
 
@@ -296,14 +315,25 @@ abstract class DataModel
     public static function _configSetEditMode()
     {
         $class = get_called_class();
-        $data = self::_configDataFragment($class);
+
+        $default_associated_table = Inflector::getInstance()->getAssociatedTable($class);
+        $fragment = self::_configDataFragment($class);
+
+        $fragment_table_name = isset($fragment['table']['name']) ? $fragment['table']['name'] : null;
+
         $parent_data = array();
         $parent_class = get_parent_class($class);
         if ($parent_class) {
             $parent_data = self::_configData($parent_class);
         }
         // Получаем из фрагмента конфига только переопределенные параметры
-        $diff = Fn::array_diff_assoc_recursive($data, $parent_data);
+        $diff = Fn::array_diff_assoc_recursive($fragment, $parent_data);
+        if (!isset($diff['table'])) {
+            if ($fragment_table_name === $default_associated_table) {
+                // Состояние: есть секция table и имя не задано
+                $diff['table'] = array();
+            }
+        }
 
         $data = array_replace_recursive($parent_data, $diff);
         if (!isset($diff['table']['name'])) {

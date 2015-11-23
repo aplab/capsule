@@ -70,7 +70,7 @@ $language_data = array (
 
         // Toplevel objects: http://documentation.typo3.org/documentation/tsref/tlo-objects/
         3 => array(
-            'CARRAY', 'REF_CONFIG', 'CONSTANTS', 'FE_DATA', 'FE_TABLE', 'FRAME',
+            'CARRAY', 'CONFIG', 'CONSTANTS', 'FE_DATA', 'FE_TABLE', 'FRAME',
             'FRAMESET', 'META', 'PAGE', 'plugin'
             ),
 

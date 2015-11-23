@@ -59,11 +59,14 @@ class SomeTest extends \Capsule\Unit\UnitTs
 
 }
 
-\Capsule\Tools\Tools::dump(SomeTest::_configDataJson());
+SomeTest::_configClearCache();
 
-\Capsule\Tools\Tools::dump(SomeTest::_configSetEditMode());
-\Capsule\Tools\Tools::dump(SomeTest::_configApply());
+//\Capsule\Tools\Tools::dump(SomeTest::_configSetEditMode());
+//\Capsule\Tools\Tools::dump(SomeTest::_configApply());
 
+//\Capsule\Tools\Tools::dump(SomeTest::_configDataJson());
+\Capsule\Tools\Tools::dump(SomeTest::config());
+\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::config());
 //\Capsule\Tools\Tools::dump($app->worktime);
 
 
