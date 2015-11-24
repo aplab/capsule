@@ -1,4 +1,23 @@
 {
     "title": "some-test",
-    "table": []
+    "table": {
+        "indexes": {
+            "created_lastmodified": {
+                "fields": {
+                    "created": [],
+                    "last_modified": []
+                }
+            },
+            "lastmodified_created": {
+                "fields": {
+                    "created": {
+                        "position": 200
+                    },
+                    "last_modified": {
+                        "position": 100
+                    }
+                }
+            }
+        }
+    }
 }

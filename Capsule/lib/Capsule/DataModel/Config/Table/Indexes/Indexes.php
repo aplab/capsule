@@ -19,6 +19,7 @@
 namespace Capsule\DataModel\Config\Table\Indexes;
 
 use Capsule\DataModel\Config\AbstractConfig;
+use Capsule\Tools\Tools;
 
 /**
  * Indexes.php
@@ -42,6 +43,9 @@ class Indexes extends AbstractConfig
     public function __construct(array $data) {
         parent::__construct($data);
         foreach ($data as $index_name => $index_data) {
+            if (is_null($index_data)) {
+                continue;
+            }
             $this->data[$index_name] = new Index($index_data);
         }
     }

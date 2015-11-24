@@ -58,16 +58,23 @@ class SomeTest extends \Capsule\Unit\UnitTs
 {
 
 }
+class SomeTestChild extends SomeTest
+{
 
-SomeTest::_configClearCache();
+}
 
+//SomeTest::_configClearCache();
+//
 //\Capsule\Tools\Tools::dump(SomeTest::_configSetEditMode());
-\Capsule\Tools\Tools::dump(SomeTest::_configApply());
+//\Capsule\Tools\Tools::dump(SomeTest::_configApply());
+//\Capsule\Tools\Tools::dump(SomeTest::all());
 
-//\Capsule\Tools\Tools::dump(SomeTest::_configDataJson());
-//\Capsule\Tools\Tools::dump(SomeTest::config());
-//\Capsule\Tools\Tools::dump(\Capsule\Unit\UnitTs::config());
-//\Capsule\Tools\Tools::dump($app->worktime);
+SomeTestChild::_configClearCache();
+
+\Capsule\Tools\Tools::dump(SomeTestChild::_configSetEditMode());
+\Capsule\Tools\Tools::dump(SomeTestChild::_configApply());
+#\Capsule\Tools\Tools::dump(SomeTestChild::all());
+
 
 
 ?>
