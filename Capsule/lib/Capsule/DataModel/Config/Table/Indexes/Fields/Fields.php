@@ -28,9 +28,16 @@ use Capsule\DataModel\Config\AbstractConfig;
  */
 class Fields extends AbstractConfig
 {
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
         foreach ($data as $field_name => $field_data) {
+            if (is_null($field_data)) {
+                // полю присвоили null
+                // удаление ключа поля
+                unset($this->data[$field_name]);
+                continue;
+            }
             $this->data[$field_name] = new Field($field_data);
         }
     }
@@ -41,7 +48,8 @@ class Fields extends AbstractConfig
      * @param void
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         $tmp = array();
         $counter = 0;
         foreach ($this->data as $name => $field) {

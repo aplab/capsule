@@ -40,10 +40,14 @@ class Indexes extends AbstractConfig
      * @param array $data
      * @return self
      */
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
         foreach ($data as $index_name => $index_data) {
             if (is_null($index_data)) {
+                // индексу присвоили null
+                // удаление ключа индекса
+                unset($this->data[$index_name]);
                 continue;
             }
             $this->data[$index_name] = new Index($index_data);
@@ -53,10 +57,11 @@ class Indexes extends AbstractConfig
     /**
      * explicit conversion to string
      *
-     * @param void
+     * @param int $indent
      * @return string
      */
-    public function toString($indent = 0) {
+    public function toString($indent = 0)
+    {
         $ret = array();
         foreach ($this->data as $name => $index) {
             $type = $index->get('type', self::DEFAULT_TYPE);

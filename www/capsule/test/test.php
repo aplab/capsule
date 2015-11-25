@@ -73,7 +73,7 @@ SomeTestChild::_configClearCache();
 
 \Capsule\Tools\Tools::dump(SomeTestChild::_configSetEditMode());
 \Capsule\Tools\Tools::dump(SomeTestChild::_configApply());
-#\Capsule\Tools\Tools::dump(SomeTestChild::all());
+\Capsule\Tools\Tools::dump(SomeTestChild::all());
 
 
 

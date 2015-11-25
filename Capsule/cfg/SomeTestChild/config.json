@@ -1,7 +1,18 @@
 {
     "table": {
         "indexes": {
-            "lastmodified_created": null
+            "created_lastmodified": null,
+            "lastmodified_created": {
+                "fields": {
+                    "created": null,
+                    "id": {
+                        "position": 50
+                    },
+                    "id": {
+                        "position": 60
+                    }
+                }
+            }
         }
     }
 }
