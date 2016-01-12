@@ -6,9 +6,6 @@
                 "fields": {
                     "created": null,
                     "id": {
-                        "position": 50
-                    },
-                    "id": {
                         "position": 60
                     }
                 }
