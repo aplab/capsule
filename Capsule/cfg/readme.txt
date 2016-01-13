@@ -1,1 +1,1 @@
-Общесистемные конфигурационные файлы
+System-wide configuration files

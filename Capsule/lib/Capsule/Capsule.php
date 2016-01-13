@@ -26,7 +26,9 @@ use Capsule\DataStorage\DataStorage;
 use Capsule\Common\Path;
 use Capsule\DataStruct\Loader;
 use Capsule\DataStruct\Config;
+use Capsule\Tools\Tools;
 use PHP\Exceptionizer\Exceptionizer;
+use \Capsule\Config\Path as ConfigPath;
 /**
  * Capsule.php
  *
@@ -39,6 +41,12 @@ use PHP\Exceptionizer\Exceptionizer;
  * @property string $documentRoot
  * @property string $osType
  * @property Config $config
+ * @property string $lib
+ * @property string $cfg
+ * @property string $bin
+ * @property string $ext
+ * @property string $tmp
+ * @property string $var
  */
 final class Capsule implements \Serializable
 {
@@ -57,6 +65,7 @@ final class Capsule implements \Serializable
     const DIR_EXT = 'ext'; // olg opt
     const DIR_TMP = 'tmp';
     const DIR_VAR = 'var';
+    const DIR_TPL = 'tpl';
     
     /**
      * Developer mode flag
@@ -127,6 +136,7 @@ final class Capsule implements \Serializable
         $this->data[self::DIR_TMP] = $this->systemRoot . '/' . self::DIR_TMP;
         $this->data[self::DIR_VAR] = $this->systemRoot . '/' . self::DIR_VAR;
         $this->data[self::DIR_BIN] = $this->systemRoot . '/' . self::DIR_BIN;
+        $this->data[self::DIR_TPL] = $this->systemRoot . '/' . self::DIR_TPL;
         include 'Exception.php';
         include $this->{self::DIR_LIB} . '/Capsule/Core/Exception.php';
         if (PHP_MAJOR_VERSION < 5 or PHP_MINOR_VERSION < 4 or PHP_RELEASE_VERSION < 3) {
@@ -234,12 +244,11 @@ final class Capsule implements \Serializable
     protected function getConfig($name) {
         if (!array_key_exists($name, $this->data)) {
             $class = get_class($this);
-            $namespace = Fn::get_namespace($this);
             $storage = DataStorage::getInstance();
             if ($storage->exists($class)) {
                 $this->data[$name] = $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->{self::DIR_CFG}, $namespace, 'config.json');
+                $path = new ConfigPath($this);
                 $loader = new Loader();
                 $data = $loader->loadJson($path);
                 $$name = new Config($data);
