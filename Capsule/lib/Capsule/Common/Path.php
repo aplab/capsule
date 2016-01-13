@@ -31,10 +31,9 @@ class Path
      * @var string
      */
     protected $path;
-    
+
     /**
-     * @param string
-     * @return self
+     * @throws Exception
      */
     public function __construct() {
         $tmp = array();
