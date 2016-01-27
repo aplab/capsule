@@ -140,7 +140,7 @@ class Inflector extends Singleton
      */
     protected function convertPropertyToField($property)
     {
-        return strtr($property, $this->getSymbolConversionTable());
+        return trim(strtr($property, $this->getSymbolConversionTable()), '_');
     }
 
     /**
