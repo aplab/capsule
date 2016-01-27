@@ -167,6 +167,7 @@ class Fn
      *
      * @param
      * @param string|object $context
+     * @return string
      */
     public static function cc($name, $context = null)
     {
@@ -178,16 +179,15 @@ class Fn
             }
             return '\\' . $name;
         }
+        if (preg_match('/^\\\\/', $name)) {
+            return $name;
+        }
         if (is_object($context)) {
             $context = self::get_namespace($context);
         }
         $context = preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/u', '\\', $context);
         $context = preg_replace('/\\\\{2,}/', '\\', $context);
-        if (preg_match('/^\\\\/', $name)) {
-            return $name;
-        }
-        return preg_replace('/\\\\{2,}/', '\\', '\\' .
-            self::concat_ws('\\', $context, $name));
+        return preg_replace('/\\\\{2,}/', '\\', '\\' . self::concat_ws('\\', $context, $name));
     }
 
     /**
