@@ -91,7 +91,7 @@ abstract class ReferenceController extends DefaultController
     
         $c = $this->moduleClass;
         $config = $c::config();
-        $title = $config->get('title')?:untitled;
+        $title = $config->get('title')?:'untitled';
         $this->ui->title->prepend($title.'::List items');
         
         $data_grid = new DataGrid('capsule-ui-datagrid', $c::page($p->currentPage, $p->itemsPerPage));
