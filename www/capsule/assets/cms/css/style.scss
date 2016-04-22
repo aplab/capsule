@@ -1,0 +1,139 @@
+@import "/capsule/assets/cms/font/opensans.css";
+/*
+	Open Sans, 300, 300 italic, 400, 400 italic, 600, 600 italic, 700, 700 italic, 800, 800 italic
+*/
+
+
+
+/* GENERAL */
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#capsule-cms-body {
+    color: #000000;
+    font-family: "Open Sans", sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#capsule-cms-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    margin: auto;
+    overflow: hidden;
+}
+#capsule-cms-main-menu {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    top: 0;
+    right: 0;
+    overflow: visible;
+    background: #e8e7e6;
+    z-index: 2147483638;
+}
+#capsule-cms-workplace {
+    width: 100%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 100;
+}
+#capsule-cms-buffer {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    position: absolute;
+    left: -9000px;
+    top: 0;
+}
+/* END OF GENERAL */    
+
+/* SYS MAIN TOOLBAR PLACE */
+#capsule-cms-toolbar-place {
+    height: 29px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+/* END OF SYS MAIN TOOLBAR PLACE */
+
+/* CKEDITOR SMALL TUNING :) */
+.cke_chrome {
+    border: 0 !important;
+}
+.cke_top {
+    box-shadow: none !important;
+}
+/* DIALOG-WINDOW-PANEL */
+.dialog-window-panel {
+    position: absolute; 
+    left: 15px;
+    top: 15px;
+    right: 15px;
+    bottom: 36px;
+}
+.dialog-window-panel .dialog-window-tabs {
+    overflow: hidden;
+}
+.dialog-window-body {
+    background-color: #f2f1f0;
+    border: 1px solid #a4a09d;
+    border-top: 0;
+    position: absolute;
+    bottom: 0;
+    top: 30px;
+    right: 0;
+    left: 0;
+    border-radius: 0 0 3px 3px;
+    overflow: auto;
+    padding: 15px;
+}
+.dialog-window-buttons-place {
+    position: absolute; 
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+    height: 21px;
+    overflow: hidden;
+    clear: both;
+}
+.dialog-window-buttons-place .dialog-window-button {
+    position: static; 
+    overflow: hidden;
+    float: right;
+    margin-left: 15px;
+}
+.dialog-window-buttons-place .dialog-window-button .capsule-cms-control-button span {
+    padding: 0 10px;
+}
+/* END OF DIALOG-WINDOW-PANEL */
+.minw83 {
+    min-width: 83px;
+}
+.bold {
+    font-weight: bold;
+}
+/* jquery ui resizable tuning */
+.ui-icon-gripsmall-diagonal-se {
+    background: url("data:image/gif;base64,R0lGODlhBwAHAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFFAACACwAAAAABwAHAAACDJQfZ5HI/gSbctpbAAAh+QQFFAACACwAAAAABwAHAAACDJQPZ5DI/gSbctpbAAA7") bottom right no-repeat !important;
+}
+/* COMMON SECTION */
+strong {
+    font-weight: bold;
+}
+/* END OF COMMON SECTION */
