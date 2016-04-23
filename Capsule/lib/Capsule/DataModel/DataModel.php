@@ -39,13 +39,6 @@ use PHP\Exceptionizer\Exceptionizer;
 abstract class DataModel
 {
     /**
-     * Config filename
-     *
-     * @var string
-     */
-    const CONFIG_FILENAME = 'config.json';
-
-    /**
      * DO NOT CHANGE!
      * config
      * used in the configuration files to refer to himself
@@ -509,7 +502,7 @@ abstract class DataModel
         $c = $class ?: get_called_class();
         $f = __FUNCTION__;
         if (!isset(self::$common[$c][$f])) {
-            self::$common[$c][$f] = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $c, self::CONFIG_FILENAME);
+            self::$common[$c][$f] = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $c . '.json');
         }
         return self::$common[$c][$f];
     }

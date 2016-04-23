@@ -100,13 +100,12 @@ class Db extends mysqli
         $name = __FUNCTION__;
         if (!self::$$name) {
             $class = get_called_class();
-            $namespace = Fn::get_namespace($class);
             $storage = DataStorage::getInstance();
             if ($storage->exists($class)) {
                 self::$$name = $storage->get($class);
                 $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $namespace, 'config.json');
+                $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class . '.json');
                 $loader = new Loader();
                 $data = $loader->loadJson($path);
                 $$name = new Config($data);

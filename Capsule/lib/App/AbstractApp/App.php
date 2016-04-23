@@ -90,12 +90,11 @@ abstract class App extends Singleton
     protected function getConfig($name) {
         if (!array_key_exists($name, $this->data)) {
             $class = get_class($this);
-            $namespace = Fn::get_namespace($this);
             $storage = DataStorage::getInstance();
             if ($storage->exists($class)) {
                 $this->data[$name] = $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->cfg, $namespace, 'config.json');
+                $path = new Path(Capsule::getInstance()->cfg, $class . '.json');
                 $loader = new Loader();
                 $data = $loader->loadJson($path);
                 $$name = new Config($data);
