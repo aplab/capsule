@@ -79,12 +79,11 @@ class Storage
         $name = __FUNCTION__;
         if (!self::$$name) {
             $class = get_called_class();
-            $namespace = Fn::get_namespace($class);
             $storage = DataStorage::getInstance();
             if ($storage->exists($class)) {
                 self::$$name = $storage->get($class); $storage->get($class);
             } else {
-                $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $namespace, 'config.json');
+                $path = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $class . '.json');
                 if (!file_exists($path)) {
                     $dir = dirname($path);
                     if (!is_dir($dir)) {
