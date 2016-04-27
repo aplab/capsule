@@ -54,27 +54,11 @@ $(document).ready(function() {
 </script>
 <?php
 
-class SomeTest extends \Capsule\Unit\UnitTs
-{
 
-}
-class SomeTestChild extends SomeTest
-{
-
-}
-
-//SomeTest::_configClearCache();
-//
-//\Capsule\Tools\Tools::dump(SomeTest::_configSetEditMode());
-//\Capsule\Tools\Tools::dump(SomeTest::_configApply());
-//\Capsule\Tools\Tools::dump(SomeTest::all());
-
-SomeTestChild::_configClearCache();
-
-\Capsule\Tools\Tools::dump(SomeTestChild::_configSetEditMode());
-\Capsule\Tools\Tools::dump(SomeTestChild::_configApply());
-\Capsule\Tools\Tools::dump(SomeTestChild::all());
-
+//\Capsule\Tools\Tools::dump(SomeTestChild::_configSetEditMode());
+//\Capsule\Tools\Tools::dump(SomeTestChild::_configApply());
+//\Capsule\Tools\Tools::dump(SomeTestChild::all());
+\Capsule\Tools\Tools::dump(\Cp\CpUser\User::_configDataJson());
 
 
 ?>

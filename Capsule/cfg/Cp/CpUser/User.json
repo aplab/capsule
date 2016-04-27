@@ -1,0 +1,331 @@
+{
+    "title": "Пользователь системы",
+    "properties": {
+        "login": {
+            "title": "Login",
+            "description": "Логин пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "min": 1,
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 2000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 2000,
+                    "tab": "General"
+                }
+            }
+        },
+        "nickname": {
+            "title": "Nickname",
+            "description": "Ник пользователя", 
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "min": 1,
+                "max": 255
+            },
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 3000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 3000,
+                    "tab": "General"
+                }
+            }
+        },
+        "password": {
+            "title": "Password",
+            "description": "Пароль пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "String"
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Password",
+                    "order": 4000,
+                    "tab": "General"
+                }
+            }
+        },
+        "email": {
+            "title": "E-mail",
+            "description": "E-mail пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "Email",
+                "allowEmpty": "True"
+            },
+            "column": {
+                "c1": {
+                    "width": 200,
+                    "order": 4000,
+                    "type": "Text"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 5000,
+                    "tab": "General"
+                }
+            }
+        },
+        "recieveEmail": {
+            "title": "Получать рассылку",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "column": {
+                "c1": {
+                    "width": 32,
+                    "order": 5000,
+                    "type": "emailRecv"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Flag",
+                    "order": 5500,
+                    "tab": "General"
+                }
+            }
+        },
+        "checkEmail": {
+            "title": "Адрес почты подтвержден",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "column": {
+                "c1": {
+                    "width": 32,
+                    "order": 6000,
+                    "type": "emailCheck"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Flag",
+                    "order": 5500,
+                    "tab": "General"
+                }
+            }
+        },
+        "active": {
+            "title": "Active",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "column": {
+                "c1": {
+                    "width": 32,
+                    "order": 7000,
+                    "type": "Active"
+                }
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Flag",
+                    "order": 7000,
+                    "tab": "General"
+                }
+            }
+        },
+        "skype": {
+            "title": "Skype",
+            "description": "E-mail пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "String"
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 1000,
+                    "tab": "Additional"
+                }
+            }
+        },
+        "balance": {
+            "title": "Balance",
+            "description": "Баланс пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "Digits",
+                "allowEmpty": "True"
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 2000,
+                    "tab": "Additional"
+                }
+            }
+        },
+        "lang": {
+            "title": "Language",
+            "description": "Язык пользователя",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "String"
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 3000,
+                    "tab": "Additional"
+                }
+            }
+        },
+        "avatar": {
+            "title": "Avatar",
+            "description": "",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "StringLength",
+                "max": 255
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Image",
+                    "order": 4000,
+                    "tab": "Additional"
+                }
+            }
+        },
+        "activationLink": {
+            "title": "Activation Link",
+            "description": "Ссылка для активации",
+            "help": "",
+            "comment": "",
+            "label": "",
+            "validator": {
+                "type": "String"
+            },
+            "formElement": {
+                "f1": {
+                    "type": "Text",
+                    "order": 5000,
+                    "tab": "Additional"
+                }
+            }
+        }
+    },
+    "table": {
+        "columns": {
+            "id": {
+                "type": "smallint"
+            },
+            "login": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.login.title"
+            },
+            "nickname": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.nickname.title"
+            },
+            "password": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.password.title"
+            },
+            "email": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.email.title",
+                "default": ""
+            },
+            "recieveEmail": {
+                "type": "TINYINT",
+                "length": 1,
+                "comment": "this.properties.recieveEmail.title"
+            },
+            "checkEmail": {
+                "type": "TINYINT",
+                "length": 1,
+                "comment": "this.properties.checkEmail.title"
+            },
+            "active": {
+                "type": "tinyint",
+                "length": 1,
+                "unsigned": true,
+                "comment": "activity"
+            },
+            "skype": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.skype.title"
+            },
+            "balance": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.balance.title",
+                "default": 0
+            },
+            "lang": {
+                "type": "VARCHAR",
+                "length": 3,
+                "comment": "this.properties.lang.title"
+            },
+            "avatar": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.avatar.title",
+                "default": ""
+            },
+            "activationLink": {
+                "type": "VARCHAR",
+                "length": 255,
+                "comment": "this.properties.activationLink.title"
+            }
+        },
+        "indexes": {
+            "login": {
+                "type": "unique",
+                "fields": {
+                    "login": [
+
+                    ]
+                }
+            }
+        },
+        "name": "cp_user"
+    }
+}

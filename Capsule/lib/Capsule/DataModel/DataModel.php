@@ -179,7 +179,7 @@ abstract class DataModel
     {
         $c = get_called_class();
         if (!isset(self::$common[$c][self::REF_CONFIG])) {
-            self::$common[$c][self::REF_CONFIG] = self::_loadConfig($c);
+            self::$common[$c][self::REF_CONFIG] = self::_loadConfig();
         }
         return self::$common[$c][self::REF_CONFIG];
     }
@@ -187,12 +187,11 @@ abstract class DataModel
     /**
      * Load module configuration object
      *
-     * @param string|null $class
      * @return array
      */
-    protected static function _loadConfig($class = null)
+    protected static function _loadConfig()
     {
-        $class = $class ?: get_called_class();
+        $class = get_called_class();
         if (!Storage::getInstance()->exists($class)) {
             $data = self::_configData();
             /**
@@ -230,15 +229,14 @@ abstract class DataModel
     /**
      * Returns an array of data to create a configuration object
      *
-     * @param string $class
      * @return array
      */
-    protected static function _configData($class = null)
+    protected static function _configData()
     {
-        $c = $class ?: get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
         if (!isset(self::$common[$c][$f])) {
-            self::$common[$c][$f] = self::_buildConfigData($c);
+            self::$common[$c][$f] = self::_buildConfigData();
         }
         return self::$common[$c][$f];
     }
@@ -246,15 +244,14 @@ abstract class DataModel
     /**
      * Собирает и возвращает данные конфига с учетом наследования.
      *
-     * @param string|null $class
      * @return void
      */
-    protected static function _buildConfigData($class = null)
+    protected static function _buildConfigData()
     {
-        $class = $class ?: get_called_class();
+        $class = get_called_class();
 
         $default_associated_table = Inflector::getInstance()->getAssociatedTable($class);
-        $fragment = self::_configDataFragment($class);// загрузить фрагмент
+        $fragment = self::_configDataFragment();// загрузить фрагмент
         if (isset($fragment['table'])) {// есть секция table, значит работает с таблицей
             if (!isset($fragment['table']['name'])) {// имя не задано, ставим значение по умолчанию
                 $fragment['table']['name'] = $default_associated_table;
@@ -264,7 +261,7 @@ abstract class DataModel
         $parent_data = array();// родительский класс
         $parent_class = get_parent_class($class);
         if ($parent_class) {// данные родительского класса по такому же принципу
-            $parent_data = self::_configData($parent_class);
+            $parent_data = $parent_class::_configData();
         }
 
         // Получаем из фрагмента конфига только переопределенные параметры
@@ -452,6 +449,7 @@ abstract class DataModel
         $class = $class ?: get_called_class();
         $path = self::_configLocation($class);
         if (!file_exists($path)) {
+            Tools::dump($path . ' cre ' . $class);
             self::_createConfigFile();
             return array();
         }
@@ -478,15 +476,14 @@ abstract class DataModel
      * Возвращает фрагмент конфигурационных данных, переопределенных в текущей
      * модели.
      *
-     * @param string|null $class
      * @return array
      */
-    public static function _configDataFragment($class = null)
+    public static function _configDataFragment()
     {
-        $c = $class ?: get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
         if (!isset(self::$common[$c][$f])) {
-            self::$common[$c][$f] = self::_loadConfigDataFragment($c);
+            self::$common[$c][$f] = $c::_loadConfigDataFragment();
         }
         return self::$common[$c][$f];
     }
@@ -497,9 +494,9 @@ abstract class DataModel
      * @param string|null $class
      * @return string
      */
-    public static function _configLocation($class = null)
+    public static function _configLocation()
     {
-        $c = $class ?: get_called_class();
+        $c = get_called_class();
         $f = __FUNCTION__;
         if (!isset(self::$common[$c][$f])) {
             self::$common[$c][$f] = new Path(Capsule::getInstance()->{Capsule::DIR_CFG}, $c . '.json');
@@ -517,6 +514,7 @@ abstract class DataModel
     public static function _createConfigFile()
     {
         $path = self::_configLocation();
+        Tools::dump($path);
         if (file_exists($path)) {
             return true;
         }

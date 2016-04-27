@@ -602,6 +602,7 @@
         "usrproduct": "Usr.Catalog.Product",
         "usrattribute-section-link": "Usr.Catalog.AttributeSectionLink",
         "usrattribute": "Usr.Catalog.Attribute",
-        "usrattributegroup": "Usr.Catalog.AttributeGroup"
+        "usrattributegroup": "Usr.Catalog.AttributeGroup",
+        "cpuser": "/Cp.CpUser.CpController"
     }
 }
