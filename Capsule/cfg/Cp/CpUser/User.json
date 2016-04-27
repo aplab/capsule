@@ -29,7 +29,7 @@
         },
         "nickname": {
             "title": "Nickname",
-            "description": "Ник пользователя", 
+            "description": "Ник пользователя",
             "help": "",
             "comment": "",
             "label": "",

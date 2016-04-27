@@ -449,7 +449,6 @@ abstract class DataModel
         $class = $class ?: get_called_class();
         $path = self::_configLocation($class);
         if (!file_exists($path)) {
-            Tools::dump($path . ' cre ' . $class);
             self::_createConfigFile();
             return array();
         }
@@ -514,7 +513,6 @@ abstract class DataModel
     public static function _createConfigFile()
     {
         $path = self::_configLocation();
-        Tools::dump($path);
         if (file_exists($path)) {
             return true;
         }
