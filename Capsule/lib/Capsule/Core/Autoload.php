@@ -65,7 +65,7 @@ class Autoload extends Singleton
             }
         }
         $msg = 'Class ' . $classname . ' not found';
-        throw new Exception($msg);
+        #throw new Exception($msg);
     }
 
     /**
