@@ -32,7 +32,7 @@ class TextBlock extends UnitController
     public function handle() {
         $object = t::getElementById($this->unit->moduleId);
         if (!$object) {
-            echo'object ' . t::get_called_class() . '#' . $this->unit->moduleId . ' not found';
+            echo'object ' . t::class . '#' . $this->unit->moduleId . ' not found';
             return;
         }
         $template = new Path($this->tplpath, $this->unit->template);

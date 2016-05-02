@@ -686,15 +686,6 @@ abstract class DataModel
     }
 
     /**
-     * @param void
-     * @return string
-     */
-    public static function get_called_class()
-    {
-        return get_called_class();
-    }
-
-    /**
      * common key generator
      *
      * @param string $__FUNCTION__
