@@ -60,8 +60,12 @@ function CapsuleUiScrollable(instance_name)
     var contentHeight;
     var scrollbarHeight;
     var scrollbarTop;
+    var skipInit = false;
 
     var init = function() {
+        if (skipInit) {
+            return;
+        }
         wrapperHeight = wrapper.height();
         contentHeight = content.height();
         if (wrapperHeight >= contentHeight) {
@@ -69,12 +73,13 @@ function CapsuleUiScrollable(instance_name)
             return;
         }
         scrollbarHeight = wrapperHeight * wrapperHeight / contentHeight;
-        scrollbarTop = wrapper.scrollTop() * scrollbarHeight / wrapperHeight;
-
-        if (scrollbarHeight < 10) {
-            scrollbarHeight = 10;
+        if (scrollbarHeight < 20) {
+            scrollbarHeight = 20;
         }
+        content_scroll_distance = contentHeight - wrapperHeight;
+        scrollbar_move_distance = wrapperHeight - scrollbarHeight;
 
+        scrollbarTop = wrapper.scrollTop() * scrollbar_move_distance / content_scroll_distance;
         scrollbar.css({
             height: scrollbarHeight,
             top: scrollbarTop
@@ -88,6 +93,27 @@ function CapsuleUiScrollable(instance_name)
 
     wrapper.scroll(function() {
         init();
+    });
+
+    scrollbar.draggable({
+        axis: 'y',
+        containment: 'parent',
+        scroll: false,
+        start: function() {
+            skipInit = true;
+            scrollbarTop = parseInt(scrollbar.css('top'), 10);
+            wrapper.scrollTop(scrollbarTop / (scrollbar_move_distance / content_scroll_distance));
+        },
+        drag: function() {
+            skipInit = true;
+            scrollbarTop = parseInt(scrollbar.css('top'), 10);
+            wrapper.scrollTop(scrollbarTop / (scrollbar_move_distance / content_scroll_distance));
+        },
+        stop: function() {
+            skipInit = false;
+            scrollbarTop = parseInt(scrollbar.css('top'), 10);
+            wrapper.scrollTop(scrollbarTop / (scrollbar_move_distance / content_scroll_distance));
+        }
     });
 
     init();

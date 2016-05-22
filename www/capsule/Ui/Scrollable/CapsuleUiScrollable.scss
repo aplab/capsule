@@ -8,6 +8,7 @@ $capsule-ui-scrollable-width: 300px;
     width: $capsule-ui-scrollable-width;
     bottom: 0;
     overflow: hidden;
+    box-sizing: border-box;
     .capsule-ui-scrollable-wrapper {
         position: absolute;
         background: #fff;
@@ -18,20 +19,26 @@ $capsule-ui-scrollable-width: 300px;
         bottom: 0;
         overflow: hidden;
         overflow-y: scroll;
+        box-sizing: border-box;
     }
     .capsule-ui-scrollable-content {
         width: $capsule-ui-scrollable-width;
         overflow: hidden;
         background: #dfd;
-        z-index: 90;
+        box-sizing: border-box;
     }
     .capsule-ui-scrollable-scrollbar {
         position: absolute;
         top: 0;
         right: 0;
-        width: 2px;
+        width: 10px;
         height: 0;
-        background: #f00;
+        background: #666;
         display: none;
+        box-sizing: border-box;
+        //opacity: .5;
+    }
+    .capsule-ui-scrollable-scrollbar:hover {
+        //width: 10px;
     }
 }
